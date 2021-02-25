@@ -1,6 +1,6 @@
 import { Address } from "cluster";
 import { stringify } from "querystring";
-import { Page, Product, ProductReview } from "../interface/misc.model";
+import { Cart, IndividualPurchase, Page, Payment, Product, ProductCategory, ProductReview, Purchase, Shipment, User } from "../interface/misc.model";
 
 export function queryProducts(page: number): Promise<Page<Product>> {
   return new Promise(() => {
@@ -49,7 +49,7 @@ export function queryProducts(page: number): Promise<Page<Product>> {
   })
 }
 
-export function retrieveProduct(productId: number | string) {
+export function retrieveProduct(productId: number | string): Promise<Product> {
   return new Promise(() => {
     return {
       id: productId,
@@ -69,7 +69,7 @@ export function retrieveProduct(productId: number | string) {
   })
 }
 
-export function retrieveCategories() {
+export function retrieveCategories(): Promise<ProductCategory[]> {
   return new Promise(() => {
     return [
       {
@@ -84,7 +84,7 @@ export function retrieveCategories() {
   })
 }
 
-export function retrieveCategory(categoryId: string | number) {
+export function retrieveCategory(categoryId: string | number): Promise<ProductCategory> {
   return new Promise(() => {
     return {
       id: categoryId,
@@ -93,7 +93,7 @@ export function retrieveCategory(categoryId: string | number) {
   })
 }
 
-export function retrieveProductReviews(productId: number | string) {
+export function retrieveProductReviews(productId: number | string): Promise<Page<ProductReview>> {
   return new Promise(() => {
     return [
       {
@@ -121,11 +121,11 @@ export function retrieveProductReviews(productId: number | string) {
   })
 }
 
-export function createProductReview(productId: number | string, payload: ProductReview) {
+export function createProductReview(productId: number | string, payload: ProductReview): Promise<ProductReview> {
   return new Promise(() => { return {...payload, id: 588} })
 }
 
-export function createCart() {
+export function createCart(): Promise<Cart> {
   return new Promise(() => {
     return {
       id: 9879,
@@ -138,7 +138,7 @@ export function createCart() {
   })
 }
 
-export function retrieveCart(cartId: number | string) {
+export function retrieveCart(cartId: number | string): Promise<Cart> {
   return new Promise(() => {
     return {
       id: cartId,
@@ -171,7 +171,7 @@ export function retrieveCart(cartId: number | string) {
   })
 }
 
-export function addProductToCart(cartId: string, products : {productId:number | string, count:number}[]) {
+export function addProductToCart(cartId: string, products : {productId:number | string, count:number}[]): Promise<Cart> {
   return new Promise(() => {
     return {
       id: cartId,
@@ -204,7 +204,7 @@ export function addProductToCart(cartId: string, products : {productId:number | 
   })
 }
 
-export function modifyProductInCart(cartId: string, productId: number | string, count: number) {
+export function modifyProductInCart(cartId: string, productId: number | string, count: number): Promise<Cart> {
   return new Promise(() => {
     return {
       id: cartId,
@@ -237,7 +237,7 @@ export function modifyProductInCart(cartId: string, productId: number | string, 
   })
 }
 
-export function createPurchase(cartId:string, shipmentAreaCenter:Address, clientsTargetNumber:number) {
+export function createPurchase(cartId:string, shipmentAreaCenter:Address, clientsTargetNumber:number): Promise<Purchase> {
   return new Promise(() => {
     return {
       id: 9848,
@@ -286,7 +286,7 @@ export function createPurchase(cartId:string, shipmentAreaCenter:Address, client
   })
 }
 
-export function retrievePurchase(purchaseIdOrCode: string | number) {
+export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Purchase> {
   return new Promise(() => {
     return {
       id: 9848,
@@ -335,7 +335,7 @@ export function retrievePurchase(purchaseIdOrCode: string | number) {
   })
 }
 
-export function createIndividualPurchaseFromPurchase(purchaseId: number|string, shipmentAddres:Address) {
+export function createIndividualPurchaseFromPurchase(purchaseId: number|string, shipmentAddres:Address): Promise<IndividualPurchase> {
   return new Promise(() => {
     return {
       id: 88979700,
@@ -400,7 +400,7 @@ export function createIndividualPurchaseFromPurchase(purchaseId: number|string, 
   })
 }
 
-export function retrieveIndividualPurchase(individualPurchaseId: number|string) {
+export function retrieveIndividualPurchase(individualPurchaseId: number | string): Promise<IndividualPurchase> {
   return new Promise(() => {
     return {
       id: individualPurchaseId,
@@ -465,7 +465,7 @@ export function retrieveIndividualPurchase(individualPurchaseId: number|string) 
   })
 }
 
-export function retrievePayment(paymentId: string | number) {
+export function retrievePayment(paymentId: string | number): Promise<Payment> {
   return new Promise(() => {
     return {
       id: paymentId,
@@ -475,7 +475,7 @@ export function retrievePayment(paymentId: string | number) {
   })
 }
 
-export function processPayment(paymentId: string | number, payload?: any) {
+export function processPayment(paymentId: string | number, payload?: any): Promise<Payment> {
   return new Promise(() => {
     return {
       id: paymentId,
@@ -485,7 +485,7 @@ export function processPayment(paymentId: string | number, payload?: any) {
   })
 }
 
-export function retrieveShipment(shipmentId: string | number) {
+export function retrieveShipment(shipmentId: string | number): Promise<Shipment> {
   return new Promise(() => {
     return {
       id: shipmentId,
@@ -495,7 +495,7 @@ export function retrieveShipment(shipmentId: string | number) {
   })
 }
 
-export function retrieveUserByEmail(email: string) {
+export function retrieveUserByEmail(email: string): Promise<User> {
   return new Promise(() => {
     return {
       email: email
@@ -503,7 +503,7 @@ export function retrieveUserByEmail(email: string) {
   })
 }
 
-export function createUser(email: string) {
+export function createUser(email: string): Promise<User> {
   return new Promise(() => {
     return {
       id: 9879,
