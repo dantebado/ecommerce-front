@@ -5,21 +5,24 @@ import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import GlobalReducer from './reducers'
 import { CounterTypes, COUNTER_INITIAL_STATE } from './reducers/Counter'
+import { LoggedUserTypes, LOGGED_USER_INITIAL_STATE } from './reducers/LoggedUser'
 
 let store: Store
 
 export interface StateTypes {
   counter: CounterTypes
+  loggedUser: LoggedUserTypes
 }
 
 export const APP_INITIAL_STATE: StateTypes = {
-  ...COUNTER_INITIAL_STATE
+  ...COUNTER_INITIAL_STATE,
+  ...LOGGED_USER_INITIAL_STATE
 }
 
 const persistConfig = {
   key: 'primary',
   storage,
-  whitelist: ['counter'],
+  whitelist: ['counter', 'loggedUser'],
 }
 
 const persistedReducer = persistReducer(persistConfig, GlobalReducer)

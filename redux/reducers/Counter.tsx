@@ -1,3 +1,5 @@
+import { StateTypes } from "../Store";
+
 export interface CounterTypes {
   value: number
 }
@@ -10,7 +12,7 @@ export const COUNTER_INITIAL_STATE = {
   counter: COUNTER_INITIAL_VALUE
 }
 
-function handleChange(state: any, step: number) {
+function handleChange(state, step: number) {
   return {
     value: state.value + step
   }
