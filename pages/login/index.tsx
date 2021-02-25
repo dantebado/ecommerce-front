@@ -3,6 +3,7 @@ import { Magic } from 'magic-sdk';
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux';
 import { StateTypes } from '../../redux/Store';
+import { actionLoginMagicLink, actionSignoutMagicLink } from '../../redux/reducers/LoggedUser';
 
 const Login = (props) =>  {
   const [emailAddress, setEmailAddress] = useState('')
@@ -16,10 +17,7 @@ const Login = (props) =>  {
       email: emailAddress
     })
     .then(token => {
-      dispatch({
-        type: 'MAGIC_LINK_LOGIN',
-        token: token
-      })
+      dispatch(actionLoginMagicLink(token))
       router.push("/")
     })
     .catch()
@@ -27,10 +25,7 @@ const Login = (props) =>  {
 
   const signOut = () => {
     m.user.logout().then(value => {
-      dispatch({
-        type: 'MAGIC_LINK_LOGIN',
-        token: null
-      })
+      dispatch(actionSignoutMagicLink())
     }).catch(console.error)
   }
 

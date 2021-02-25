@@ -15,8 +15,6 @@ export default function Home(props) {
   const i18Validation = useTranslation('validation').t
   const i18Common = useTranslation('common').t
 
-  console.log(process.env.NEXT_PUBLIC_TEST)
-
   const [loginPayload, setLoginPayload] = useState({
     email: ''
   })
