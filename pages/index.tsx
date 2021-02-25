@@ -6,6 +6,7 @@ import { StateTypes } from "../redux/Store"
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { EmailRegex } from "../utils/Regex"
 import { useTranslation } from "next-i18next"
+import getConfig from 'next/config';
 
 export default function Home(props) {
   const counter = useSelector((state: StateTypes) => state.counter)
@@ -13,6 +14,8 @@ export default function Home(props) {
 
   const i18Validation = useTranslation('validation').t
   const i18Common = useTranslation('common').t
+
+  console.log(process.env.NEXT_PUBLIC_TEST)
 
   const [loginPayload, setLoginPayload] = useState({
     email: ''
