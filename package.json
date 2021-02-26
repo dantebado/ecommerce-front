@@ -10,7 +10,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "destyle.css": "^2.0.2",
-    "firebase": "^8.2.4",
     "i18next-browser-languagedetector": "^6.0.1",
     "javascript-time-ago": "^2.3.4",
     "magic-sdk": "^4.1.1",
