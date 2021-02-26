@@ -2,7 +2,6 @@ import i18next from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import TimeAgo from 'javascript-time-ago'
 import es from 'javascript-time-ago/locale/es'
-import { appWithTranslation } from 'next-i18next'
 import { AppProps } from 'next/dist/next-server/lib/router/router'
 import Head from 'next/head'
 import React from 'react'
@@ -13,7 +12,7 @@ import { useStore } from '../redux/Store'
 import '../styles/globals.scss'
 
 
-function MyApp({ Component, pageProps }: any)  {
+function MyApp({ Component, pageProps }: AppProps)  {
   if (TimeAgo.getDefaultLocale() == 'en') {
     TimeAgo.addDefaultLocale(es)
   }
@@ -39,4 +38,4 @@ function MyApp({ Component, pageProps }: any)  {
   )
 }
 
-export default appWithTranslation(MyApp)
+export default MyApp
