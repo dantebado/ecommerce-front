@@ -558,11 +558,6 @@ export function createUser(email: string): Promise<User> {
   })
 }
 
-
-
-
-
-
 const addressToGeocodeQuery = (address: Address) => {
   return address.addressLine +
     (address.city ? `, ${address.city}` : '') +
@@ -570,13 +565,13 @@ const addressToGeocodeQuery = (address: Address) => {
     (address.country ? `, ${address.country}` : '')
 }
 
-export const geocodeAddress = async (address: Address, apiKey: string): Promise<AddressGeoCodingResult> => {
+export const geocodeAddress = async (address: Address): Promise<AddressGeoCodingResult> => {
   if (!address.addressLine)
     return
 
   let query = addressToGeocodeQuery(address)
 
-  let results = await axios.get<AddressGeoCodingResponse>(`http://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${query}`)
+  let results = await axios.get<AddressGeoCodingResponse>(`/api/gc?query=${query}`)
   return new Promise((resolve, reject) => {
     if (results.data.data.length !== 1)
       reject({ resultCount: results.data.data.length })

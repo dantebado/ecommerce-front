@@ -32,7 +32,7 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
 
   const validateAddressHandler = () => {
     setValidatedShipmentArea(false)
-    geocodeAddress(shipmentAddress, apiKey)
+    geocodeAddress(shipmentAddress)
       .then(geo => {
         setValidatedShipmentArea(true)
         setShipmentAddress({
@@ -50,8 +50,6 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
       .catch(console.error)
   }
   
-  const apiKey = process.env.NEXT_PUBLIC_POSITION_STACK_KEY
-
   return (
     <div>
       { !purchase.clientsTargetReached ? (

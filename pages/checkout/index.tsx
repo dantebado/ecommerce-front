@@ -34,8 +34,6 @@ export default function index() {
   const router = useRouter()
   const dispatch = useDispatch()
   
-  const apiKey = process.env.NEXT_PUBLIC_POSITION_STACK_KEY
-
   if (!activeCart) {
     console.error("no cart retrieved from state")
     router.push("/")
@@ -80,7 +78,7 @@ export default function index() {
   }
 
   const geocodeHandler = () => {
-    geocodeAddress(shipmentAddress, apiKey)
+    geocodeAddress(shipmentAddress)
       .then(geo => {
         setShipmentAddress({
           ...shipmentAddress,
