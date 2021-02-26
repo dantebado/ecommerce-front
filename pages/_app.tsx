@@ -13,7 +13,7 @@ import { useStore } from '../redux/Store'
 import '../styles/globals.scss'
 
 
-function MyApp({ Component, pageProps }: AppProps)  {
+function MyApp({ Component, pageProps }: any)  {
   if (TimeAgo.getDefaultLocale() == 'en') {
     TimeAgo.addDefaultLocale(es)
   }
