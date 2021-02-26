@@ -11,7 +11,7 @@ html, body {
 }
 
 a {
-  color: inherit;
+  color: blue;
   text-decoration: none;
 }
 
@@ -23,8 +23,29 @@ button {
   color: #3498db;
   background-color: #ecf0f1;
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+
+    &:hover {
+      color: #3498db;
+      background-color: #ecf0f1;
+    }
+  }
   &:hover {
     background-color: #3498db;
     color: #ecf0f1;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+table.cart-table {
+  border-collapse: collapse;
+  td, th {
+    border: 1px solid black;
+    padding: .5rem;
   }
 }

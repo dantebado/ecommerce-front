@@ -3,6 +3,7 @@ import { applyMiddleware, createStore, Store } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import { Cart } from '../interface/misc.model'
 import GlobalReducer from './reducers'
 import { CounterTypes, COUNTER_INITIAL_STATE } from './reducers/Counter'
 import { LoggedUserTypes, LOGGED_USER_INITIAL_STATE } from './reducers/LoggedUser'
@@ -12,17 +13,19 @@ let store: Store
 export interface StateTypes {
   counter: CounterTypes
   loggedUser: LoggedUserTypes
+  activeCart: Cart
 }
 
 export const APP_INITIAL_STATE: StateTypes = {
   ...COUNTER_INITIAL_STATE,
-  ...LOGGED_USER_INITIAL_STATE
+  ...LOGGED_USER_INITIAL_STATE,
+  activeCart: null
 }
 
 const persistConfig = {
   key: 'primary',
   storage,
-  whitelist: ['counter', 'loggedUser'],
+  whitelist: ['counter', 'loggedUser', 'activeCart'],
 }
 
 const persistedReducer = persistReducer(persistConfig, GlobalReducer)
