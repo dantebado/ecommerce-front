@@ -3,7 +3,12 @@ export interface Address {
   address: string
   state: string
   city: string
-  commentary: string
+  postalCode?: string
+  commentary?: string
+}
+
+export function addressToReadableString(address: Address) {
+  return `${address.address}, CP ${address.postalCode}, ${address.city}, ${address.state}, ${address.country}`
 }
 
 export interface Client {
@@ -27,7 +32,7 @@ export interface Product {
   tags: string[]
   category: ProductCategory
   currentStock: number
-  firstReview: ProductReview
+  firstReview?: ProductReview
 }
 
 export interface ProductReview {
@@ -35,7 +40,7 @@ export interface ProductReview {
   authorName: string
   commentary: string
   rating: number // 1 - 5
-  date: Date
+  date: Date | string
 }
 
 export interface ProductInCart {
@@ -46,19 +51,19 @@ export interface ProductInCart {
 
 export interface Cart {
   id: string | number
-  creationDate: Date
-  lastUpdateDate: Date
+  creationDate: Date | string
+  lastUpdateDate: Date | string
   products: ProductInCart[]
   productsPrice: number
   locked: boolean
 }
 
-export type PurchaseStatus = 'pending-initial-payment' | 'completed' | 'cancelled' | 'awaiting-peers' | 'expired'
+export type PurchaseStatus = "awaiting-peers" | "pending-initial-payment" | "completed" | "cancelled" | "expired"
 
 export interface Purchase {
   id: string | number
-  creationDate: Date
-  expirationDate: Date
+  creationDate: Date | string
+  expirationDate: Date | string
   status: PurchaseStatus
   clientsTarget: number
   currentConfirmedClients: number // los que YA pagaron
@@ -81,20 +86,21 @@ export interface IndividualPurchase {
   payment: Payment
 }
 
-export type PaymentStatus = 'pending' | 'failed' | 'reserved' | 'captured'
+export type PaymentStatus = "pending" | "failed" | "reserved" | "captured"
 
 export interface Payment {
   id: string | number
-  individualPurchaseId: string
+  individualPurchaseId: string | number
   status: PaymentStatus
 }
 
-export type ShipmentStatus = 'awaiting-payment' | 'awaiting-purchase-completition' | 'aborted' | 'pending' | 'dispatched' | 'delivered'
+export type ShipmentStatus = "awaiting-payment" | "awaiting-purchase-completition" | "aborted" | "pending" | "dispatched" | "delivered"
 
 export interface Shipment {
   id: string | number
   status: ShipmentStatus
   shipmentAddress: Address
+  individualPurchaseId: string | number
 }
 
 export interface Page<T> {

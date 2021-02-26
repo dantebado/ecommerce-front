@@ -1,10 +1,8 @@
-import { Address } from "cluster";
-import { stringify } from "querystring";
-import { Cart, IndividualPurchase, Page, Payment, Product, ProductCategory, ProductReview, Purchase, Shipment, User } from "../interface/misc.model";
+import { Address, Cart, IndividualPurchase, Page, Payment, Product, ProductCategory, ProductReview, Purchase, Shipment, User } from "../interface/misc.model";
 
 export function queryProducts(page: number): Promise<Page<Product>> {
-  return new Promise(() => {
-    return {
+  return new Promise((resolve, reject) => {
+    resolve({
       count: 2,
       results: [
         {
@@ -41,109 +39,113 @@ export function queryProducts(page: number): Promise<Page<Product>> {
             authorName: 'Diego',
             commentary: 'Hola este es mi comentario sobre la papa',
             rating: 4,
-            date: new Date()
+            date: (new Date()).toString()
           }
         },
       ]
-    }
+    })
   })
 }
 
 export function retrieveProduct(productId: number | string): Promise<Product> {
-  return new Promise(() => {
-    return {
-      id: productId,
-      displayName: 'Papas Blancas',
-      description: 'Papas blancas',
-      featuredPhotoURL: 'http://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-      photosURL: ['http://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-      unitaryPrice: 650,
-      measureUnit: 'kg',
-      tags: ['papas','verdura'],
-      category: {
-        id: 879,
-        name: 'Verdura'
-      },
-      currentStock: 206,
-    }
+  return new Promise((resolve, reject) => {
+    resolve(
+      {
+        id: productId,
+        displayName: 'Papas Blancas',
+        description: 'Papas blancas',
+        featuredPhotoURL: 'http://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
+        photosURL: ['http://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
+        unitaryPrice: 650,
+        measureUnit: 'kg',
+        tags: ['papas','verdura'],
+        category: {
+          id: 879,
+          name: 'Verdura'
+        },
+        currentStock: 206
+    })
   })
 }
 
 export function retrieveCategories(): Promise<ProductCategory[]> {
-  return new Promise(() => {
-    return [
+  return new Promise((resolve, reject) => {
+    resolve([
       {
         id: 879,
         name: 'Verdura'
       },
       {
-        id: 740,
+        id: 564,
         name: 'Fruta'
-      }
-    ]
+      },
+    ])
   })
 }
 
 export function retrieveCategory(categoryId: string | number): Promise<ProductCategory> {
-  return new Promise(() => {
-    return {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: categoryId,
       name: 'Fruta'
-    }
+    })
   })
 }
 
 export function retrieveProductReviews(productId: number | string): Promise<Page<ProductReview>> {
-  return new Promise(() => {
-    return [
-      {
+  return new Promise((resolve, reject) => {
+    resolve({
+      count: 4,
+      results: [{
         id: 498,
         authorName: 'Diego',
         commentary: 'Hola este es mi comentario sobre la papa',
         rating: 4,
-        date: new Date()
+        date: (new Date()).toString()
       },
       {
         id: 849,
         authorName: 'Diego',
         commentary: 'Hola este es mi comentario sobre la papa',
         rating: 4,
-        date: new Date()
+        date: (new Date()).toString()
       },
       {
         id: 577,
         authorName: 'Diego',
         commentary: 'Hola este es mi comentario sobre la papa',
         rating: 4,
-        date: new Date()
+        date: (new Date()).toString()
       },
-    ]
+    ]})
   })
 }
 
 export function createProductReview(productId: number | string, payload: ProductReview): Promise<ProductReview> {
-  return new Promise(() => { return {...payload, id: 588} })
+  return new Promise((resolve, reject) => {
+    resolve({...payload, id: 588})
+  })
 }
 
 export function createCart(): Promise<Cart> {
-  return new Promise(() => {
-    return {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: 9879,
-      creationDate: new Date(),
-      lastUpdateDate: new Date(),
+      creationDate: (new Date()).toString(),
+      lastUpdateDate: (new Date()).toString(),
       products: [],
       productsPrice: 0,
       locked: false
-    }
+    })
   })
 }
 
 export function retrieveCart(cartId: number | string): Promise<Cart> {
-  return new Promise(() => {
-    return {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: cartId,
-      creationDate: new Date(),
-      lastUpdateDate: new Date(),
+      creationDate: (new Date()).toString(),
+      lastUpdateDate: (new Date()).toString(),
       products: [
         {
           id: 987,
@@ -167,16 +169,16 @@ export function retrieveCart(cartId: number | string): Promise<Cart> {
       ],
       productsPrice: 1300,
       locked: false
-    }
+    })
   })
 }
 
-export function addProductToCart(cartId: string, products : {productId:number | string, count:number}[]): Promise<Cart> {
-  return new Promise(() => {
-    return {
+export function addProductToCart(cartId: number | string, products : {productId:number | string, count:number}[]): Promise<Cart> {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: cartId,
-      creationDate: new Date(),
-      lastUpdateDate: new Date(),
+      creationDate: (new Date()).toString(),
+      lastUpdateDate: (new Date()).toString(),
       products: [
         {
           id: 987,
@@ -200,16 +202,16 @@ export function addProductToCart(cartId: string, products : {productId:number | 
       ],
       productsPrice: 1300,
       locked: false
-    }
+    })
   })
 }
 
-export function modifyProductInCart(cartId: string, productId: number | string, count: number): Promise<Cart> {
-  return new Promise(() => {
-    return {
+export function modifyProductInCart(cartId: number | string, productId: number | string, count: number): Promise<Cart> {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: cartId,
-      creationDate: new Date(),
-      lastUpdateDate: new Date(),
+      creationDate: (new Date()).toString(),
+      lastUpdateDate: (new Date()).toString(),
       products: [
         {
           id: 987,
@@ -233,16 +235,16 @@ export function modifyProductInCart(cartId: string, productId: number | string, 
       ],
       productsPrice: 1300,
       locked: false
-    }
+    })
   })
 }
 
-export function createPurchase(cartId:string, shipmentAreaCenter:Address, clientsTargetNumber:number): Promise<Purchase> {
-  return new Promise(() => {
-    return {
+export function createPurchase(cartId: number | string, shipmentAreaCenter:Address, clientsTargetNumber:number): Promise<Purchase> {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: 9848,
-      creationDate: new Date(),
-      expirationDate: new Date('2021-03-01'),
+      creationDate: (new Date()).toString(),
+      expirationDate: (new Date('2021-03-01')).toString(),
       status: 'pending-initial-payment',
       clientsTarget: clientsTargetNumber,
       currentConfirmedClients: 0,
@@ -252,8 +254,8 @@ export function createPurchase(cartId:string, shipmentAreaCenter:Address, client
       shipmentAreaRadius: 5,
       cart: {
         id: cartId,
-        creationDate: new Date(),
-        lastUpdateDate: new Date(),
+        creationDate: (new Date()).toString(),
+        lastUpdateDate: (new Date()).toString(),
         products: [
           {
             id: 987,
@@ -282,17 +284,17 @@ export function createPurchase(cartId:string, shipmentAreaCenter:Address, client
       discountAmount: 0,
       amountToPay: 1300,
       shareCode: 'code',
-    }
+    })
   })
 }
 
 export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Purchase> {
-  return new Promise(() => {
-    return {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: 9848,
-      creationDate: new Date(),
-      expirationDate: new Date('2021-03-01'),
-      status: 'pending-initial-payment',
+      creationDate: (new Date()).toString(),
+      expirationDate: (new Date('2021-02-27T23:59')).toString(),
+      status: 'awaiting-peers',
       clientsTarget: 2,
       currentConfirmedClients: 0,
       clientsLeft: 2,
@@ -301,8 +303,8 @@ export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Pur
       shipmentAreaRadius: 5,
       cart: {
         id: 123,
-        creationDate: new Date(),
-        lastUpdateDate: new Date(),
+        creationDate: (new Date()).toString(),
+        lastUpdateDate: (new Date()).toString(),
         products: [
           {
             id: 987,
@@ -331,20 +333,21 @@ export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Pur
       discountAmount: 0,
       amountToPay: 1300,
       shareCode: 'code',
-    }
+    })
   })
 }
 
-export function createIndividualPurchaseFromPurchase(purchaseId: number|string, shipmentAddres:Address): Promise<IndividualPurchase> {
-  return new Promise(() => {
-    return {
+export function createIndividualPurchaseFromPurchase(purchaseId: number|string, shipmentAddress:Address): Promise<IndividualPurchase> {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: 88979700,
       client: {
+        id: 94940,
         email: 'dantebado@gmail.com'
       },
       purchase: {
         id: 9848,
-        creationDate: new Date(),
+        creationDate: (new Date()).toString(),
         expirationDate: new Date('2021-03-01'),
         status: 'pending-initial-payment',
         clientsTarget: 2,
@@ -355,8 +358,8 @@ export function createIndividualPurchaseFromPurchase(purchaseId: number|string, 
         shipmentAreaRadius: 5,
         cart: {
           id: 123,
-          creationDate: new Date(),
-          lastUpdateDate: new Date(),
+          creationDate: (new Date()).toString(),
+          lastUpdateDate: (new Date()).toString(),
           products: [
             {
               id: 987,
@@ -389,27 +392,29 @@ export function createIndividualPurchaseFromPurchase(purchaseId: number|string, 
       shipment: {
         id: 4987,
         status: 'awaiting-payment',
-        shipmentAddress: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'}
+        shipmentAddress: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'},
+        individualPurchaseId: 88979700
       },
       payment: {
         id: 58588,
         individualPurchaseId: 9848,
         status: 'pending'
       }
-    }
+    })
   })
 }
 
 export function retrieveIndividualPurchase(individualPurchaseId: number | string): Promise<IndividualPurchase> {
-  return new Promise(() => {
-    return {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: individualPurchaseId,
       client: {
-        email: 'dantebado@gmail.com'
+        email: 'dantebado@gmail.com',
+        id: 94980
       },
       purchase: {
         id: 9848,
-        creationDate: new Date(),
+        creationDate: (new Date()).toString(),
         expirationDate: new Date('2021-03-01'),
         status: 'pending-initial-payment',
         clientsTarget: 2,
@@ -420,8 +425,8 @@ export function retrieveIndividualPurchase(individualPurchaseId: number | string
         shipmentAreaRadius: 5,
         cart: {
           id: 123,
-          creationDate: new Date(),
-          lastUpdateDate: new Date(),
+          creationDate: (new Date()).toString(),
+          lastUpdateDate: (new Date()).toString(),
           products: [
             {
               id: 987,
@@ -454,60 +459,63 @@ export function retrieveIndividualPurchase(individualPurchaseId: number | string
       shipment: {
         id: 4987,
         status: 'awaiting-payment',
-        shipmentAddress: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'}
+        shipmentAddress: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'},
+        individualPurchaseId: individualPurchaseId
       },
       payment: {
         id: 58588,
         individualPurchaseId: individualPurchaseId,
         status: 'pending'
       }
-    }
+    })
   })
 }
 
 export function retrievePayment(paymentId: string | number): Promise<Payment> {
-  return new Promise(() => {
-    return {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: paymentId,
       individualPurchaseId: 9848,
       status: 'pending'
-    }
+    })
   })
 }
 
 export function processPayment(paymentId: string | number, payload?: any): Promise<Payment> {
-  return new Promise(() => {
-    return {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: paymentId,
       individualPurchaseId: 9848,
       status: 'reserved'
-    }
+    })
   })
 }
 
 export function retrieveShipment(shipmentId: string | number): Promise<Shipment> {
-  return new Promise(() => {
-    return {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: shipmentId,
       status: 'awaiting-payment',
-      shipmentAddress: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'}
-    }
+      shipmentAddress: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'},
+      individualPurchaseId: 65798
+    })
   })
 }
 
 export function retrieveUserByEmail(email: string): Promise<User> {
-  return new Promise(() => {
-    return {
-      email: email
-    }
+  return new Promise((resolve, reject) => {
+    resolve({
+      email: email,
+      id: 98498
+    })
   })
 }
 
 export function createUser(email: string): Promise<User> {
-  return new Promise(() => {
-    return {
+  return new Promise((resolve, reject) => {
+    resolve({
       id: 9879,
       email: email
-    }
+    })
   })
 }
