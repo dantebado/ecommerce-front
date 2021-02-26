@@ -24,7 +24,7 @@ export default function CoordinatesMap(props: {geocode: AddressGeoCodingResult, 
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
       </Head>
       <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={position} icon={myIcon}>
