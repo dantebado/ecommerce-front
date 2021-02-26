@@ -69,9 +69,7 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
             )
           }
         </div>
-      ) : (
-        <span></span>
-      )}
+      ) : (<span></span>)}
     </div>
   )
 }

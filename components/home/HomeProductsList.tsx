@@ -25,7 +25,7 @@ export default function HomeProductsList() {
   }, [])
 
   return (
-    <div>
+    <div className="m-3">
       {
         loading ? (
           <p>Cargando</p>

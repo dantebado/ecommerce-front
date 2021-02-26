@@ -29,24 +29,26 @@ export default function PaymentView(props: {purchase: Purchase}) {
         <p className="my-2">Compradores Restantes: {purchase.clientsLeft}</p>
         <p className="my-2">Compradores Alcanzados: {purchase.clientsTargetReached ? 'Sí' : 'No'}</p>
 
-        <div className="mt-6">
+        <div className="my-6">
           <CartViewer cart={purchase.cart} />
         </div>
 
-        {
-          purchase.status == 'awaiting-peers' ? (
-            <div>
-              <div className="my-6 font-lg font-bold">
-                <Countdown date={expirationDate} onComplete={expirationCallback} />
+        <div className="my-6">
+          {
+            purchase.status == 'awaiting-peers' ? (
+              <div>
+                <div className="font-lg font-bold">
+                  <Countdown date={expirationDate} onComplete={expirationCallback} />
+                </div>
+                <JoinPurchaseComponent purchase={purchase} />     
+              </div>       
+            ) : (
+              <div className="font-lg font-bold">
+                <p>Estado de Compra <b>{purchase.status}</b></p>
               </div>
-              <JoinPurchaseComponent purchase={purchase} />     
-            </div>       
-          ) : (
-            <div className="mt-6 font-lg font-bold">
-              <p>Estado de Compra <b>{purchase.status}</b></p>
-            </div>
-          )
-        }
+            )
+          }
+        </div>
       </div>
     </DefaultLayout>
   )

@@ -42,10 +42,10 @@ export default function ProductViewer(props: {product: Product}) {
         <h2 className="mb-3">Viendo {product.displayName}</h2>
         <p>{product.description}</p>
 
-        <h1 className="mt-3">$ {product.unitaryPrice} / {product.measureUnit}</h1>
+        <h1 className="my-3">$ {product.unitaryPrice} / {product.measureUnit}</h1>
 
         <p className="mt-6"><b>Fotografía Destacada</b></p>
-        <div className="sm:w-1/2 mx-auto my-3">
+        <div className="sm:w-1/2 mx-auto mt-3 mb-6">
           <img className="shadow-2" src={product.featuredPhotoURL}/>
         </div>
 
@@ -60,7 +60,7 @@ export default function ProductViewer(props: {product: Product}) {
           }
         </div>
 
-        <div className="flex flex-row items-center sm:w-1/2 sm:mx-auto">
+        <div className="flex flex-row items-center sm:w-1/2 sm:mx-auto mt-6">
           <div className="w-1/2">
             <select className="w-full py-2 px-2" value={count} onChange={(e) => setCount(parseInt(e.target.value))}>
               {

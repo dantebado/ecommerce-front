@@ -114,11 +114,8 @@ export default function index() {
                       }
                     </div>
                   </div>
-
                 </div>
-              ) : (
-                <span></span>
-              )
+              ) : (<span></span>)
             }
           </div>
         ) : (

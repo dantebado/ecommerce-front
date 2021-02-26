@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { processPayment, retrieveIndividualPurchase, retrievePayment, retrievePurchase } from '../../api/api'
 import CartViewer from '../../components/cart/CartViewer'
 import PaymentForm from '../../components/forms/PaymentForm'
@@ -44,7 +44,7 @@ export default function PaymentView(props: {payment: Payment}) {
           individualPurchase && !processedPayment ? (
             <div className="text-left my-3">
               <h3>Compra #{iPurchase.id}-#{iPurchase.purchase.id}</h3>
-              <div className="mt-3">
+              <div className="my-3">
                 <CartViewer cart={iPurchase.purchase.cart} />
               </div>
 
@@ -86,7 +86,7 @@ export default function PaymentView(props: {payment: Payment}) {
         }
         {
           processedPayment ? (
-            <div>
+            <Fragment>
               <h3 className="mb-3">Resultado del Pago</h3>
 
               <p>Pago resultado en <b>{processedPayment.status}</b></p>
@@ -95,7 +95,7 @@ export default function PaymentView(props: {payment: Payment}) {
                   <button className="mt-3 px-3 py-2">Ir a Estado de Compra</button>
                 </Link>
               </div>
-            </div>
+            </Fragment>
           ) : (<span></span>)
         }
 

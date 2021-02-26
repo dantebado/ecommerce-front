@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createCart } from '../../api/api'
 import { actionSetActiveCart } from '../../redux/reducers/ActiveCart'
@@ -16,8 +16,5 @@ export default function CartRetriever() {
       .catch(console.error)
   }
 
-  return (
-    <div>
-    </div>
-  )
+  return (<Fragment></Fragment>)
 }
