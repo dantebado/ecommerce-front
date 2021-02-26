@@ -1,12 +1,13 @@
 
 export interface ProgressStateTypes {
   active: boolean
-  message: string
+  message?: string
 }
 
 export const PROGRESS_INITIAL_STATE = {
   progress: {
-    active: false
+    active: false,
+    message: null
   }
 }
 
