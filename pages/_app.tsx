@@ -1,5 +1,3 @@
-import i18next from 'i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
 import TimeAgo from 'javascript-time-ago'
 import es from 'javascript-time-ago/locale/es'
 import { AppProps } from 'next/dist/next-server/lib/router/router'
@@ -17,8 +15,6 @@ function MyApp({ Component, pageProps }: AppProps)  {
     TimeAgo.addDefaultLocale(es)
   }
 
-  i18next.use(LanguageDetector).init()
-  
   const store = useStore(pageProps.initialReduxState)
   const persistor = persistStore(store, {}, function () {
     persistor.persist()
