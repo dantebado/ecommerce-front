@@ -7,6 +7,7 @@ import { Cart } from '../interface/misc.model'
 import GlobalReducer from './reducers'
 import { CounterTypes, COUNTER_INITIAL_STATE } from './reducers/Counter'
 import { LoggedUserTypes, LOGGED_USER_INITIAL_STATE } from './reducers/LoggedUser'
+import { ProgressStateTypes, PROGRESS_INITIAL_STATE } from './reducers/Progress'
 
 let store: Store
 
@@ -14,12 +15,14 @@ export interface StateTypes {
   counter: CounterTypes
   loggedUser: LoggedUserTypes
   activeCart: Cart
+  progress: ProgressStateTypes
 }
 
 export const APP_INITIAL_STATE: StateTypes = {
   ...COUNTER_INITIAL_STATE,
   ...LOGGED_USER_INITIAL_STATE,
-  activeCart: null
+  activeCart: null,
+  ...PROGRESS_INITIAL_STATE
 }
 
 const persistConfig = {

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { queryProducts } from '../../api/api'
+import { actionsHideProgress } from '../../redux/reducers/Progress'
 import ProductGridComponent from '../products/ProductGridComponent'
 
 export default function HomeProductsList() {

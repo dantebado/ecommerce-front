@@ -6,11 +6,13 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/lib/integration/react'
+import ProgressIndicator from '../components/progress/ProgressIndicator'
 import { useStore } from '../redux/Store'
 import '../styles/globals.scss'
+import { motion } from 'framer-motion';
 
 
-function MyApp({ Component, pageProps }: AppProps)  {
+function MyApp({ Component, pageProps, router }: AppProps)  {
   if (TimeAgo.getDefaultLocale() == 'en') {
     TimeAgo.addDefaultLocale(es)
   }
@@ -24,11 +26,22 @@ function MyApp({ Component, pageProps }: AppProps)  {
     <Provider store={store}>
       <PersistGate loading={<div>loading</div>} persistor={persistor}>
         <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="shortcut icon" href="/favicon.jpg" type="image/jpg"/>
           <title>ECommerce</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="shortcut icon" href="/assets/favicon.png" type="image/png"/>
         </Head>
-        <Component {...pageProps} />
+        <motion.div key={router.route} initial="pageInitial" animate="pageAnimate"
+          variants={{
+            pageInitial: {
+              opacity: 0
+            },
+            pageAnimate: {
+              opacity: 1
+            },
+          }}>
+          <Component {...pageProps} />
+          <ProgressIndicator/>
+        </motion.div>
       </PersistGate>
     </Provider>
   )
