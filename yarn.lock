@@ -1446,6 +1446,11 @@ native-url@0.3.4:
   dependencies:
     querystring "^0.2.0"
 
+next-translate@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/next-translate/-/next-translate-1.0.4.tgz#e44b6df4cefc89c24d4b97160d70c4ff9cc37bb5"
+  integrity sha512-+PY/iOQFsJuNm6ehC3Be/sCCwt4TBxlPOWV3JWmWYa2LOzUIL40qjsRbYuB67NY7Mp9QJz1cZt8pKdlVTVO2JA==
+
 next@10.0.7:
   version "10.0.7"
   resolved "https://registry.yarnpkg.com/next/-/next-10.0.7.tgz#442f8e1da7454de33b0bbcc1ce5684b923597ee6"
