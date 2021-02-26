@@ -22,7 +22,7 @@ export default function index() {
     <DefaultLayout>
       {
         activeCart ? (
-          <div className="container py-6 text-center">
+          <div className="container py-6 text-center px-2">
             <h1>Carrito</h1>
             <div className="my-6">
               <CartViewer cart={activeCart} />

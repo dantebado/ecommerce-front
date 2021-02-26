@@ -20,7 +20,7 @@ export default function PaymentView(props: {purchase: Purchase}) {
 
   return (
     <DefaultLayout>
-      <div className="container text-center py-8">
+      <div className="container text-center py-8 px-2">
         <h1 className="mb-6">Compra #{purchase.id}</h1>
 
         <p className="my-2">Compra Colaborativa: {purchase.clientsTarget > 1 ? 'Sí' : 'No'}</p>

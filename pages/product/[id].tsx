@@ -50,18 +50,18 @@ export default function ProductViewer(props: {product: Product}) {
         </div>
 
         <p className="mt-6"><b>Otras Fotografías</b></p>
-        <div className="my-3 sm:flex flex-row overflow-x-auto border-top border-bottom">
+        <div className="my-3 sm:flex flex-row overflow-x-auto border-top flex-wrap border-bottom">
           {
             product.photosURL.map((v, i, a) => (
               <Fragment key={i}>
-                <img className="w-1/4" src={v} />
+                <img className="w-1/2 sm:w-1/4" src={v} />
               </Fragment>
             ))
           }
         </div>
 
-        <div className="flex flex-row items-center sm:w-1/2 sm:mx-auto mt-6">
-          <div className="w-1/2">
+        <div className="sm:flex flex-row items-center sm:w-1/2 sm:mx-auto mt-6">
+          <div className="sm:w-1/2 px-4">
             <select className="w-full py-2 px-2" value={count} onChange={(e) => setCount(parseInt(e.target.value))}>
               {
                 countOptions.map((v, i, a) => (
@@ -70,8 +70,8 @@ export default function ProductViewer(props: {product: Product}) {
               }
             </select>
           </div>
-          <div className="w-1/2">
-            <button className="px-6 py-3"
+          <div className="sm:w-1/2 px-4 mt-4 sm:mt-0">
+            <button className="px-6 py-3 w-full"
               disabled={count == 0 || !activeCart}
               onClick={submitHandler}>
               {count === 0 ? 'Seleccioná la Cantidad' : 'Añadir al Carrito'}

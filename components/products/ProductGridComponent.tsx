@@ -6,12 +6,15 @@ export default function ProductGridComponent(props: {product: Product}) {
   const [product] = useState(props.product)
 
   return (
-    <div className="border p-5 text-center">
-      <p>{product.displayName}</p>
+    <div className="m-2 text-center">
+      <div className="shadow-2 p-3 border-radius-sm">
+        <img className="border-radius-sm" src={product.featuredPhotoURL} alt=""/>
 
-      <h5 className="mb-0 mt-3">$ {product.unitaryPrice} / {product.measureUnit}</h5>
+        <p className="text-left my-3">{product.displayName}</p>
+        <h4 className="text-left mb-0 my-3">$ {product.unitaryPrice} / {product.measureUnit}</h4>
 
-      <Link href={`/product/${product.id}`}><button className="w-full py-2 mt-4">Ver Más</button></Link>
+        <Link href={`/product/${product.id}`}><button className="w-full py-1 font-sm">Ver Más</button></Link>
+      </div>
     </div>
   )
 }

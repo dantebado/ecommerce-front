@@ -38,7 +38,7 @@ export default function PaymentView(props: {payment: Payment}) {
 
   return (
     <DefaultLayout>
-      <div className="container text-center">
+      <div className="container text-center px-2">
         <h1 className="my-5">Pagar</h1>
         {
           individualPurchase && !processedPayment ? (

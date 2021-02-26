@@ -3,8 +3,45 @@ import { Address, Cart, IndividualPurchase, Page, Payment, Product, ProductCateg
 export function queryProducts(page: number): Promise<Page<Product>> {
   return new Promise((resolve, reject) => {
     resolve({
-      count: 2,
+      count: 4,
       results: [
+        {
+          id: 88049,
+          displayName: 'Papas Negras',
+          description: 'Papas negras',
+          featuredPhotoURL: 'http://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
+          photosURL: ['http://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
+          unitaryPrice: 500,
+          measureUnit: 'kg',
+          tags: ['papas','verdura'],
+          category: {
+            id: 879,
+            name: 'Verdura'
+          },
+          currentStock: 100,
+        },
+        {
+          id: 88050,
+          displayName: 'Papas Blancas',
+          description: 'Papas blancas',
+          featuredPhotoURL: 'http://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
+          photosURL: ['http://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
+          unitaryPrice: 650,
+          measureUnit: 'kg',
+          tags: ['papas','verdura'],
+          category: {
+            id: 879,
+            name: 'Verdura'
+          },
+          currentStock: 206,
+          firstReview: {
+            id: 498,
+            authorName: 'Diego',
+            commentary: 'Hola este es mi comentario sobre la papa',
+            rating: 4,
+            date: (new Date()).toString()
+          }
+        },
         {
           id: 88049,
           displayName: 'Papas Negras',

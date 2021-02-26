@@ -4,6 +4,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionSignoutMagicLink } from '../../redux/reducers/LoggedUser'
 import { StateTypes } from '../../redux/Store'
+import styles from './styles.module.scss'
 
 export default function DefaultHeader() {
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser)
@@ -15,13 +16,23 @@ export default function DefaultHeader() {
   }
 
   return (
-    <header className="border-bottom py-3 text-center">
-      <Link href="/">
-        <a><h2 className="mb-3">HEADER | {t('i-test')} | {lang}</h2></a>
-      </Link>
+    <header className={`py-3 text-center flex flex-row items-center background-bg-g-1 justify-between ${styles.Header}`}>
+      <div className="w-1/3">
+
+      </div>
+      <div className="w-1/3">
+        <Link href="/">
+          <a><img src="/assets/logo.png" /></a>
+        </Link>
+      </div>
+      <div className="w-1/3">
       {
-        loggedUser.magicToken ? <button className="px-4 py-2" onClick={logoutHandler}>Cerrar Sesión</button> : <Link href="/login"><a className="display-block">Iniciar Sesión</a></Link>
+        loggedUser.magicToken ?
+          <button className="px-2 py-1" onClick={logoutHandler}>Cerrar Sesión</button>
+          :
+          <Link href="/login"><a className="display-block">Iniciar Sesión</a></Link>
       }
+      </div>
     </header>
   )
 }

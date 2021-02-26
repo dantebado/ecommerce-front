@@ -27,13 +27,13 @@ export default function HomeProductsList() {
   }, [])
 
   return (
-    <div className="m-3">
+    <div className="flex flex-row items-center flex-wrap justify-around p-2">
       {
         loading ? (
           <p>Cargando</p>
         ) : (
           products.results.map((v, i, a) => (
-            <div key={i} className="display-inline-block m-3">
+            <div key={i} className="w-1/2 sm:w-1/4">
               <ProductGridComponent product={v} />
             </div>
           ))

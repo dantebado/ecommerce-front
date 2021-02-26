@@ -32,7 +32,7 @@ const Login = (props) =>  {
 
   return (
     <DefaultLayout>
-      <div className="container text-center py-6">
+      <div className="container text-center p-6">
         <div className="sm:w-1/2 mx-auto">
         {
           loggedUser.magicToken ? (
@@ -43,6 +43,7 @@ const Login = (props) =>  {
           ) : (
             <Fragment>
               <h1 className="text-center mb-3">Iniciar Sesión</h1>
+              <p className="my-3">Ingresá ahora. Enviaremos un link a tu correo electrónico que te dará acceso a la app.</p>
       
               <input type="email" required={true} className="w-full mb-3 px-4 py-2"
                 value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />

@@ -74,7 +74,7 @@ export default function index() {
     <DefaultLayout>
       {
         activeCart ? (
-          <div className="container py-6 text-center">
+          <div className="container py-6 text-center px-2">
             <h1>Checkout</h1>
             <div className="my-6">
               <CartViewer cart={activeCart} />
@@ -99,7 +99,7 @@ export default function index() {
                   <h1>¿Qué tipo de compra querés?</h1>
                   
                   <div className="sm:flex flex-row items-center mt-6">
-                    <div className="sm:w-1/2 text-center">
+                    <div className="sm:w-1/2 text-center mb-6 sm:mb-0">
                       <button className="px-5 py-3" onClick={() => createPurchaseHandler(0)}>Quiero pagar $ {activeCart.productsPrice}</button>
                     </div>
                     <div className="sm:w-1/2 text-center">
