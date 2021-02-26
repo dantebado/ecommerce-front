@@ -1,4 +1,5 @@
-import { Address, Cart, IndividualPurchase, Page, Payment, Product, ProductCategory, ProductReview, Purchase, Shipment, User } from "../interface/misc.model";
+import axios from "axios";
+import { Address, AddressGeoCodingResponse, AddressGeoCodingResult, Cart, IndividualPurchase, Page, Payment, Product, ProductCategory, ProductReview, Purchase, Shipment, User } from "../interface/misc.model";
 
 export function queryProducts(page: number): Promise<Page<Product>> {
   return new Promise((resolve, reject) => {
@@ -336,7 +337,7 @@ export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Pur
       currentConfirmedClients: 0,
       clientsLeft: 2,
       clientsTargetReached: false,
-      shipmentAreaCenter: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'},
+      shipmentAreaCenter: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '',state:'CABA', city:'CABA'},
       shipmentAreaRadius: 5,
       cart: {
         id: 123,
@@ -391,7 +392,7 @@ export function createIndividualPurchaseFromPurchase(purchaseId: number|string, 
         currentConfirmedClients: 0,
         clientsLeft: 2,
         clientsTargetReached: false,
-        shipmentAreaCenter: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'},
+        shipmentAreaCenter: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
         shipmentAreaRadius: 5,
         cart: {
           id: 123,
@@ -429,7 +430,7 @@ export function createIndividualPurchaseFromPurchase(purchaseId: number|string, 
       shipment: {
         id: 4987,
         status: 'awaiting-payment',
-        shipmentAddress: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'},
+        shipmentAddress: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
         individualPurchaseId: 88979700
       },
       payment: {
@@ -458,7 +459,7 @@ export function retrieveIndividualPurchase(individualPurchaseId: number | string
         currentConfirmedClients: 0,
         clientsLeft: 2,
         clientsTargetReached: false,
-        shipmentAreaCenter: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'},
+        shipmentAreaCenter: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
         shipmentAreaRadius: 5,
         cart: {
           id: 123,
@@ -496,7 +497,7 @@ export function retrieveIndividualPurchase(individualPurchaseId: number | string
       shipment: {
         id: 4987,
         status: 'awaiting-payment',
-        shipmentAddress: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'},
+        shipmentAddress: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
         individualPurchaseId: individualPurchaseId
       },
       payment: {
@@ -533,7 +534,7 @@ export function retrieveShipment(shipmentId: string | number): Promise<Shipment>
     resolve({
       id: shipmentId,
       status: 'awaiting-payment',
-      shipmentAddress: {country:'Argentina', address:'Cuenca 2469', state:'CABA', city:'CABA'},
+      shipmentAddress: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
       individualPurchaseId: 65798
     })
   })
@@ -554,5 +555,31 @@ export function createUser(email: string): Promise<User> {
       id: 9879,
       email: email
     })
+  })
+}
+
+
+
+
+
+
+const addressToGeocodeQuery = (address: Address) => {
+  return address.addressLine +
+    (address.city ? `, ${address.city}` : '') +
+    (address.state ? `, ${address.state}` : '') +
+    (address.country ? `, ${address.country}` : '')
+}
+
+export const geocodeAddress = async (address: Address, apiKey: string): Promise<AddressGeoCodingResult> => {
+  if (!address.addressLine)
+    return
+
+  let query = addressToGeocodeQuery(address)
+
+  let results = await axios.get<AddressGeoCodingResponse>(`http://api.positionstack.com/v1/forward?access_key=${apiKey}&query=${query}`)
+  return new Promise((resolve, reject) => {
+    if (results.data.data.length !== 1)
+      reject({ resultCount: results.data.data.length })
+    resolve(results.data.data[0])
   })
 }

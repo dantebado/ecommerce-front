@@ -1,31 +1,45 @@
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { createIndividualPurchaseFromPurchase } from '../../api/api'
-import { Purchase } from '../../interface/misc.model'
+import { createIndividualPurchaseFromPurchase, geocodeAddress } from '../../api/api'
+import { addressToReadableString, Purchase } from '../../interface/misc.model'
 import AddressForm from '../forms/AddressForm'
 
 export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
+  const CoordinatesMap = dynamic(
+    () => import('../../components/maps/CoordinatesMap'),
+    { 
+      loading: () => <p>A map is loading</p>,
+      ssr: false
+    }
+  )
+  
   const purchase = props.purchase
 
   const router = useRouter()
   const [shipmentAddress, setShipmentAddress] = useState({
     country: 'Argentina',
-    address: '',
+    addressLine: '',
+    floorApt: '',
     state: '',
     city: '',
     postalCode: '',
-    commentary: ''
+    commentary: '',
+    geocoding: null
   })
 
   const [validatedShipmentArea, setValidatedShipmentArea] = useState(false)
 
-  useEffect(() => {
-    setValidatedShipmentArea(false)
-  }, [shipmentAddress])
-
   const validateAddressHandler = () => {
-    // TODO validate proximity
-    setValidatedShipmentArea(true)
+    setValidatedShipmentArea(false)
+    geocodeAddress(shipmentAddress, apiKey)
+      .then(geo => {
+        setValidatedShipmentArea(true)
+        setShipmentAddress({
+          ...shipmentAddress,
+          geocoding: geo
+        })
+      })
   }
 
   const createIndividualPurchaseHandler = () => {
@@ -35,6 +49,8 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
       })
       .catch(console.error)
   }
+  
+  const apiKey = process.env.NEXT_PUBLIC_POSITION_STACK_KEY
 
   return (
     <div>
@@ -45,9 +61,14 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
           <AddressForm value={shipmentAddress} onChange={setShipmentAddress} />
 
           {
-            validatedShipmentArea ? (
+            validatedShipmentArea && shipmentAddress.geocoding ? (
               <div className="mt-3">
                 <h3>¡Estás en el área de entrega!</h3>
+
+                <div className="my-3" style={{height: '20rem'}}>
+                  <CoordinatesMap geocode={shipmentAddress.geocoding} popupText={addressToReadableString(shipmentAddress)} />
+                </div>
+
                 <p className="mt-3">Finalizá tu compra ahora.</p>
 
                 <button className="px-4 py-2 mt-3 text-uppercase"

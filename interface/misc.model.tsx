@@ -1,14 +1,40 @@
 export interface Address {
   country: string
-  address: string
+  addressLine: string
+  floorApt: string
   state: string
   city: string
   postalCode?: string
   commentary?: string
+
+  geocoding?: AddressGeoCodingResult
+}
+
+export interface AddressGeoCodingResponse {
+  data: AddressGeoCodingResult[]
+}
+
+export interface AddressGeoCodingResult {
+  latitude: number,
+  longitude: number,
+  label: string,
+  name: string,
+  type: string,
+  number: string,
+  street: string,
+  postal_code: string,
+  confidence: number,
+  region: string,
+  region_code: string,
+  administrative_area: string,
+  neighbourhood: string,
+  country: string,
+  country_code: string,
+  map_url: string
 }
 
 export function addressToReadableString(address: Address) {
-  return `${address.address}, CP ${address.postalCode}, ${address.city}, ${address.state}, ${address.country}`
+  return `${address.addressLine}, ${address.floorApt}, CP ${address.postalCode}, ${address.city}, ${address.state}, ${address.country}`
 }
 
 export interface Client {

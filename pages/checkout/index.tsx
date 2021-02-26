@@ -1,8 +1,8 @@
-import { spawn, SpawnOptions } from 'child_process'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createCart, createIndividualPurchaseFromPurchase, createPurchase } from '../../api/api'
+import { createCart, createIndividualPurchaseFromPurchase, createPurchase, geocodeAddress } from '../../api/api'
 import CartViewer from '../../components/cart/CartViewer'
 import AddressForm from '../../components/forms/AddressForm'
 import DefaultLayout from '../../components/layouts/DefaultLayout'
@@ -11,19 +11,30 @@ import { actionSetActiveCart } from '../../redux/reducers/ActiveCart'
 import { StateTypes } from '../../redux/Store'
 
 export default function index() {
+  const CoordinatesMap = dynamic(
+    () => import('../../components/maps/CoordinatesMap'),
+    { 
+      loading: () => <p>A map is loading</p>,
+      ssr: false
+    }
+  )
+
   const activeCart = useSelector((state: StateTypes) => state.activeCart)
   const [addressConfirmed, setAddressConfirmed] = useState(false)
   const [shipmentAddress, setShipmentAddress] = useState({
     country: 'Argentina',
-    address: '',
+    addressLine: '',
+    floorApt: '',
     state: '',
     city: '',
     postalCode: '',
-    commentary: ''
+    commentary: '',
+    geocoding: null
   })
   const router = useRouter()
   const dispatch = useDispatch()
-  let shipmentAddressReadable: string = ''
+  
+  const apiKey = process.env.NEXT_PUBLIC_POSITION_STACK_KEY
 
   if (!activeCart) {
     console.error("no cart retrieved from state")
@@ -45,8 +56,6 @@ export default function index() {
     },
   ]
 
-  shipmentAddressReadable = addressToReadableString(shipmentAddress)
-  
   const createPurchaseHandler = (people: number) => {
     let finalPeople = people + 1
     createPurchase(activeCart.id, shipmentAddress, finalPeople)
@@ -70,6 +79,17 @@ export default function index() {
       .catch(console.error)
   }
 
+  const geocodeHandler = () => {
+    geocodeAddress(shipmentAddress, apiKey)
+      .then(geo => {
+        setShipmentAddress({
+          ...shipmentAddress,
+          geocoding: geo
+        })
+      })
+      .catch(console.error)
+  }
+
   return (
     <DefaultLayout>
       {
@@ -86,12 +106,25 @@ export default function index() {
               <AddressForm value={shipmentAddress} onChange={setShipmentAddress}></AddressForm>
             </div>
 
-            <p>Leímos tu dirección como {shipmentAddressReadable}</p>
-            <div className="text-center mt-3">
-              <button className="px-4 py-2"
-                disabled={!shipmentAddress.address}
-                onClick={(e) => setAddressConfirmed(true)}>Mi Dirección es Correcta</button>
-            </div>
+            {
+              shipmentAddress.geocoding ? (
+                <div>
+                  <h3>Esta es la dirección que encontramos</h3>
+
+                  <div className="my-3" style={{height: '20rem'}}>
+                    <CoordinatesMap geocode={shipmentAddress.geocoding} popupText={addressToReadableString(shipmentAddress)} />
+                  </div>
+
+                  <div className="text-center mt-3">
+                    <button className="px-4 py-2"
+                      disabled={!shipmentAddress.addressLine}
+                      onClick={(e) => setAddressConfirmed(true)}>Mi Dirección es Correcta</button>
+                  </div>
+                </div>
+              ) : (
+                <button className="display-block mt-2 mx-auto px-5 py-2" onClick={geocodeHandler}>Validar Dirección</button>
+              )
+            }
 
             {
               addressConfirmed ? (
