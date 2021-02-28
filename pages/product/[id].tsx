@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addProductToCart, retrieveProduct } from '../../api/api'
 import CartRetriever from '../../components/cart/CartRetriever'
 import DefaultLayout from '../../components/layouts/DefaultLayout'
+import CurrencyDisplay from '../../components/utils/CurrencyDisplay'
 import { Product } from '../../interface/misc.model'
 import { actionSetActiveCart } from '../../redux/reducers/ActiveCart'
 import { StateTypes } from '../../redux/Store'
@@ -42,7 +43,7 @@ export default function ProductViewer(props: {product: Product}) {
         <h2 className="mb-3">Viendo {product.displayName}</h2>
         <p>{product.description}</p>
 
-        <h1 className="my-3">$ {product.unitaryPrice} / {product.measureUnit}</h1>
+        <h1 className="my-3"><CurrencyDisplay amount={product.unitaryPrice} /> / {product.measureUnit}</h1>
 
         <p className="mt-6"><b>Fotografía Destacada</b></p>
         <div className="sm:w-1/2 mx-auto mt-3 mb-6">

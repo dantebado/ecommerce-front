@@ -17,7 +17,7 @@ export function queryProducts(page: number): Promise<Page<Product>> {
           tags: ['papas','verdura'],
           category: {
             id: 879,
-            name: 'Verdura'
+            description: 'Verdura'
           },
           currentStock: 100,
         },
@@ -32,10 +32,10 @@ export function queryProducts(page: number): Promise<Page<Product>> {
           tags: ['papas','verdura'],
           category: {
             id: 879,
-            name: 'Verdura'
+            description: 'Verdura'
           },
           currentStock: 206,
-          firstReview: {
+          lastReview: {
             id: 498,
             authorName: 'Diego',
             commentary: 'Hola este es mi comentario sobre la papa',
@@ -54,7 +54,7 @@ export function queryProducts(page: number): Promise<Page<Product>> {
           tags: ['papas','verdura'],
           category: {
             id: 879,
-            name: 'Verdura'
+            description: 'Verdura'
           },
           currentStock: 100,
         },
@@ -69,10 +69,10 @@ export function queryProducts(page: number): Promise<Page<Product>> {
           tags: ['papas','verdura'],
           category: {
             id: 879,
-            name: 'Verdura'
+            description: 'Verdura'
           },
           currentStock: 206,
-          firstReview: {
+          lastReview: {
             id: 498,
             authorName: 'Diego',
             commentary: 'Hola este es mi comentario sobre la papa',
@@ -99,7 +99,7 @@ export function retrieveProduct(productId: number | string): Promise<Product> {
         tags: ['papas','verdura'],
         category: {
           id: 879,
-          name: 'Verdura'
+          description: 'Verdura'
         },
         currentStock: 206
     })
@@ -111,11 +111,11 @@ export function retrieveCategories(): Promise<ProductCategory[]> {
     resolve([
       {
         id: 879,
-        name: 'Verdura'
+        description: 'Verdura'
       },
       {
         id: 564,
-        name: 'Fruta'
+        description: 'Fruta'
       },
     ])
   })
@@ -125,7 +125,7 @@ export function retrieveCategory(categoryId: string | number): Promise<ProductCa
   return new Promise((resolve, reject) => {
     resolve({
       id: categoryId,
-      name: 'Fruta'
+      description: 'Fruta'
     })
   })
 }
@@ -170,10 +170,9 @@ export function createCart(): Promise<Cart> {
     resolve({
       id: 9879,
       creationDate: (new Date()).toString(),
-      lastUpdateDate: (new Date()).toString(),
       products: [],
-      productsPrice: 0,
-      locked: false
+      total: 0,
+      isLocked: false
     })
   })
 }
@@ -183,30 +182,15 @@ export function retrieveCart(cartId: number | string): Promise<Cart> {
     resolve({
       id: cartId,
       creationDate: (new Date()).toString(),
-      lastUpdateDate: (new Date()).toString(),
       products: [
         {
           id: 987,
-          product: {
-            id: 4498,
-            displayName: 'Papas Blancas',
-            description: 'Papas blancas',
-            featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-            photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-            unitaryPrice: 650,
-            measureUnit: 'kg',
-            tags: ['papas','verdura'],
-            category: {
-              id: 879,
-              name: 'Verdura'
-            },
-            currentStock: 206,
-          },
+          product: 4498,
           count: 2
         }
       ],
-      productsPrice: 1300,
-      locked: false
+      total: 1300,
+      isLocked: false
     })
   })
 }
@@ -216,30 +200,15 @@ export function addProductToCart(cartId: number | string, products : {productId:
     resolve({
       id: cartId,
       creationDate: (new Date()).toString(),
-      lastUpdateDate: (new Date()).toString(),
       products: [
         {
           id: 987,
-          product: {
-            id: 4498,
-            displayName: 'Papas Blancas',
-            description: 'Papas blancas',
-            featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-            photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-            unitaryPrice: 650,
-            measureUnit: 'kg',
-            tags: ['papas','verdura'],
-            category: {
-              id: 879,
-              name: 'Verdura'
-            },
-            currentStock: 206,
-          },
+          product: 4498,
           count: 2
         }
       ],
-      productsPrice: 1300,
-      locked: false
+      total: 1300,
+      isLocked: false
     })
   })
 }
@@ -249,30 +218,15 @@ export function modifyProductInCart(cartId: number | string, productId: number |
     resolve({
       id: cartId,
       creationDate: (new Date()).toString(),
-      lastUpdateDate: (new Date()).toString(),
       products: [
         {
           id: 987,
-          product: {
-            id: 4498,
-            displayName: 'Papas Blancas',
-            description: 'Papas blancas',
-            featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-            photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-            unitaryPrice: 650,
-            measureUnit: 'kg',
-            tags: ['papas','verdura'],
-            category: {
-              id: 879,
-              name: 'Verdura'
-            },
-            currentStock: 206,
-          },
+          product: 4498,
           count: 1
         }
       ],
-      productsPrice: 1300,
-      locked: false
+      total: 1300,
+      isLocked: false
     })
   })
 }
@@ -293,35 +247,19 @@ export function createPurchase(cartId: number | string, shipmentAreaCenter:Addre
       cart: {
         id: cartId,
         creationDate: (new Date()).toString(),
-        lastUpdateDate: (new Date()).toString(),
         products: [
           {
             id: 987,
-            product: {
-              id: 4498,
-              displayName: 'Papas Blancas',
-              description: 'Papas blancas',
-              featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-              photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-              unitaryPrice: 650,
-              measureUnit: 'kg',
-              tags: ['papas','verdura'],
-              category: {
-                id: 879,
-                name: 'Verdura'
-              },
-              currentStock: 206,
-            },
+            product: 4498,
             count: 1
           }
         ],
-        productsPrice: 1300,
-        locked: false
+        total: 1300,
+        isLocked: false
       },
       cartPrice: 1300,
       discountAmount: 0,
       amountToPay: 1300,
-      shareCode: 'code',
     })
   })
 }
@@ -342,35 +280,19 @@ export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Pur
       cart: {
         id: 123,
         creationDate: (new Date()).toString(),
-        lastUpdateDate: (new Date()).toString(),
         products: [
           {
             id: 987,
-            product: {
-              id: 4498,
-              displayName: 'Papas Blancas',
-              description: 'Papas blancas',
-              featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-              photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-              unitaryPrice: 650,
-              measureUnit: 'kg',
-              tags: ['papas','verdura'],
-              category: {
-                id: 879,
-                name: 'Verdura'
-              },
-              currentStock: 206,
-            },
+            product: 4498,
             count: 1
           }
         ],
-        productsPrice: 1300,
-        locked: false
+        total: 1300,
+        isLocked: false
       },
       cartPrice: 1300,
       discountAmount: 0,
       amountToPay: 1300,
-      shareCode: 'code',
     })
   })
 }
@@ -397,45 +319,29 @@ export function createIndividualPurchaseFromPurchase(purchaseId: number|string, 
         cart: {
           id: 123,
           creationDate: (new Date()).toString(),
-          lastUpdateDate: (new Date()).toString(),
           products: [
             {
               id: 987,
-              product: {
-                id: 4498,
-                displayName: 'Papas Blancas',
-                description: 'Papas blancas',
-                featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-                photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-                unitaryPrice: 650,
-                measureUnit: 'kg',
-                tags: ['papas','verdura'],
-                category: {
-                  id: 879,
-                  name: 'Verdura'
-                },
-                currentStock: 206,
-              },
+              product: 4498,
               count: 1
             }
           ],
-          productsPrice: 1300,
-          locked: false
+          total: 1300,
+          isLocked: false
         },
         cartPrice: 1300,
         discountAmount: 0,
         amountToPay: 1300,
-        shareCode: 'code',
       },
       shipment: {
         id: 4987,
         status: 'awaiting-payment',
         shipmentAddress: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
-        individualPurchaseId: 88979700
+        individualPurchase: 88979700
       },
       payment: {
         id: 58588,
-        individualPurchaseId: 9848,
+        individualPurchase: 9848,
         status: 'pending'
       }
     })
@@ -464,45 +370,29 @@ export function retrieveIndividualPurchase(individualPurchaseId: number | string
         cart: {
           id: 123,
           creationDate: (new Date()).toString(),
-          lastUpdateDate: (new Date()).toString(),
           products: [
             {
               id: 987,
-              product: {
-                id: 4498,
-                displayName: 'Papas Blancas',
-                description: 'Papas blancas',
-                featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-                photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-                unitaryPrice: 650,
-                measureUnit: 'kg',
-                tags: ['papas','verdura'],
-                category: {
-                  id: 879,
-                  name: 'Verdura'
-                },
-                currentStock: 206,
-              },
+              product: 4498,
               count: 1
             }
           ],
-          productsPrice: 1300,
-          locked: false
+          total: 1300,
+          isLocked: false
         },
         cartPrice: 1300,
         discountAmount: 0,
         amountToPay: 1300,
-        shareCode: 'code',
       },
       shipment: {
         id: 4987,
         status: 'awaiting-payment',
         shipmentAddress: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
-        individualPurchaseId: individualPurchaseId
+        individualPurchase: individualPurchaseId
       },
       payment: {
         id: 58588,
-        individualPurchaseId: individualPurchaseId,
+        individualPurchase: individualPurchaseId,
         status: 'pending'
       }
     })
@@ -513,7 +403,7 @@ export function retrievePayment(paymentId: string | number): Promise<Payment> {
   return new Promise((resolve, reject) => {
     resolve({
       id: paymentId,
-      individualPurchaseId: 9848,
+      individualPurchase: 9848,
       status: 'pending'
     })
   })
@@ -523,7 +413,7 @@ export function processPayment(paymentId: string | number, payload?: any): Promi
   return new Promise((resolve, reject) => {
     resolve({
       id: paymentId,
-      individualPurchaseId: 9848,
+      individualPurchase: 9848,
       status: 'reserved'
     })
   })
@@ -535,7 +425,7 @@ export function retrieveShipment(shipmentId: string | number): Promise<Shipment>
       id: shipmentId,
       status: 'awaiting-payment',
       shipmentAddress: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
-      individualPurchaseId: 65798
+      individualPurchase: 65798
     })
   })
 }

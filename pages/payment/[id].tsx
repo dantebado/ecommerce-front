@@ -2,10 +2,11 @@ import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
-import { processPayment, retrieveIndividualPurchase, retrievePayment, retrievePurchase } from '../../api/api'
+import { retrieveIndividualPurchase, retrievePayment } from '../../api/api'
 import CartViewer from '../../components/cart/CartViewer'
 import PaymentForm from '../../components/forms/PaymentForm'
 import DefaultLayout from '../../components/layouts/DefaultLayout'
+import CurrencyDisplay from '../../components/utils/CurrencyDisplay'
 import { addressToReadableString, IndividualPurchase, Payment } from '../../interface/misc.model'
 
 export default function PaymentView(props: {payment: Payment}) {
@@ -20,7 +21,7 @@ export default function PaymentView(props: {payment: Payment}) {
   let shipmentAddressString = iPurchase ? addressToReadableString(individualPurchase.shipment.shipmentAddress) : 'Cargando'
 
   useEffect(() => {
-    retrieveIndividualPurchase(payment.individualPurchaseId)
+    retrieveIndividualPurchase(payment.individualPurchase)
       .then(individualPurchase => {
         if (individualPurchase.payment.status !== 'pending') {
           console.error("payment is not pending")
@@ -57,16 +58,16 @@ export default function PaymentView(props: {payment: Payment}) {
                 <h1 className="my-4">Pagar Ahora</h1>
 
                 <h5 className="my-3">Productos</h5>
-                <h4>$ {iPurchase.purchase.cartPrice}</h4>
+                <h4><CurrencyDisplay amount={iPurchase.purchase.cartPrice} /></h4>
                 
                 <h5 className="my-3">Envío</h5>
                 <h4>$ 0.00</h4>
 
                 <h5 className="my-3">Ahorro por Colaborativa</h5>
-                <h4>- $ {iPurchase.purchase.discountAmount}</h4>
+                <h4>- <CurrencyDisplay amount={iPurchase.purchase.discountAmount} /></h4>
 
                 <h5 className="my-3 pt-3 border-top sm:w-1/2 sm:mx-auto">TOTAL</h5>
-                <h4>$ {iPurchase.purchase.amountToPay}</h4>
+                <h4><CurrencyDisplay amount={iPurchase.purchase.amountToPay} /></h4>
 
                 <button
                   className="display-block px-4 py-3 text-uppercase mx-auto my-6"

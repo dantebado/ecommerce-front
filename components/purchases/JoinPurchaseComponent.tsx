@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { createIndividualPurchaseFromPurchase, geocodeAddress } from '../../api/api'
 import { addressToReadableString, Purchase } from '../../interface/misc.model'
 import AddressForm from '../forms/AddressForm'
+import CurrencyDisplay from '../utils/CurrencyDisplay'
 
 export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
   const CoordinatesMap = dynamic(
@@ -71,10 +72,10 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
 
                 <button className="px-4 py-2 mt-3 text-uppercase"
                   onClick={createIndividualPurchaseHandler}>
-                  Pagar Ahora $ {purchase.amountToPay}
+                  Pagar Ahora <CurrencyDisplay amount={purchase.amountToPay} />
                 </button>
 
-                <p className="mt-3">Te ahorrás $ {purchase.discountAmount}</p>
+                <p className="mt-3">Te ahorrás <CurrencyDisplay amount={purchase.discountAmount} /></p>
               </div>
             ) : (
               <div className="mt-3">

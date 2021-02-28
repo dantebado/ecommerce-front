@@ -16,7 +16,7 @@ export default function ShipmentView(props: {shipment: Shipment}) {
         <p className="my-3">Estado de Envío <b>{shipment.status}</b></p>
         <p className="my-3">Dirección de Entrega: {shipmentAddressString}</p>
 
-        <h4 className="mt-6">IP#{shipment.individualPurchaseId}</h4>
+        <h4 className="mt-6">IP#{shipment.individualPurchase}</h4>
       </div>
     </DefaultLayout>
   )

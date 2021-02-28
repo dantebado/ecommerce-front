@@ -6,6 +6,7 @@ import { createCart, createIndividualPurchaseFromPurchase, createPurchase, geoco
 import CartViewer from '../../components/cart/CartViewer'
 import AddressForm from '../../components/forms/AddressForm'
 import DefaultLayout from '../../components/layouts/DefaultLayout'
+import CurrencyDisplay from '../../components/utils/CurrencyDisplay'
 import { addressToReadableString, Purchase } from '../../interface/misc.model'
 import { actionSetActiveCart } from '../../redux/reducers/ActiveCart'
 import { StateTypes } from '../../redux/Store'
@@ -131,7 +132,7 @@ export default function index() {
                   
                   <div className="sm:flex flex-row items-center mt-6">
                     <div className="sm:w-1/2 text-center mb-6 sm:mb-0">
-                      <button className="px-5 py-3" onClick={() => createPurchaseHandler(0)}>Quiero pagar $ {activeCart.productsPrice}</button>
+                      <button className="px-5 py-3" onClick={() => createPurchaseHandler(0)}>Quiero pagar <CurrencyDisplay amount={activeCart.total} /></button>
                     </div>
                     <div className="sm:w-1/2 text-center">
                       {

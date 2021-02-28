@@ -44,7 +44,7 @@ export interface Client {
 
 export interface ProductCategory {
   id: string | number
-  name: string
+  description: string
 }
 
 export interface Product {
@@ -58,7 +58,7 @@ export interface Product {
   tags: string[]
   category: ProductCategory
   currentStock: number
-  firstReview?: ProductReview
+  lastReview?: ProductReview
 }
 
 export interface ProductReview {
@@ -71,17 +71,17 @@ export interface ProductReview {
 
 export interface ProductInCart {
   id: string | number
-  product: Product
+  product: number | string
   count: number
 }
 
 export interface Cart {
   id: string | number
   creationDate: Date | string
-  lastUpdateDate: Date | string
+  //lastUpdateDate: Date | string
   products: ProductInCart[]
-  productsPrice: number
-  locked: boolean
+  total: number
+  isLocked: boolean
 }
 
 export type PurchaseStatus = "awaiting-peers" | "pending-initial-payment" | "completed" | "cancelled" | "expired"
@@ -97,26 +97,25 @@ export interface Purchase {
   clientsTargetReached: boolean
   shipmentAreaCenter: Address
   shipmentAreaRadius: number // harcodearlo en el back al crear [kms]
-  cart: Cart
+  cart: Cart  // enviar todo el cart, no el ID
   cartPrice: number
-  discountAmount: number
-  amountToPay: number
-  shareCode: string
+  discountAmount: number  // > 0
+  amountToPay: number // cartPrice - discountAmount
 }
 
 export interface IndividualPurchase {
   id: string | number
-  client: Client
-  purchase: Purchase
-  shipment: Shipment
-  payment: Payment
+  client: Client  // enviar el objeto
+  purchase: Purchase  // enviar el objeto
+  shipment: Shipment  // enviar el objeto
+  payment: Payment  // enviar el objeto
 }
 
 export type PaymentStatus = "pending" | "failed" | "reserved" | "captured"
 
 export interface Payment {
   id: string | number
-  individualPurchaseId: string | number
+  individualPurchase: string | number
   status: PaymentStatus
 }
 
@@ -126,7 +125,7 @@ export interface Shipment {
   id: string | number
   status: ShipmentStatus
   shipmentAddress: Address
-  individualPurchaseId: string | number
+  individualPurchase: string | number
 }
 
 export interface Page<T> {
