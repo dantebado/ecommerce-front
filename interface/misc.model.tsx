@@ -35,7 +35,7 @@ export interface AddressGeoCodingResult {
 }
 
 export function addressToReadableString(address: Address) {
-  return `${address.address_line}, ${address.floor_apt}, CP ${address.postal_code}, ${address.city}, ${address.state}, ${address.country}`
+  return `${address.address_line}, ${address.floor_apt || '---'}, CP ${address.postal_code || '---'}, ${address.city || '---'}, ${address.state || '---'}, ${address.country || '---'}`
 }
 
 export interface Client {
