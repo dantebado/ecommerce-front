@@ -8,11 +8,7 @@ export interface Wrapper<T> {
 }
 
 export function queryProducts(page: number): Promise<Wrapper<Page<Product>>> {
-  return axios.get(API_ROOT + `/products?page=${page}`, {
-    headers: {
-      'origin' : "localhost"
-    }
-  })
+  return axios.get(API_ROOT + `/products?page=${page}`)
 }
 
 export function retrieveProduct(productId: number | string): Promise<Wrapper<Product>> {

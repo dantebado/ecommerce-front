@@ -24,11 +24,11 @@ export default function index() {
   const [addressConfirmed, setAddressConfirmed] = useState(false)
   const [shipmentAddress, setShipmentAddress] = useState({
     country: 'Argentina',
-    addressLine: '',
-    floorApt: '',
+    address_line: '',
+    floor_apt: '',
     state: '',
     city: '',
-    postalCode: '',
+    postal_code: '',
     commentary: '',
     geocoding: null
   })
@@ -116,7 +116,7 @@ export default function index() {
 
                   <div className="text-center mt-3">
                     <button className="px-4 py-2"
-                      disabled={!shipmentAddress.addressLine}
+                      disabled={!shipmentAddress.address_line}
                       onClick={(e) => setAddressConfirmed(true)}>Mi Dirección es Correcta</button>
                   </div>
                 </div>
