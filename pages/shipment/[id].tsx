@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 
   return {
     props: {
-      shipment: shipment
+      shipment: shipment.data
     }
   }
 }

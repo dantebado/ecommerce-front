@@ -23,11 +23,11 @@ export default function PaymentView(props: {payment: Payment}) {
   useEffect(() => {
     retrieveIndividualPurchase(payment.individualPurchase)
       .then(individualPurchase => {
-        if (individualPurchase.payment.status !== 'pending') {
+        if (individualPurchase.data.payment.status !== 'pending') {
           console.error("payment is not pending")
           router.push("/")
         } else {
-          setIndividualPurchase(individualPurchase)
+          setIndividualPurchase(individualPurchase.data)
         }
       })
       .catch(console.error)
@@ -112,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 
   return {
     props: {
-      payment: payment
+      payment: payment.data
     }
   }
 }

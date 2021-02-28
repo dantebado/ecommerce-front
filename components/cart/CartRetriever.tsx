@@ -11,7 +11,7 @@ export default function CartRetriever() {
   if (!activeCart) {
     createCart()
       .then(cart => {
-        dispatch(actionSetActiveCart(cart))
+        dispatch(actionSetActiveCart(cart.data))
       })
       .catch(console.error)
   }

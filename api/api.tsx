@@ -1,9 +1,13 @@
 import axios from "axios";
 import { Address, AddressGeoCodingResponse, AddressGeoCodingResult, Cart, IndividualPurchase, Page, Payment, Product, ProductCategory, ProductReview, Purchase, Shipment, User } from "../interface/misc.model";
 
-export function queryProducts(page: number): Promise<Page<Product>> {
+export interface Wrapper<T> {
+  data: T
+}
+
+export function queryProducts(page: number): Promise<Wrapper<Page<Product>>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       count: 4,
       results: [
         {
@@ -81,14 +85,14 @@ export function queryProducts(page: number): Promise<Page<Product>> {
           }
         },
       ]
-    })
+    }})
   })
 }
 
-export function retrieveProduct(productId: number | string): Promise<Product> {
+export function retrieveProduct(productId: number | string): Promise<Wrapper<Product>> {
   return new Promise((resolve, reject) => {
     resolve(
-      {
+      {data:{
         id: productId,
         displayName: 'Papas Blancas',
         description: 'Papas blancas',
@@ -102,13 +106,13 @@ export function retrieveProduct(productId: number | string): Promise<Product> {
           description: 'Verdura'
         },
         currentStock: 206
-    })
+    }})
   })
 }
 
-export function retrieveCategories(): Promise<ProductCategory[]> {
+export function retrieveCategories(): Promise<Wrapper<ProductCategory[]>> {
   return new Promise((resolve, reject) => {
-    resolve([
+    resolve({data:[
       {
         id: 879,
         description: 'Verdura'
@@ -117,22 +121,22 @@ export function retrieveCategories(): Promise<ProductCategory[]> {
         id: 564,
         description: 'Fruta'
       },
-    ])
+    ]})
   })
 }
 
-export function retrieveCategory(categoryId: string | number): Promise<ProductCategory> {
+export function retrieveCategory(categoryId: string | number): Promise<Wrapper<ProductCategory>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: categoryId,
       description: 'Fruta'
-    })
+    }})
   })
 }
 
-export function retrieveProductReviews(productId: number | string): Promise<Page<ProductReview>> {
+export function retrieveProductReviews(productId: number | string): Promise<Wrapper<Page<ProductReview>>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       count: 4,
       results: [{
         id: 498,
@@ -155,31 +159,31 @@ export function retrieveProductReviews(productId: number | string): Promise<Page
         rating: 4,
         date: (new Date()).toString()
       },
-    ]})
+    ]}})
   })
 }
 
-export function createProductReview(productId: number | string, payload: ProductReview): Promise<ProductReview> {
+export function createProductReview(productId: number | string, payload: ProductReview): Promise<Wrapper<ProductReview>> {
   return new Promise((resolve, reject) => {
-    resolve({...payload, id: 588})
+    resolve({data:{...payload, id: 588}})
   })
 }
 
-export function createCart(): Promise<Cart> {
+export function createCart(): Promise<Wrapper<Cart>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: 9879,
       creationDate: (new Date()).toString(),
       products: [],
       total: 0,
       isLocked: false
-    })
+    }})
   })
 }
 
-export function retrieveCart(cartId: number | string): Promise<Cart> {
+export function retrieveCart(cartId: number | string): Promise<Wrapper<Cart>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: cartId,
       creationDate: (new Date()).toString(),
       products: [
@@ -191,13 +195,13 @@ export function retrieveCart(cartId: number | string): Promise<Cart> {
       ],
       total: 1300,
       isLocked: false
-    })
+    }})
   })
 }
 
-export function addProductToCart(cartId: number | string, products : {productId:number | string, count:number}[]): Promise<Cart> {
+export function addProductToCart(cartId: number | string, products : {productId:number | string, count:number}[]): Promise<Wrapper<Cart>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: cartId,
       creationDate: (new Date()).toString(),
       products: [
@@ -209,13 +213,13 @@ export function addProductToCart(cartId: number | string, products : {productId:
       ],
       total: 1300,
       isLocked: false
-    })
+    }})
   })
 }
 
-export function modifyProductInCart(cartId: number | string, productId: number | string, count: number): Promise<Cart> {
+export function modifyProductInCart(cartId: number | string, productId: number | string, count: number): Promise<Wrapper<Cart>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: cartId,
       creationDate: (new Date()).toString(),
       products: [
@@ -227,13 +231,13 @@ export function modifyProductInCart(cartId: number | string, productId: number |
       ],
       total: 1300,
       isLocked: false
-    })
+    }})
   })
 }
 
-export function createPurchase(cartId: number | string, shipmentAreaCenter:Address, clientsTargetNumber:number): Promise<Purchase> {
+export function createPurchase(cartId: number | string, shipmentAreaCenter:Address, clientsTargetNumber:number): Promise<Wrapper<Purchase>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: 9848,
       creationDate: (new Date()).toString(),
       expirationDate: (new Date('2021-03-01')).toString(),
@@ -260,13 +264,13 @@ export function createPurchase(cartId: number | string, shipmentAreaCenter:Addre
       cartPrice: 1300,
       discountAmount: 0,
       amountToPay: 1300,
-    })
+    }})
   })
 }
 
-export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Purchase> {
+export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Wrapper<Purchase>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: 9848,
       creationDate: (new Date()).toString(),
       expirationDate: (new Date('2021-02-27T23:59')).toString(),
@@ -293,13 +297,13 @@ export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Pur
       cartPrice: 1300,
       discountAmount: 0,
       amountToPay: 1300,
-    })
+    }})
   })
 }
 
-export function createIndividualPurchaseFromPurchase(purchaseId: number|string, shipmentAddress:Address): Promise<IndividualPurchase> {
+export function createIndividualPurchaseFromPurchase(purchaseId: number|string, shipmentAddress:Address): Promise<Wrapper<IndividualPurchase>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: 88979700,
       client: {
         id: 94940,
@@ -344,13 +348,13 @@ export function createIndividualPurchaseFromPurchase(purchaseId: number|string, 
         individualPurchase: 9848,
         status: 'pending'
       }
-    })
+    }})
   })
 }
 
-export function retrieveIndividualPurchase(individualPurchaseId: number | string): Promise<IndividualPurchase> {
+export function retrieveIndividualPurchase(individualPurchaseId: number | string): Promise<Wrapper<IndividualPurchase>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: individualPurchaseId,
       client: {
         email: 'dantebado@gmail.com',
@@ -395,56 +399,56 @@ export function retrieveIndividualPurchase(individualPurchaseId: number | string
         individualPurchase: individualPurchaseId,
         status: 'pending'
       }
-    })
+    }})
   })
 }
 
-export function retrievePayment(paymentId: string | number): Promise<Payment> {
+export function retrievePayment(paymentId: string | number): Promise<Wrapper<Payment>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: paymentId,
       individualPurchase: 9848,
       status: 'pending'
-    })
+    }})
   })
 }
 
-export function processPayment(paymentId: string | number, payload?: any): Promise<Payment> {
+export function processPayment(paymentId: string | number, payload?: any): Promise<Wrapper<Payment>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: paymentId,
       individualPurchase: 9848,
       status: 'reserved'
-    })
+    }})
   })
 }
 
-export function retrieveShipment(shipmentId: string | number): Promise<Shipment> {
+export function retrieveShipment(shipmentId: string | number): Promise<Wrapper<Shipment>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: shipmentId,
       status: 'awaiting-payment',
       shipmentAddress: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
       individualPurchase: 65798
-    })
+    }})
   })
 }
 
-export function retrieveUserByEmail(email: string): Promise<User> {
+export function retrieveUserByEmail(email: string): Promise<Wrapper<User>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       email: email,
       id: 98498
-    })
+    }})
   })
 }
 
-export function createUser(email: string): Promise<User> {
+export function createUser(email: string): Promise<Wrapper<User>> {
   return new Promise((resolve, reject) => {
-    resolve({
+    resolve({data:{
       id: 9879,
       email: email
-    })
+    }})
   })
 }
 

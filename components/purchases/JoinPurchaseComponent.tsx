@@ -46,7 +46,7 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
   const createIndividualPurchaseHandler = () => {
     createIndividualPurchaseFromPurchase(purchase.id, shipmentAddress)
       .then(individual => {
-        router.push("/payment/" + individual.payment.id)
+        router.push("/payment/" + individual.data.payment.id)
       })
       .catch(console.error)
   }

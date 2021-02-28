@@ -31,7 +31,7 @@ export default function ProductViewer(props: {product: Product}) {
     }
     addProductToCart(activeCart.id, [payload])
       .then(cart => {
-        dispatch(actionSetActiveCart(cart))
+        dispatch(actionSetActiveCart(cart.data))
         router.push("/cart")
       })
       .catch(console.error)
@@ -91,7 +91,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 
   return {
     props: {
-      product: product
+      product: product.data
     }
   }
 }

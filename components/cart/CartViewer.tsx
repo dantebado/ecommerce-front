@@ -16,7 +16,7 @@ export default function CartViewer(props: { cart: Cart }) {
         .then(response => {
           setProductsCache({
             ...productsCache,
-            [response.id]: response
+            [response.data.id]: response.data
           })
         })
     })
@@ -50,7 +50,7 @@ export default function CartViewer(props: { cart: Cart }) {
   const removeFromCart = (product: Product) => {
     modifyProductInCart(cart.id, product.id, 0)
       .then(cart => {
-        dispatch(actionSetActiveCart(cart))
+        dispatch(actionSetActiveCart(cart.data))
       })
       .catch(console.error)
   }

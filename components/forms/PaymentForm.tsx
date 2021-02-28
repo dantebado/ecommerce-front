@@ -8,7 +8,7 @@ export default function PaymentForm(props: {payment: Payment, callback: (payment
   const processPaymentHandler = () => {
     processPayment(payment.id, null)
       .then(proccesedPayment => {
-        props.callback(proccesedPayment)
+        props.callback(proccesedPayment.data)
       })
       .catch(console.error)
   }

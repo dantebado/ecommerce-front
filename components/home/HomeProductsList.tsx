@@ -16,7 +16,7 @@ export default function HomeProductsList() {
     setLoading(true)
     queryProducts(pageNumber)
     .then(page => {
-      setProducts(page)
+      setProducts(page.data)
     })
     .catch(console.error)
     .finally(() => { setLoading(false) })

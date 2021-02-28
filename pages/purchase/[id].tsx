@@ -60,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 
   return {
     props: {
-      purchase: purchase
+      purchase: purchase.data
     }
   }
 }

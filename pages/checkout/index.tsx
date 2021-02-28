@@ -59,7 +59,7 @@ export default function index() {
     let finalPeople = people + 1
     createPurchase(activeCart.id, shipmentAddress, finalPeople)
       .then(purchase => {
-        createIndividualPurchase(purchase)
+        createIndividualPurchase(purchase.data)
       })
       .catch(console.error)
   }
@@ -69,10 +69,10 @@ export default function index() {
       .then(individual => {
         createCart()
           .then(cart => {
-            dispatch(actionSetActiveCart(cart))
+            dispatch(actionSetActiveCart(cart.data))
           })
           .finally(() => {
-            router.push("/payment/" + individual.payment.id)
+            router.push("/payment/" + individual.data.payment.id)
           })
       })
       .catch(console.error)
