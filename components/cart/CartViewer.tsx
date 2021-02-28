@@ -30,13 +30,13 @@ export default function CartViewer(props: { cart: Cart }) {
     if (!p) {
       return {
         id: -1,
-        displayName: 'Cargando',
-        featuredPhotoURL: '',
-        measureUnit: '',
-        currentStock: 1,
-        unitaryPrice: 0,
+        display_name: 'Cargando',
+        featured_photo_url: '',
+        measure_unit: '',
+        current_stock: 1,
+        unitary_price: 0,
         description: '',
-        photosURL: [],
+        photos_url: [],
         tags: [],
         category: {
           id: 1,
@@ -71,10 +71,10 @@ export default function CartViewer(props: { cart: Cart }) {
           {
             cart.products.map((v, i, a) => (
               <tr key={i}>
-                <td>{findProductInCache(v.product).displayName}</td>
-                <td><CurrencyDisplay amount={findProductInCache(v.product).unitaryPrice} /> / {findProductInCache(v.product).measureUnit}</td>
-                <td>x {v.count} {findProductInCache(v.product).measureUnit}</td>
-                <td><CurrencyDisplay amount={findProductInCache(v.product).unitaryPrice  * v.count}/></td>
+                <td>{findProductInCache(v.product).display_name}</td>
+                <td><CurrencyDisplay amount={findProductInCache(v.product).unitary_price} /> / {findProductInCache(v.product).measure_unit}</td>
+                <td>x {v.count} {findProductInCache(v.product).measure_unit}</td>
+                <td><CurrencyDisplay amount={findProductInCache(v.product).unitary_price  * v.count}/></td>
                 <td><button className="w-full py-2" onClick={() => removeFromCart(findProductInCache(v.product))}>Quitar</button></td>
               </tr>
             ))

@@ -20,11 +20,11 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
   const router = useRouter()
   const [shipmentAddress, setShipmentAddress] = useState({
     country: 'Argentina',
-    addressLine: '',
-    floorApt: '',
+    address_line: '',
+    floor_apt: '',
     state: '',
     city: '',
-    postalCode: '',
+    postal_code: '',
     commentary: '',
     geocoding: null
   })
@@ -53,7 +53,7 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
   
   return (
     <div>
-      { !purchase.clientsTargetReached ? (
+      { !purchase.clients_target_reached ? (
         <div>
           <h3>Unite a la Compra Colaborativa</h3>
           <p className="mt-3">Ingresá tu dirección de envío</p>
@@ -72,10 +72,10 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
 
                 <button className="px-4 py-2 mt-3 text-uppercase"
                   onClick={createIndividualPurchaseHandler}>
-                  Pagar Ahora <CurrencyDisplay amount={purchase.amountToPay} />
+                  Pagar Ahora <CurrencyDisplay amount={purchase.amount_to_pay} />
                 </button>
 
-                <p className="mt-3">Te ahorrás <CurrencyDisplay amount={purchase.discountAmount} /></p>
+                <p className="mt-3">Te ahorrás <CurrencyDisplay amount={purchase.discount_amount} /></p>
               </div>
             ) : (
               <div className="mt-3">

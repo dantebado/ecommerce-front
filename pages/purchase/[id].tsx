@@ -9,7 +9,7 @@ import { Purchase } from '../../interface/misc.model'
 
 export default function PaymentView(props: {purchase: Purchase}) {
   const [purchase, setPurchase] = useState(props.purchase)
-  let expirationDate = new Date(purchase.expirationDate)
+  let expirationDate = new Date(purchase.expiration_date)
 
   const expirationCallback = () => {
     setPurchase({
@@ -23,11 +23,11 @@ export default function PaymentView(props: {purchase: Purchase}) {
       <div className="container text-center py-8 px-2">
         <h1 className="mb-6">Compra #{purchase.id}</h1>
 
-        <p className="my-2">Compra Colaborativa: {purchase.clientsTarget > 1 ? 'Sí' : 'No'}</p>
-        <p className="my-2">Compradores Necesarios: {purchase.clientsTarget}</p>
-        <p className="my-2">Compradores Actuales: {purchase.currentConfirmedClients}</p>
-        <p className="my-2">Compradores Restantes: {purchase.clientsLeft}</p>
-        <p className="my-2">Compradores Alcanzados: {purchase.clientsTargetReached ? 'Sí' : 'No'}</p>
+        <p className="my-2">Compra Colaborativa: {purchase.clients_target > 1 ? 'Sí' : 'No'}</p>
+        <p className="my-2">Compradores Necesarios: {purchase.clients_target}</p>
+        <p className="my-2">Compradores Actuales: {purchase.current_confirmed_clients}</p>
+        <p className="my-2">Compradores Restantes: {purchase.clients_left}</p>
+        <p className="my-2">Compradores Alcanzados: {purchase.clients_target_reached ? 'Sí' : 'No'}</p>
 
         <div className="my-6">
           <CartViewer cart={purchase.cart} />

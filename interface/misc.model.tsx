@@ -1,10 +1,10 @@
 export interface Address {
   country: string
-  addressLine: string
-  floorApt: string
+  address_line: string
+  floor_apt: string
   state: string
   city: string
-  postalCode?: string
+  postal_code?: string
   commentary?: string
 
   geocoding?: AddressGeoCodingResult
@@ -30,11 +30,12 @@ export interface AddressGeoCodingResult {
   neighbourhood: string,
   country: string,
   country_code: string,
-  map_url: string
+  map_url: string,
+  geocoding_result_type: string
 }
 
 export function addressToReadableString(address: Address) {
-  return `${address.addressLine}, ${address.floorApt}, CP ${address.postalCode}, ${address.city}, ${address.state}, ${address.country}`
+  return `${address.address_line}, ${address.floor_apt}, CP ${address.postal_code}, ${address.city}, ${address.state}, ${address.country}`
 }
 
 export interface Client {
@@ -49,58 +50,57 @@ export interface ProductCategory {
 
 export interface Product {
   id: string | number
-  displayName: string
+  display_name: string
   description: string
-  featuredPhotoURL: string
-  photosURL: string[]
-  unitaryPrice: number // supuesto, todo esta en la misma moneda, no es un negocio internacional
-  measureUnit: string // unidad / kg / atado / planta
+  featured_photo_url: string
+  photos_url: string[]
+  unitary_price: number // supuesto, todo esta en la misma moneda, no es un negocio internacional
+  measure_unit: string // unidad / kg / atado / planta
   tags: string[]
   category: ProductCategory
-  currentStock: number
-  lastReview?: ProductReview
+  current_stock: number
+  last_review?: ProductReview
 }
 
 export interface ProductReview {
   id: string | number
-  authorName: string
+  author_name: string
   commentary: string
   rating: number // 1 - 5
   date: Date | string
 }
 
 export interface ProductInCart {
-  id: string | number
   product: number | string
   count: number
 }
 
 export interface Cart {
   id: string | number
-  creationDate: Date | string
+  created_at: Date | string
   //lastUpdateDate: Date | string
   products: ProductInCart[]
   total: number
-  isLocked: boolean
+  is_locked: boolean
 }
 
 export type PurchaseStatus = "awaiting-peers" | "pending-initial-payment" | "completed" | "cancelled" | "expired"
 
 export interface Purchase {
   id: string | number
-  creationDate: Date | string
-  expirationDate: Date | string
+  creation_date: Date | string
+  expiration_date: Date | string
   status: PurchaseStatus
-  clientsTarget: number
-  currentConfirmedClients: number // los que YA pagaron
-  clientsLeft: number
-  clientsTargetReached: boolean
-  shipmentAreaCenter: Address
-  shipmentAreaRadius: number // harcodearlo en el back al crear [kms]
+  clients_target: number
+  current_confirmed_clients: number // los que YA pagaron
+  clients_left: number
+  clients_target_reached: boolean
+  shipment_area_center: Address
+  shipment_area_radius: number // harcodearlo en el back al crear [kms]
   cart: Cart  // enviar todo el cart, no el ID
-  cartPrice: number
-  discountAmount: number  // > 0
-  amountToPay: number // cartPrice - discountAmount
+  cart_price: number
+  discount_amount: number  // > 0
+  amount_to_pay: number // cartPrice - discountAmount
 }
 
 export interface IndividualPurchase {

@@ -10,7 +10,7 @@ export default function HomeProductsList() {
     results: []
   })
   const [loading, setLoading] = useState(true)
-  const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber, setPageNumber] = useState(1)
 
   const fetchProducts = () => {
     setLoading(true)

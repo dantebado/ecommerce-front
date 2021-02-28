@@ -58,16 +58,16 @@ export default function PaymentView(props: {payment: Payment}) {
                 <h1 className="my-4">Pagar Ahora</h1>
 
                 <h5 className="my-3">Productos</h5>
-                <h4><CurrencyDisplay amount={iPurchase.purchase.cartPrice} /></h4>
+                <h4><CurrencyDisplay amount={iPurchase.purchase.cart_price} /></h4>
                 
                 <h5 className="my-3">Envío</h5>
                 <h4>$ 0.00</h4>
 
                 <h5 className="my-3">Ahorro por Colaborativa</h5>
-                <h4>- <CurrencyDisplay amount={iPurchase.purchase.discountAmount} /></h4>
+                <h4>- <CurrencyDisplay amount={iPurchase.purchase.discount_amount} /></h4>
 
                 <h5 className="my-3 pt-3 border-top sm:w-1/2 sm:mx-auto">TOTAL</h5>
-                <h4><CurrencyDisplay amount={iPurchase.purchase.amountToPay} /></h4>
+                <h4><CurrencyDisplay amount={iPurchase.purchase.amount_to_pay} /></h4>
 
                 <button
                   className="display-block px-4 py-3 text-uppercase mx-auto my-6"

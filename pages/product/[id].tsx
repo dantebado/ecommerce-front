@@ -19,7 +19,7 @@ export default function ProductViewer(props: {product: Product}) {
 
 
   let countOptions = []
-  for (let i=0 ; i<Math.min(10, product.currentStock) ; i++) {
+  for (let i=0 ; i<Math.min(10, product.current_stock) ; i++) {
     countOptions.push(i)
   }
 
@@ -40,20 +40,20 @@ export default function ProductViewer(props: {product: Product}) {
   return (
     <DefaultLayout>
       <div className="container py-6 text-center">
-        <h2 className="mb-3">Viendo {product.displayName}</h2>
+        <h2 className="mb-3">Viendo {product.display_name}</h2>
         <p>{product.description}</p>
 
-        <h1 className="my-3"><CurrencyDisplay amount={product.unitaryPrice} /> / {product.measureUnit}</h1>
+        <h1 className="my-3"><CurrencyDisplay amount={product.unitary_price} /> / {product.measure_unit}</h1>
 
         <p className="mt-6"><b>Fotografía Destacada</b></p>
         <div className="sm:w-1/2 mx-auto mt-3 mb-6">
-          <img className="shadow-2" src={product.featuredPhotoURL}/>
+          <img className="shadow-2" src={product.featured_photo_url}/>
         </div>
 
         <p className="mt-6"><b>Otras Fotografías</b></p>
         <div className="my-3 sm:flex flex-row overflow-x-auto border-top flex-wrap border-bottom">
           {
-            product.photosURL.map((v, i, a) => (
+            product.photos_url.map((v, i, a) => (
               <Fragment key={i}>
                 <img className="w-1/2 sm:w-1/4" src={v} />
               </Fragment>
@@ -66,7 +66,7 @@ export default function ProductViewer(props: {product: Product}) {
             <select className="w-full py-2 px-2" value={count} onChange={(e) => setCount(parseInt(e.target.value))}>
               {
                 countOptions.map((v, i, a) => (
-                  <option key={v} value={v}>{v} {product.measureUnit}</option>
+                  <option key={v} value={v}>{v} {product.measure_unit}</option>
                 ))
               }
             </select>

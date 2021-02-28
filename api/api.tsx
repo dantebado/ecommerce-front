@@ -1,182 +1,48 @@
 import axios from "axios";
 import { Address, AddressGeoCodingResponse, AddressGeoCodingResult, Cart, IndividualPurchase, Page, Payment, Product, ProductCategory, ProductReview, Purchase, Shipment, User } from "../interface/misc.model";
 
+const API_ROOT = process.env.NEXT_PUBLIC_ROOT_API
+
 export interface Wrapper<T> {
   data: T
 }
 
 export function queryProducts(page: number): Promise<Wrapper<Page<Product>>> {
-  return new Promise((resolve, reject) => {
-    resolve({data:{
-      count: 4,
-      results: [
-        {
-          id: 88049,
-          displayName: 'Papas Negras',
-          description: 'Papas negras',
-          featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-          photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-          unitaryPrice: 500,
-          measureUnit: 'kg',
-          tags: ['papas','verdura'],
-          category: {
-            id: 879,
-            description: 'Verdura'
-          },
-          currentStock: 100,
-        },
-        {
-          id: 88050,
-          displayName: 'Papas Blancas',
-          description: 'Papas blancas',
-          featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-          photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-          unitaryPrice: 650,
-          measureUnit: 'kg',
-          tags: ['papas','verdura'],
-          category: {
-            id: 879,
-            description: 'Verdura'
-          },
-          currentStock: 206,
-          lastReview: {
-            id: 498,
-            authorName: 'Diego',
-            commentary: 'Hola este es mi comentario sobre la papa',
-            rating: 4,
-            date: (new Date()).toString()
-          }
-        },
-        {
-          id: 88049,
-          displayName: 'Papas Negras',
-          description: 'Papas negras',
-          featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-          photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-          unitaryPrice: 500,
-          measureUnit: 'kg',
-          tags: ['papas','verdura'],
-          category: {
-            id: 879,
-            description: 'Verdura'
-          },
-          currentStock: 100,
-        },
-        {
-          id: 88050,
-          displayName: 'Papas Blancas',
-          description: 'Papas blancas',
-          featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-          photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-          unitaryPrice: 650,
-          measureUnit: 'kg',
-          tags: ['papas','verdura'],
-          category: {
-            id: 879,
-            description: 'Verdura'
-          },
-          currentStock: 206,
-          lastReview: {
-            id: 498,
-            authorName: 'Diego',
-            commentary: 'Hola este es mi comentario sobre la papa',
-            rating: 4,
-            date: (new Date()).toString()
-          }
-        },
-      ]
-    }})
+  return axios.get(API_ROOT + `/products?page=${page}`, {
+    headers: {
+      'origin' : "localhost"
+    }
   })
 }
 
 export function retrieveProduct(productId: number | string): Promise<Wrapper<Product>> {
-  return new Promise((resolve, reject) => {
-    resolve(
-      {data:{
-        id: productId,
-        displayName: 'Papas Blancas',
-        description: 'Papas blancas',
-        featuredPhotoURL: 'https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg',
-        photosURL: ['https://2.bp.blogspot.com/-u1tyCT8M5Vg/UN_nwu71hgI/AAAAAAAAEvI/eMYOaW8Q2a0/s1600/vitelotte-noire.jpg'],
-        unitaryPrice: 650,
-        measureUnit: 'kg',
-        tags: ['papas','verdura'],
-        category: {
-          id: 879,
-          description: 'Verdura'
-        },
-        currentStock: 206
-    }})
-  })
+  return axios.get(API_ROOT + `/products/${productId}`)
 }
 
-export function retrieveCategories(): Promise<Wrapper<ProductCategory[]>> {
-  return new Promise((resolve, reject) => {
-    resolve({data:[
-      {
-        id: 879,
-        description: 'Verdura'
-      },
-      {
-        id: 564,
-        description: 'Fruta'
-      },
-    ]})
-  })
+export function retrieveCategories(): Promise<Wrapper<Page<ProductCategory>>> {
+  return axios.get(API_ROOT + `/products/categories?page=1`)
 }
 
 export function retrieveCategory(categoryId: string | number): Promise<Wrapper<ProductCategory>> {
-  return new Promise((resolve, reject) => {
-    resolve({data:{
-      id: categoryId,
-      description: 'Fruta'
-    }})
-  })
+  return axios.get(API_ROOT + `/products/categories/${categoryId}`)
 }
 
 export function retrieveProductReviews(productId: number | string): Promise<Wrapper<Page<ProductReview>>> {
-  return new Promise((resolve, reject) => {
-    resolve({data:{
-      count: 4,
-      results: [{
-        id: 498,
-        authorName: 'Diego',
-        commentary: 'Hola este es mi comentario sobre la papa',
-        rating: 4,
-        date: (new Date()).toString()
-      },
-      {
-        id: 849,
-        authorName: 'Diego',
-        commentary: 'Hola este es mi comentario sobre la papa',
-        rating: 4,
-        date: (new Date()).toString()
-      },
-      {
-        id: 577,
-        authorName: 'Diego',
-        commentary: 'Hola este es mi comentario sobre la papa',
-        rating: 4,
-        date: (new Date()).toString()
-      },
-    ]}})
-  })
+  return axios.get(API_ROOT + `/products/${productId}/reviews`)
 }
 
 export function createProductReview(productId: number | string, payload: ProductReview): Promise<Wrapper<ProductReview>> {
-  return new Promise((resolve, reject) => {
-    resolve({data:{...payload, id: 588}})
-  })
+  return axios.post(API_ROOT + `/products/${productId}/reviews/`, payload)
 }
 
 export function createCart(): Promise<Wrapper<Cart>> {
   return new Promise((resolve, reject) => {
     resolve({data:{
       id: 9879,
-      creationDate: (new Date()).toString(),
+      created_at: (new Date()).toString(),
       products: [],
       total: 0,
-      isLocked: false
+      is_locked: false
     }})
   })
 }
@@ -185,16 +51,15 @@ export function retrieveCart(cartId: number | string): Promise<Wrapper<Cart>> {
   return new Promise((resolve, reject) => {
     resolve({data:{
       id: cartId,
-      creationDate: (new Date()).toString(),
+      created_at: (new Date()).toString(),
       products: [
         {
-          id: 987,
           product: 4498,
           count: 2
         }
       ],
       total: 1300,
-      isLocked: false
+      is_locked: false
     }})
   })
 }
@@ -203,16 +68,15 @@ export function addProductToCart(cartId: number | string, products : {productId:
   return new Promise((resolve, reject) => {
     resolve({data:{
       id: cartId,
-      creationDate: (new Date()).toString(),
+      created_at: (new Date()).toString(),
       products: [
         {
-          id: 987,
           product: 4498,
           count: 2
         }
       ],
       total: 1300,
-      isLocked: false
+      is_locked: false
     }})
   })
 }
@@ -221,16 +85,15 @@ export function modifyProductInCart(cartId: number | string, productId: number |
   return new Promise((resolve, reject) => {
     resolve({data:{
       id: cartId,
-      creationDate: (new Date()).toString(),
+      created_at: (new Date()).toString(),
       products: [
         {
-          id: 987,
           product: 4498,
           count: 1
         }
       ],
       total: 1300,
-      isLocked: false
+      is_locked: false
     }})
   })
 }
@@ -239,31 +102,30 @@ export function createPurchase(cartId: number | string, shipmentAreaCenter:Addre
   return new Promise((resolve, reject) => {
     resolve({data:{
       id: 9848,
-      creationDate: (new Date()).toString(),
-      expirationDate: (new Date('2021-03-01')).toString(),
+      creation_date: (new Date()).toString(),
+      expiration_date: (new Date('2021-03-01')).toString(),
       status: 'pending-initial-payment',
-      clientsTarget: clientsTargetNumber,
-      currentConfirmedClients: 0,
-      clientsLeft: clientsTargetNumber,
-      clientsTargetReached: false,
-      shipmentAreaCenter: shipmentAreaCenter,
-      shipmentAreaRadius: 5,
+      clients_target: clientsTargetNumber,
+      current_confirmed_clients: 0,
+      clients_left: clientsTargetNumber,
+      clients_target_reached: false,
+      shipment_area_center: shipmentAreaCenter,
+      shipment_area_radius: 5,
       cart: {
         id: cartId,
-        creationDate: (new Date()).toString(),
+        created_at: (new Date()).toString(),
         products: [
           {
-            id: 987,
             product: 4498,
             count: 1
           }
         ],
         total: 1300,
-        isLocked: false
+        is_locked: false
       },
-      cartPrice: 1300,
-      discountAmount: 0,
-      amountToPay: 1300,
+      cart_price: 1300,
+      discount_amount: 0,
+      amount_to_pay: 1300,
     }})
   })
 }
@@ -272,31 +134,30 @@ export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Wra
   return new Promise((resolve, reject) => {
     resolve({data:{
       id: 9848,
-      creationDate: (new Date()).toString(),
-      expirationDate: (new Date('2021-02-27T23:59')).toString(),
+      creation_date: (new Date()).toString(),
+      expiration_date: (new Date('2021-02-28T00:15')).toString(),
       status: 'awaiting-peers',
-      clientsTarget: 2,
-      currentConfirmedClients: 0,
-      clientsLeft: 2,
-      clientsTargetReached: false,
-      shipmentAreaCenter: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '',state:'CABA', city:'CABA'},
-      shipmentAreaRadius: 5,
+      clients_target: 2,
+      current_confirmed_clients: 0,
+      clients_left: 2,
+      clients_target_reached: false,
+      shipment_area_center: {country:'Argentina', address_line:'Cuenca 2469', floor_apt: '',state:'CABA', city:'CABA'},
+      shipment_area_radius: 5,
       cart: {
         id: 123,
-        creationDate: (new Date()).toString(),
+        created_at: (new Date()).toString(),
         products: [
           {
-            id: 987,
             product: 4498,
             count: 1
           }
         ],
         total: 1300,
-        isLocked: false
+        is_locked: false
       },
-      cartPrice: 1300,
-      discountAmount: 0,
-      amountToPay: 1300,
+      cart_price: 1300,
+      discount_amount: 0,
+      amount_to_pay: 1300,
     }})
   })
 }
@@ -311,36 +172,35 @@ export function createIndividualPurchaseFromPurchase(purchaseId: number|string, 
       },
       purchase: {
         id: 9848,
-        creationDate: (new Date()).toString(),
-        expirationDate: new Date('2021-03-01'),
+        creation_date: (new Date()).toString(),
+        expiration_date: new Date('2021-03-01'),
         status: 'pending-initial-payment',
-        clientsTarget: 2,
-        currentConfirmedClients: 0,
-        clientsLeft: 2,
-        clientsTargetReached: false,
-        shipmentAreaCenter: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
-        shipmentAreaRadius: 5,
+        clients_target: 2,
+        current_confirmed_clients: 0,
+        clients_left: 2,
+        clients_target_reached: false,
+        shipment_area_center: {country:'Argentina', address_line:'Cuenca 2469', floor_apt: '', state:'CABA', city:'CABA'},
+        shipment_area_radius: 5,
         cart: {
           id: 123,
-          creationDate: (new Date()).toString(),
+          created_at: (new Date()).toString(),
           products: [
             {
-              id: 987,
               product: 4498,
               count: 1
             }
           ],
           total: 1300,
-          isLocked: false
+          is_locked: false
         },
-        cartPrice: 1300,
-        discountAmount: 0,
-        amountToPay: 1300,
+        cart_price: 1300,
+        discount_amount: 0,
+        amount_to_pay: 1300,
       },
       shipment: {
         id: 4987,
         status: 'awaiting-payment',
-        shipmentAddress: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
+        shipmentAddress: {country:'Argentina', address_line:'Cuenca 2469', floor_apt: '', state:'CABA', city:'CABA'},
         individualPurchase: 88979700
       },
       payment: {
@@ -362,36 +222,35 @@ export function retrieveIndividualPurchase(individualPurchaseId: number | string
       },
       purchase: {
         id: 9848,
-        creationDate: (new Date()).toString(),
-        expirationDate: new Date('2021-03-01'),
+        creation_date: (new Date()).toString(),
+        expiration_date: new Date('2021-03-01'),
         status: 'pending-initial-payment',
-        clientsTarget: 2,
-        currentConfirmedClients: 0,
-        clientsLeft: 2,
-        clientsTargetReached: false,
-        shipmentAreaCenter: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
-        shipmentAreaRadius: 5,
+        clients_target: 2,
+        current_confirmed_clients: 0,
+        clients_left: 2,
+        clients_target_reached: false,
+        shipment_area_center: {country:'Argentina', address_line:'Cuenca 2469', floor_apt: '', state:'CABA', city:'CABA'},
+        shipment_area_radius: 5,
         cart: {
           id: 123,
-          creationDate: (new Date()).toString(),
+          created_at: (new Date()).toString(),
           products: [
             {
-              id: 987,
               product: 4498,
               count: 1
             }
           ],
           total: 1300,
-          isLocked: false
+          is_locked: false
         },
-        cartPrice: 1300,
-        discountAmount: 0,
-        amountToPay: 1300,
+        cart_price: 1300,
+        discount_amount: 0,
+        amount_to_pay: 1300,
       },
       shipment: {
         id: 4987,
         status: 'awaiting-payment',
-        shipmentAddress: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
+        shipmentAddress: {country:'Argentina', address_line:'Cuenca 2469', floor_apt: '', state:'CABA', city:'CABA'},
         individualPurchase: individualPurchaseId
       },
       payment: {
@@ -428,7 +287,7 @@ export function retrieveShipment(shipmentId: string | number): Promise<Wrapper<S
     resolve({data:{
       id: shipmentId,
       status: 'awaiting-payment',
-      shipmentAddress: {country:'Argentina', addressLine:'Cuenca 2469', floorApt: '', state:'CABA', city:'CABA'},
+      shipmentAddress: {country:'Argentina', address_line:'Cuenca 2469', floor_apt: '', state:'CABA', city:'CABA'},
       individualPurchase: 65798
     }})
   })
@@ -453,14 +312,14 @@ export function createUser(email: string): Promise<Wrapper<User>> {
 }
 
 const addressToGeocodeQuery = (address: Address) => {
-  return address.addressLine +
+  return address.address_line +
     (address.city ? `, ${address.city}` : '') +
     (address.state ? `, ${address.state}` : '') +
     (address.country ? `, ${address.country}` : '')
 }
 
 export const geocodeAddress = async (address: Address): Promise<AddressGeoCodingResult> => {
-  if (!address.addressLine)
+  if (!address.address_line)
     return
 
   let query = addressToGeocodeQuery(address)
