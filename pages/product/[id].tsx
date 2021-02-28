@@ -55,7 +55,7 @@ export default function ProductViewer(props: {product: Product}) {
           {
             product.photos_url.map((v, i, a) => (
               <Fragment key={i}>
-                <img className="w-1/2 sm:w-1/4" src={v} />
+                <img className="w-1/2 sm:w-1/4" src={v.photo} />
               </Fragment>
             ))
           }

@@ -19,6 +19,7 @@ export default function CartViewer(props: { cart: Cart }) {
             [response.data.id]: response.data
           })
         })
+        .catch(console.error)
     })
   }, [])
 

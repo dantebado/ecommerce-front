@@ -8,7 +8,7 @@ export interface Wrapper<T> {
 }
 
 export function queryProducts(page: number): Promise<Wrapper<Page<Product>>> {
-  return axios.get(API_ROOT + `/products?page=${page}`)
+  return axios.get(API_ROOT + `/products/?page=${page}`)
 }
 
 export function retrieveProduct(productId: number | string): Promise<Wrapper<Product>> {
@@ -32,49 +32,20 @@ export function createProductReview(productId: number | string, payload: Product
 }
 
 export function createCart(): Promise<Wrapper<Cart>> {
-  return new Promise((resolve, reject) => {
-    resolve({data:{
-      id: 9879,
-      created_at: (new Date()).toString(),
-      products: [],
-      total: 0,
-      is_locked: false
-    }})
-  })
+  return axios.post(API_ROOT + `/carts/`, {})
 }
 
 export function retrieveCart(cartId: number | string): Promise<Wrapper<Cart>> {
-  return new Promise((resolve, reject) => {
-    resolve({data:{
-      id: cartId,
-      created_at: (new Date()).toString(),
-      products: [
-        {
-          product: 4498,
-          count: 2
-        }
-      ],
-      total: 1300,
-      is_locked: false
-    }})
-  })
+  return axios.get(API_ROOT + `/carts/${cartId}`)
 }
 
 export function addProductToCart(cartId: number | string, products : {productId:number | string, count:number}[]): Promise<Wrapper<Cart>> {
-  return new Promise((resolve, reject) => {
-    resolve({data:{
-      id: cartId,
-      created_at: (new Date()).toString(),
-      products: [
-        {
-          product: 4498,
-          count: 2
-        }
-      ],
-      total: 1300,
-      is_locked: false
-    }})
-  })
+  return axios.post(API_ROOT + `/carts/${cartId}/products/`, products.map((v, i, a) => {
+    return {
+      product: v.productId,
+      count: v.count
+    }
+  }))
 }
 
 export function modifyProductInCart(cartId: number | string, productId: number | string, count: number): Promise<Wrapper<Cart>> {
@@ -95,67 +66,11 @@ export function modifyProductInCart(cartId: number | string, productId: number |
 }
 
 export function createPurchase(cartId: number | string, shipmentAreaCenter:Address, clientsTargetNumber:number): Promise<Wrapper<Purchase>> {
-  return new Promise((resolve, reject) => {
-    resolve({data:{
-      id: 9848,
-      creation_date: (new Date()).toString(),
-      expiration_date: (new Date('2021-03-01')).toString(),
-      status: 'pending-initial-payment',
-      clients_target: clientsTargetNumber,
-      current_confirmed_clients: 0,
-      clients_left: clientsTargetNumber,
-      clients_target_reached: false,
-      shipment_area_center: shipmentAreaCenter,
-      shipment_area_radius: 5,
-      cart: {
-        id: cartId,
-        created_at: (new Date()).toString(),
-        products: [
-          {
-            product: 4498,
-            count: 1
-          }
-        ],
-        total: 1300,
-        is_locked: false
-      },
-      cart_price: 1300,
-      discount_amount: 0,
-      amount_to_pay: 1300,
-    }})
-  })
+  return axios.post(API_ROOT + `/purchases/`, {cart_id: cartId, shipment_area_center:shipmentAreaCenter, clients_target:clientsTargetNumber})
 }
 
 export function retrievePurchase(purchaseIdOrCode: string | number): Promise<Wrapper<Purchase>> {
-  return new Promise((resolve, reject) => {
-    resolve({data:{
-      id: 9848,
-      creation_date: (new Date()).toString(),
-      expiration_date: (new Date('2021-02-28T00:15')).toString(),
-      status: 'awaiting-peers',
-      clients_target: 2,
-      current_confirmed_clients: 0,
-      clients_left: 2,
-      clients_target_reached: false,
-      shipment_area_center: {country:'Argentina', address_line:'Cuenca 2469', floor_apt: '',state:'CABA', city:'CABA'},
-      shipment_area_radius: 5,
-      cart: {
-        id: 123,
-        created_at: (new Date()).toString(),
-        products: [
-          {
-            product: 4498,
-            count: 1
-          }
-        ],
-        total: 1300,
-        is_locked: false
-      },
-      cart_price: 1300,
-      discount_amount: 0,
-      amount_to_pay: 1300,
-    }})
-  })
+  return axios.get(API_ROOT + `/purchases/${purchaseIdOrCode}`)
 }
 
 export function createIndividualPurchaseFromPurchase(purchaseId: number|string, shipmentAddress:Address): Promise<Wrapper<IndividualPurchase>> {

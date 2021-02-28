@@ -53,7 +53,7 @@ export interface Product {
   display_name: string
   description: string
   featured_photo_url: string
-  photos_url: string[]
+  photos_url: {photo: string}[]
   unitary_price: number // supuesto, todo esta en la misma moneda, no es un negocio internacional
   measure_unit: string // unidad / kg / atado / planta
   tags: string[]
