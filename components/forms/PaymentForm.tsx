@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { processPayment } from '../../api/api'
 import { Payment } from '../../interface/misc.model'
+import MercadoPagoWrapper from '../payment/MercadoPagoWrapper'
 
 export default function PaymentForm(props: {payment: Payment, callback: (payment: Payment) => any}) {
   const [payment] = useState(props.payment)
@@ -15,12 +16,7 @@ export default function PaymentForm(props: {payment: Payment, callback: (payment
 
   return (
     <div className="mx-auto sm:w-3/4 p-4 border-radius-lg shadow-2">
-      <h5>Procesando Pago ${payment.id}</h5>
-
-      <button className="px-5 py-4 mt-3"
-        onClick={processPaymentHandler} >
-        Simular Pago JEJE
-      </button>
+      <MercadoPagoWrapper payment={payment} />
     </div>
   )
 }
