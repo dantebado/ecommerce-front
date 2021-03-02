@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { queryProducts } from '../../api/api'
-import { actionsHideProgress } from '../../redux/reducers/Progress'
 import ProductGridComponent from '../products/ProductGridComponent'
+import cogoToast from 'cogo-toast';
 
 export default function HomeProductsList() {
   const [products, setProducts] = useState({
@@ -18,7 +17,7 @@ export default function HomeProductsList() {
     .then(page => {
       setProducts(page.data)
     })
-    .catch(console.error)
+    .catch(err => cogoToast.error("Error obteniendo lista de productos"))
     .finally(() => { setLoading(false) })
   }
 

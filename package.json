@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "cogo-toast": "^4.2.3",
     "destyle.css": "^2.0.2",
     "framer-motion": "^3.7.0",
     "haversine-distance": "^1.2.1",

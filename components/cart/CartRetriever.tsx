@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createCart } from '../../api/api'
 import { actionSetActiveCart } from '../../redux/reducers/ActiveCart'
 import { StateTypes } from '../../redux/Store'
+import cogoToast from 'cogo-toast';
 
 export default function CartRetriever() {
   const dispatch = useDispatch()
@@ -13,7 +14,7 @@ export default function CartRetriever() {
       .then(cart => {
         dispatch(actionSetActiveCart(cart.data))
       })
-      .catch(console.error)
+      .catch(err => cogoToast.error("Error al recuperar un carrito"))
   }
 
   return (<Fragment></Fragment>)

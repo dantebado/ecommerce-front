@@ -1,6 +1,8 @@
+import axios from 'axios'
+import cogoToast from 'cogo-toast'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { createIndividualPurchaseFromPurchase, geocodeAddress } from '../../api/api'
 import { addressToReadableString, Purchase } from '../../interface/misc.model'
 import AddressForm from '../forms/AddressForm'
@@ -29,26 +31,41 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
     geocoding: null
   })
 
+  const [email, setEmail] = useState('')
+
   const [validatedShipmentArea, setValidatedShipmentArea] = useState(false)
 
   const validateAddressHandler = () => {
     setValidatedShipmentArea(false)
     geocodeAddress(shipmentAddress)
       .then(geo => {
-        setValidatedShipmentArea(true)
+        axios.post(`/api/shipment-check`, {
+          originAddress: purchase.shipment_area_center.geocoding,
+          radius: purchase.shipment_area_radius,
+          destinationAddress: geo
+        })
+        .then(v => {
+          setValidatedShipmentArea(true)
+          cogoToast.success("Estás dentro del área de cobertura de esta compra")
+        })
+        .catch(err => {
+          cogoToast.error("Estás fuera del área de cobertura de esta compra")
+        })
         setShipmentAddress({
           ...shipmentAddress,
           geocoding: geo
         })
       })
+      .catch(err => cogoToast.error("Error encontrando tu dirección"))
   }
 
   const createIndividualPurchaseHandler = () => {
-    createIndividualPurchaseFromPurchase(purchase.id, shipmentAddress)
+    createIndividualPurchaseFromPurchase(purchase.id, shipmentAddress, email)
       .then(individual => {
+        cogoToast.success("Dirigiéndote a tu pago")
         router.push("/payment/" + individual.data.payment.id)
       })
-      .catch(console.error)
+      .catch(err => cogoToast.error("Error al crear tu compra"))
   }
   
   return (
@@ -57,6 +74,14 @@ export default function JoinPurchaseComponent(props: {purchase: Purchase}) {
         <div>
           <h3>Unite a la Compra Colaborativa</h3>
           <p className="mt-3">Ingresá tu dirección de envío</p>
+
+          <h1>Tus Datos</h1>
+          <div className="mb-3">
+            <input type="email" placeholder="Correo electrónico" className="px-2 py-2 w-full"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} />
+          </div>
+
           <AddressForm value={shipmentAddress} onChange={setShipmentAddress} />
 
           {

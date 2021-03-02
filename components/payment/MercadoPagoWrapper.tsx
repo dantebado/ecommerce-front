@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Payment } from '../../interface/misc.model'
 import style from './mp.module.scss'
 
-export default function MercadoPagoWrapper(props: {payment: Payment}) {
+export default function MercadoPagoWrapper(props: {payment: Payment, amount: number, callback: (payload: any) => any}) {
   const mpPublicKey = process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY
   const [processing, setProcessing] = useState(false)
 
@@ -74,11 +74,22 @@ export default function MercadoPagoWrapper(props: {payment: Payment}) {
         card.setAttribute('type', 'hidden');
         card.setAttribute('value', response.id);
         form.appendChild(card);
-        console.log("mprseponse", response)
+
+        const cb = props.callback
+        const pmid: any = document.getElementById('paymentMethodId')
+        if (cb) {
+          cb({
+            "token": response.id,
+            "payment_method_id": pmid.value,
+            "installments": cardDetails.installments,
+            "payer_email": payerDetails.email,
+            "payment_vendor": "mercadopago"
+          })
+        }
     } else {
         console.log("Verify filled data!\n"+JSON.stringify(response, null, 4));
-        setProcessing(false)
     }
+    setProcessing(false)
  };
 
  const validPayer = () => {
@@ -154,7 +165,7 @@ export default function MercadoPagoWrapper(props: {payment: Payment}) {
             </div>
           </div>
           <div>
-            <input type="hidden" name="transactionAmount" id="transactionAmount" value="100" />
+            <input type="hidden" name="transactionAmount" id="transactionAmount" value={props.amount} />
             <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
             <input type="hidden" name="description" id="description" />
 

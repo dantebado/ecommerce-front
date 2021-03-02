@@ -8,33 +8,34 @@ import PaymentForm from '../../components/forms/PaymentForm'
 import DefaultLayout from '../../components/layouts/DefaultLayout'
 import CurrencyDisplay from '../../components/utils/CurrencyDisplay'
 import { addressToReadableString, IndividualPurchase, Payment } from '../../interface/misc.model'
+import cogoToast from 'cogo-toast';
 
 export default function PaymentView(props: {payment: Payment}) {
   const payment = props.payment
-  
+
   const router = useRouter()
   const [processedPayment, setProcessedPayment] = useState(null)
   const [individualPurchase, setIndividualPurchase] = useState(null)
   const [isPaying, setIsPaying] = useState(false)
 
   let iPurchase: IndividualPurchase = individualPurchase
-  let shipmentAddressString = iPurchase ? addressToReadableString(individualPurchase.shipment.shipmentAddress) : 'Cargando'
+  let shipmentAddressString = iPurchase ? addressToReadableString(individualPurchase.shipment.shipment_address) : 'Cargando'
 
   useEffect(() => {
-    retrieveIndividualPurchase(payment.individualPurchase)
+    retrieveIndividualPurchase(payment.individual_purchase_id)
       .then(individualPurchase => {
         if (individualPurchase.data.payment.status !== 'pending') {
-          console.error("payment is not pending")
+          cogoToast.error("Tu pago no está pendiente")
           router.push("/")
         } else {
           setIndividualPurchase(individualPurchase.data)
         }
       })
-      .catch(console.error)
+      .catch(err => cogoToast.error("Error obteniendo tu compra"))
   }, [])
 
-  const paymentProcessingCallback = (payment: Payment) => {
-    setProcessedPayment(payment)
+  const paymentProcessingCallback = (result: boolean) => {
+    //asd
   }
 
   return (
@@ -77,7 +78,8 @@ export default function PaymentView(props: {payment: Payment}) {
 
                 {
                   isPaying ? (
-                    <PaymentForm callback={paymentProcessingCallback} payment={iPurchase.payment} />
+                    <PaymentForm callback={paymentProcessingCallback} payment={iPurchase.payment}
+                      purchaseId={iPurchase.purchase.id} amount={iPurchase.purchase.amount_to_pay} />
                   ) : ( <span></span> )
                 }
 

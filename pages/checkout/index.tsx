@@ -10,6 +10,7 @@ import CurrencyDisplay from '../../components/utils/CurrencyDisplay'
 import { addressToReadableString, Purchase } from '../../interface/misc.model'
 import { actionSetActiveCart } from '../../redux/reducers/ActiveCart'
 import { StateTypes } from '../../redux/Store'
+import cogoToast from 'cogo-toast';
 
 export default function index() {
   const CoordinatesMap = dynamic(
@@ -32,11 +33,11 @@ export default function index() {
     commentary: '',
     geocoding: null
   })
+  const [email, setEmail] = useState('')
   const router = useRouter()
   const dispatch = useDispatch()
   
   if (!activeCart) {
-    console.error("no cart retrieved from state")
     router.push("/")
   }
 
@@ -61,21 +62,22 @@ export default function index() {
       .then(purchase => {
         createIndividualPurchase(purchase.data)
       })
-      .catch(console.error)
+      .catch(err => cogoToast.error("Error al crear tu compra"))
   }
 
   const createIndividualPurchase = (purchase: Purchase) => {
-    createIndividualPurchaseFromPurchase(purchase.id, shipmentAddress)
+    createIndividualPurchaseFromPurchase(purchase.id, shipmentAddress, email)
       .then(individual => {
         createCart()
           .then(cart => {
             dispatch(actionSetActiveCart(cart.data))
           })
           .finally(() => {
+            cogoToast.success("Dirigiéndote al Pago")
             router.push("/payment/" + individual.data.payment.id)
           })
       })
-      .catch(console.error)
+      .catch(err => cogoToast.error("Error al crear tu compra"))
   }
 
   const geocodeHandler = () => {
@@ -86,7 +88,7 @@ export default function index() {
           geocoding: geo
         })
       })
-      .catch(console.error)
+      .catch(err => {})
   }
 
   return (
@@ -99,7 +101,14 @@ export default function index() {
               <CartViewer cart={activeCart} />
             </div>
 
-            <h1>Dirección de Entrega</h1>
+            <h1>Tus Datos</h1>
+            <div>
+              <input type="email" placeholder="Correo electrónico" className="px-2 py-2 w-full"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} />
+            </div>
+
+            <h1 className="mt-3">Dirección de Entrega</h1>
 
             <div className="my-3">
               <AddressForm value={shipmentAddress} onChange={setShipmentAddress}></AddressForm>
@@ -121,7 +130,7 @@ export default function index() {
                   </div>
                 </div>
               ) : (
-                <button className="display-block mt-2 mx-auto px-5 py-2" onClick={geocodeHandler}>Validar Dirección</button>
+                <button className="display-block mt-2 mx-auto px-5 py-2" disabled={!email} onClick={geocodeHandler}>Validar Dirección</button>
               )
             }
 

@@ -27,7 +27,7 @@ const Login = (props) =>  {
   const signOut = () => {
     m.user.logout().then(value => {
       dispatch(actionSignoutMagicLink())
-    }).catch(console.error)
+    }).catch(err => {})
   }
 
   return (

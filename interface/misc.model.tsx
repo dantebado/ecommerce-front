@@ -115,7 +115,7 @@ export type PaymentStatus = "pending" | "failed" | "reserved" | "captured"
 
 export interface Payment {
   id: string | number
-  individualPurchase: string | number
+  individual_purchase_id: string | number
   status: PaymentStatus
 }
 

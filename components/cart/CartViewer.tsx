@@ -4,6 +4,7 @@ import { modifyProductInCart, retrieveProduct } from '../../api/api'
 import { Cart, Product } from '../../interface/misc.model'
 import { actionSetActiveCart } from '../../redux/reducers/ActiveCart'
 import CurrencyDisplay from '../utils/CurrencyDisplay'
+import cogoToast from 'cogo-toast';
 
 export default function CartViewer(props: { cart: Cart }) {
   const [productsCache, setProductsCache] = useState({})
@@ -19,11 +20,9 @@ export default function CartViewer(props: { cart: Cart }) {
             [response.data.id]: response.data
           })
         })
-        .catch(console.error)
+        .catch(err => cogoToast.error("Error al recuperar un producto de tu carrito"))
     })
   }, [])
-
-  console.log(productsCache)
 
   const findProductInCache = (id):Product => {
     const p = productsCache[id]
@@ -49,11 +48,13 @@ export default function CartViewer(props: { cart: Cart }) {
   }
 
   const removeFromCart = (product: Product) => {
+    if (cart.is_locked) return
     modifyProductInCart(cart.id, product.id, 0)
       .then(cart => {
         dispatch(actionSetActiveCart(cart.data))
+        cogoToast.success("Quitado con éxito")
       })
-      .catch(console.error)
+      .catch(err => cogoToast.error("Error al quitar el ítem de tu carrito"))
   }
 
   return (

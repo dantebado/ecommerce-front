@@ -4,17 +4,18 @@ import { useSelector } from 'react-redux'
 import CartViewer from '../../components/cart/CartViewer'
 import DefaultLayout from '../../components/layouts/DefaultLayout'
 import { StateTypes } from '../../redux/Store'
+import cogoToast from 'cogo-toast';
 
 export default function index() {
   const activeCart = useSelector((state: StateTypes) => state.activeCart)
   const router = useRouter()
 
   if (!activeCart) {
-    console.error("no cart retrieved from state")
     router.push("/")
   }
 
   const checkoutTriggerHandler = () => {
+    cogoToast.info("Dirigiéndote a Checkout")
     router.push("/checkout")
   }
 

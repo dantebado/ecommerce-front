@@ -9,6 +9,7 @@ import CurrencyDisplay from '../../components/utils/CurrencyDisplay'
 import { Product } from '../../interface/misc.model'
 import { actionSetActiveCart } from '../../redux/reducers/ActiveCart'
 import { StateTypes } from '../../redux/Store'
+import cogoToast from 'cogo-toast';
 
 export default function ProductViewer(props: {product: Product}) {
   const [product] = useState(props.product)
@@ -32,9 +33,10 @@ export default function ProductViewer(props: {product: Product}) {
     addProductToCart(activeCart.id, [payload])
       .then(cart => {
         dispatch(actionSetActiveCart(cart.data))
+        cogoToast.success("Ítem añadido a tu carrito")
         router.push("/cart")
       })
-      .catch(console.error)
+      .catch(err => cogoToast.error("Error añadiendo ítem a tu carrito"))
   }
 
   return (
