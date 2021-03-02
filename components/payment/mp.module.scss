@@ -1,23 +1,18 @@
 .MPForm {
-  input, select {
-    display: block;
+  input,
+  select {
     width: 100%;
-    margin-bottom: 1rem;
-    padding: .3rem .75rem;
-    &:focus {
-      outline: none;
-    }
+  }
+
+  p {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 1em 0;
   }
 
   label {
-    font-style: oblique;
     display: block;
     text-align: left;
-    font-size: 14px;
-  }
-
-  h3 {
-    margin: 1rem 0;
-    text-transform: uppercase;
+    margin-top: 0.25em;
   }
 }
