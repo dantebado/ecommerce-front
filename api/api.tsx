@@ -182,6 +182,14 @@ export function retrieveUserHistory(email: string, token: string) {
   });
 }
 
+export function retrieveUserRecommendations(email: string, token: string) {
+  return axios.get(API_ROOT + `/purchases/${email}/recommendations`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+}
+
 export function updateUserDetails(email: string, token: string, payload: any) {
   return axios.put(API_ROOT + `/users/profile/${email}`, payload, {
     headers: {

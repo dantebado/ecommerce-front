@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import { Product } from "../../interface/misc.model";
 import CurrencyDisplay from "../utils/CurrencyDisplay";
 
-export default function ProductGridComponent(props: { product: Product }) {
+export default function ProductGridComponent(props: {
+  product: Product | any;
+}) {
   const [product] = useState(props.product);
   const { t } = useTranslation("common");
 
