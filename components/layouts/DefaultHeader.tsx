@@ -1,18 +1,12 @@
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { actionSignoutMagicLink } from "../../redux/reducers/LoggedUser";
+import { useSelector } from "react-redux";
 import { StateTypes } from "../../redux/Store";
 
 export default function DefaultHeader() {
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
-  const dispatch = useDispatch();
   const { t } = useTranslation("common");
-
-  const logoutHandler = () => {
-    dispatch(actionSignoutMagicLink());
-  };
 
   return (
     <header
@@ -28,9 +22,9 @@ export default function DefaultHeader() {
       </div>
       <div className="w-1/3 text-white">
         {loggedUser.magicToken ? (
-          <button className="px-2 py-1" onClick={logoutHandler}>
-            {t("signout-title")}
-          </button>
+          <Link href="/account">
+            <button className="px-2 py-1">{t("account-button")}</button>
+          </Link>
         ) : (
           <Link href="/login">
             <a className="block">{t("signin-title")}</a>

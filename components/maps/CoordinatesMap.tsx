@@ -26,10 +26,6 @@ export default function CoordinatesMap(props: {
     props.geocode.longitude
   );
 
-  if (!position.lat || !position.alt) {
-    return <div></div>;
-  }
-
   return (
     <MapContainer center={position} zoom={16} scrollWheelZoom={false}>
       <Head>

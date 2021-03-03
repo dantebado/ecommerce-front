@@ -11,7 +11,7 @@ export default function HomeProductsList() {
   });
   const [loading, setLoading] = useState(true);
   const [pageNumber] = useState(1);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const fetchProducts = () => {
     setLoading(true);

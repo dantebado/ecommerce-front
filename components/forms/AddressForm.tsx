@@ -7,7 +7,7 @@ export default function AddressForm(props: {
   onChange: (v: any) => any;
 }) {
   const [address, setAddress] = useState({ ...props.value });
-  const { t } = useTranslation("");
+  const { t } = useTranslation("common");
 
   const inputHandler = (field: string, value: any) => {
     setAddress({

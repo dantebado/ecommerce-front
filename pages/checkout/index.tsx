@@ -124,7 +124,7 @@ export default function index() {
               />
             </div>
 
-            <p className="mt-3 font-bold text-lg">{t("Datos de Envío")}</p>
+            <p className="mt-3 font-bold text-lg">{t("shipment-data-title")}</p>
             <div className="my-3">
               <AddressForm
                 value={shipmentAddress}

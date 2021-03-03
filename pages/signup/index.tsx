@@ -5,15 +5,26 @@ import Link from "next/link";
 import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserExistence, signupUser } from "../../api/api";
+import ImageUploader from "../../components/forms/ImageUploader";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
-import { actionSignoutMagicLink } from "../../redux/reducers/LoggedUser";
+import {
+  actionLoginMagicLink,
+  actionSignoutMagicLink,
+} from "../../redux/reducers/LoggedUser";
 import { StateTypes } from "../../redux/Store";
 
 const Signup = (props) => {
+  const avatars = [
+    "https://i.imgur.com/yZjSdKP.png",
+    "https://i.imgur.com/P7hAHw6.png",
+    "https://i.imgur.com/P7hAHw6.png",
+  ];
+
   const [payload, setPayload] = useState({
     email: "",
     first_name: "",
     last_name: "",
+    avatar_url: avatars[Math.floor(2 * Math.random())],
   });
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
   const m = new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY);
@@ -35,6 +46,7 @@ const Signup = (props) => {
             signupUser(payload, token)
               .then((response) => {
                 cogoToast.success(t("signup-success"));
+                dispatch(actionLoginMagicLink(token, payload.email));
               })
               .catch((err) => cogoToast.error(t("signup-error")));
           })
@@ -58,11 +70,15 @@ const Signup = (props) => {
     });
   };
 
-  const valid = payload.email && payload.first_name && payload.last_name;
+  const valid =
+    payload.email &&
+    payload.first_name &&
+    payload.last_name &&
+    payload.avatar_url;
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto text-center py-36">
+      <div className="container mx-auto text-center px-4 py-12">
         <div className="md:w-1/2 mx-auto">
           {loggedUser.magicToken ? (
             <Fragment>
@@ -76,6 +92,20 @@ const Signup = (props) => {
               <p className="text-center text-4xl font-bold mb-12">
                 {t("signup-title")}
               </p>
+
+              <div className="mb-6">
+                <img
+                  className="w-1/2 mx-auto rounded-full border-4"
+                  src={payload.avatar_url}
+                />
+              </div>
+
+              <div className="mb-4">
+                <ImageUploader
+                  text={t("upload-avatar-message")}
+                  callback={(e) => setPayload("avatar_url", e)}
+                />
+              </div>
 
               <div className="flex flex-row mb-4 space-x-3">
                 <div className="w-1/2">

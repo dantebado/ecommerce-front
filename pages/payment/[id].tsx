@@ -2,7 +2,11 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { retrieveIndividualPurchase, retrievePayment } from "../../api/api";
+import {
+  applyCouponToPayment,
+  retrieveIndividualPurchase,
+  retrievePayment,
+} from "../../api/api";
 import CartViewer from "../../components/cart/CartViewer";
 import PaymentForm from "../../components/forms/PaymentForm";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
@@ -16,11 +20,12 @@ import cogoToast from "cogo-toast";
 import useTranslation from "next-translate/useTranslation";
 
 export default function PaymentView(props: { payment: Payment }) {
-  const payment = props.payment;
+  const [payment, setPayment] = useState(props.payment);
 
   const router = useRouter();
   const [processedPayment] = useState(null);
   const [individualPurchase, setIndividualPurchase] = useState(null);
+  const [couponCode, setCouponCode] = useState("");
   const [isPaying, setIsPaying] = useState(false);
   const { t } = useTranslation("common");
 
@@ -42,8 +47,20 @@ export default function PaymentView(props: { payment: Payment }) {
       .catch((err) => cogoToast.error(t("error-fetching-purchase")));
   }, []);
 
-  const paymentProcessingCallback = (result: boolean) => {
-    //asd
+  const paymentProcessingCallback = (result: boolean) => {};
+
+  const applyCouponHandler = (e) => {
+    e.preventDefault();
+    applyCouponToPayment(payment.id, couponCode)
+      .then((response) => {
+        cogoToast.success(t("coupon-success"));
+        retrievePayment(payment.id)
+          .then((response) => {
+            setPayment(response.data);
+          })
+          .catch(console.error);
+      })
+      .catch((err) => cogoToast.error(t("coupon-error")));
   };
 
   return (
@@ -60,6 +77,20 @@ export default function PaymentView(props: { payment: Payment }) {
             <p>
               {t("free-shipment-to")} {shipmentAddressString}
             </p>
+
+            <p className="mt-3 font-bold text-lg">{t("apply-coupon-text")}</p>
+            <div className="my-3">
+              <input
+                type="text"
+                value={couponCode}
+                placeholder={t("form-placeholder-coupon")}
+                onChange={(e) => setCouponCode(e.target.value)}
+              />
+            </div>
+
+            <button onClick={applyCouponHandler}>
+              {t("apply-coupon-button")}
+            </button>
 
             <div className="text-center">
               <p className="my-4 uppercase text-2xl font-bold">
@@ -80,11 +111,27 @@ export default function PaymentView(props: { payment: Payment }) {
                 <CurrencyDisplay amount={iPurchase.purchase.discount_amount} />
               </p>
 
+              {payment.amount_to_pay != iPurchase.purchase.amount ? (
+                <Fragment>
+                  <p className="my-3 font-bold text-lg">
+                    {t("coupon-savings")}
+                  </p>
+                  <p>
+                    -{" "}
+                    <CurrencyDisplay
+                      amount={iPurchase.purchase.amount - payment.amount_to_pay}
+                    />
+                  </p>
+                </Fragment>
+              ) : (
+                <span></span>
+              )}
+
               <p className="my-3 pt-3 border-t uppercase font-bold text-lg">
                 {t("total-badge")}
               </p>
               <p>
-                <CurrencyDisplay amount={iPurchase.purchase.amount} />
+                <CurrencyDisplay amount={payment.amount_to_pay} />
               </p>
 
               <button
@@ -97,7 +144,7 @@ export default function PaymentView(props: { payment: Payment }) {
               {isPaying ? (
                 <PaymentForm
                   callback={paymentProcessingCallback}
-                  payment={iPurchase.payment}
+                  payment={payment}
                   purchaseId={iPurchase.purchase.id}
                 />
               ) : (

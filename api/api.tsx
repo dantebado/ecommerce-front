@@ -156,6 +156,32 @@ export function signupUser(payload, token) {
   });
 }
 
+export function retrieveUserDetails(email: string, token: string) {
+  return axios.get(API_ROOT + `/users/profile/${email}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+}
+
+export function updateUserDetails(email: string, token: string, payload: any) {
+  return axios.put(API_ROOT + `/users/profile/${email}`, payload, {
+    headers: {
+      Authorization: token,
+    },
+  });
+}
+
+export function applyCouponToPayment(
+  paymentId: string | number,
+  couponAlias: string
+) {
+  const couponId = couponAlias.toUpperCase();
+  return axios.put(API_ROOT + `/purchases/payments/${paymentId}/coupon`, {
+    coupon_id: couponId,
+  });
+}
+
 // UTILS
 
 const addressToGeocodeQuery = (address: Address) => {

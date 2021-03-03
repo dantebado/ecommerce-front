@@ -29,7 +29,7 @@ const Login = (props) => {
             email: emailAddress,
           })
           .then((token) => {
-            dispatch(actionLoginMagicLink(token));
+            dispatch(actionLoginMagicLink(token, emailAddress));
             router.push("/");
           })
           .catch();

@@ -1,14 +1,14 @@
-import HomeProductsList from '../components/home/HomeProductsList'
-import DefaultLayout from '../components/layouts/DefaultLayout'
-import FeaturedProductCarrousel from '../components/products/FeaturedProductCarrousel'
+import HomeProductsList from "../components/home/HomeProductsList";
+import DefaultLayout from "../components/layouts/DefaultLayout";
+import FeaturedProductCarrousel from "../components/products/FeaturedProductCarrousel";
 
 export default function Home(props) {
   return (
     <DefaultLayout>
-      <div className="container">
+      <div className="container mx-auto">
         <FeaturedProductCarrousel />
-        <HomeProductsList/>
+        <HomeProductsList />
       </div>
     </DefaultLayout>
-  )
+  );
 }

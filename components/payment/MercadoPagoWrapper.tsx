@@ -11,7 +11,7 @@ export default function MercadoPagoWrapper(props: {
 }) {
   const mpPublicKey = process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY;
   const [processing, setProcessing] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const [cardDetails, setCardDetails] = useState({
     number: "",

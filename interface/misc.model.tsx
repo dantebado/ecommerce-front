@@ -118,6 +118,7 @@ export interface IndividualPurchase {
   purchase: Purchase; // enviar el objeto
   shipment: Shipment; // enviar el objeto
   payment: Payment; // enviar el objeto
+  coupon: string;
 }
 
 export type PaymentStatus = "pending" | "failed" | "reserved" | "captured";
