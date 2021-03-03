@@ -17,7 +17,7 @@ export default function CategoriesShowcase() {
   }, []);
 
   return (
-    <div className="container mx-auto py-3 flex md:space-x-3">
+    <div className="container mx-auto py-3 flex flex-wrap md:space-x-3 md:space-y-3">
       {categories.map((v, i, a) => (
         <Link key={v.id} href={`/search?category=${v.id}`}>
           <div className="w-full my-3 md:my-0 md:w-1/3 px-4 py-6 hover:bg-green-300 cursor-pointer transition-all text-center shadow-lg">
