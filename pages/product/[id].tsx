@@ -14,6 +14,7 @@ import { Product } from "../../interface/misc.model";
 import { actionSetActiveCart } from "../../redux/reducers/ActiveCart";
 import { StateTypes } from "../../redux/Store";
 import cogoToast from "cogo-toast";
+import useTranslation from "next-translate/useTranslation";
 
 export default function ProductViewer(props: { product: Product }) {
   const [product] = useState(props.product);
@@ -22,6 +23,7 @@ export default function ProductViewer(props: { product: Product }) {
   const [count, setCount] = useState(0);
   const dispatch = useDispatch();
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   let countOptions = [];
   for (let i = 0; i < Math.min(10, product.current_stock); i++) {
@@ -45,10 +47,10 @@ export default function ProductViewer(props: { product: Product }) {
     addProductToCart(activeCart.id, [payload])
       .then((cart) => {
         dispatch(actionSetActiveCart(cart.data));
-        cogoToast.success("Ítem añadido a tu carrito");
+        cogoToast.success(t("item-added-success"));
         router.push("/cart");
       })
-      .catch((err) => cogoToast.error("Error añadiendo ítem a tu carrito"));
+      .catch((err) => cogoToast.error(t("item-added-error")));
   };
 
   return (
@@ -98,14 +100,14 @@ export default function ProductViewer(props: { product: Product }) {
                   disabled={count == 0 || !activeCart}
                   onClick={submitHandler}
                 >
-                  {count === 0 ? "Seleccioná la Cantidad" : "Añadir al Carrito"}
+                  {count === 0 ? t("select-quantity") : t("add-to-cart")}
                 </button>
                 <CartRetriever></CartRetriever>
               </div>
             </div>
           </div>
           <div className="md:w-1/3 text-left mt-6 md:mt-0 px-3">
-            <p className="uppercase text-2xl">Comentarios</p>
+            <p className="uppercase text-2xl">{t("comments-title")}</p>
             {reviews.map((v, i, a) => (
               <div className="my-3 border-b pb-3">
                 <p className="text-sm">{v.rating} / 5</p>

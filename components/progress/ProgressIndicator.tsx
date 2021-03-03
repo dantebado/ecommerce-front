@@ -10,7 +10,7 @@ export default function ProgressIndicator() {
     <Fragment>
       {progress.active ? (
         <div
-          className={`block fixed top-0 botton-0 left-0 right-0 w-screen h-screen flex flex-row items-center justify-center ${styles.ProgressWrapper}`}
+          className={`fixed top-0 botton-0 left-0 right-0 w-screen h-screen flex flex-row items-center justify-center ${styles.ProgressWrapper}`}
         >
           <div className={`container text-center`}>
             <img src="/assets/logo.png" />

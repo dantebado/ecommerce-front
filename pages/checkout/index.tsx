@@ -16,6 +16,7 @@ import { addressToReadableString, Purchase } from "../../interface/misc.model";
 import { actionSetActiveCart } from "../../redux/reducers/ActiveCart";
 import { StateTypes } from "../../redux/Store";
 import cogoToast from "cogo-toast";
+import useTranslation from "next-translate/useTranslation";
 
 export default function index() {
   const styles = {
@@ -46,6 +47,7 @@ export default function index() {
   const [email, setEmail] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation("common");
 
   if (!activeCart) {
     router.push("/");
@@ -72,7 +74,7 @@ export default function index() {
       .then((purchase) => {
         createIndividualPurchase(purchase.data);
       })
-      .catch((err) => cogoToast.error("Error al crear tu compra"));
+      .catch((err) => cogoToast.error(t("error-creating-individual")));
   };
 
   const createIndividualPurchase = (purchase: Purchase) => {
@@ -83,11 +85,11 @@ export default function index() {
             dispatch(actionSetActiveCart(cart.data));
           })
           .finally(() => {
-            cogoToast.success("Dirigiéndote al Pago");
+            cogoToast.success(t("redirecting-to-payment"));
             router.push("/payment/" + individual.data.payment.id);
           });
       })
-      .catch((err) => cogoToast.error("Error al crear tu compra"));
+      .catch((err) => cogoToast.error(t("error-creating-individual")));
   };
 
   const geocodeHandler = () => {
@@ -105,24 +107,24 @@ export default function index() {
     <DefaultLayout>
       {activeCart ? (
         <div className="container mx-auto py-6 text-center px-2">
-          <p className="font-bold text-4xl">Checkout</p>
+          <p className="font-bold text-4xl">{t("checkout-title")}</p>
           <div className="my-6">
             <CartViewer cart={activeCart} />
           </div>
 
           <div style={styles}>
-            <p className="font-bold text-lg mb-3">Tus Datos</p>
+            <p className="font-bold text-lg mb-3">{t("your-data")}</p>
             <div>
               <input
                 type="email"
-                placeholder="Correo electrónico"
+                placeholder={t("form-placeholder-email")}
                 className="w-full"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
-            <p className="mt-3 font-bold text-lg">Dirección de Entrega</p>
+            <p className="mt-3 font-bold text-lg">{t("Datos de Envío")}</p>
             <div className="my-3">
               <AddressForm
                 value={shipmentAddress}
@@ -132,7 +134,7 @@ export default function index() {
 
             {shipmentAddress.geocoding ? (
               <div>
-                <p>Esta es la dirección que encontramos</p>
+                <p>{t("found-address")}</p>
 
                 <div className="my-3" style={{ height: "20rem" }}>
                   <CoordinatesMap
@@ -147,7 +149,7 @@ export default function index() {
                     disabled={!shipmentAddress.address_line}
                     onClick={(e) => setAddressConfirmed(true)}
                   >
-                    Mi Dirección es Correcta
+                    {t("my-address-is-correct")}
                   </button>
                 </div>
               </div>
@@ -157,14 +159,14 @@ export default function index() {
                 disabled={!email}
                 onClick={geocodeHandler}
               >
-                Validar Dirección
+                {t("validate-address")}
               </button>
             )}
 
             {addressConfirmed ? (
               <div className="mt-3">
                 <p className="font-bold text-3xl">
-                  ¿Qué tipo de compra querés?
+                  {t("purchase-type-question")}
                 </p>
 
                 <div className="md:flex flex-row items-center mt-6">
@@ -173,7 +175,8 @@ export default function index() {
                       className="px-5 py-3"
                       onClick={() => createPurchaseHandler(0)}
                     >
-                      Quiero pagar <CurrencyDisplay amount={activeCart.total} />
+                      {t("wanna-pay-amount")}{" "}
+                      <CurrencyDisplay amount={activeCart.total} />
                     </button>
                   </div>
                   <div className="md:w-1/2 text-center">
@@ -185,8 +188,10 @@ export default function index() {
                         }`}
                         onClick={() => createPurchaseHandler(v.people)}
                       >
-                        Quiero pagar {v.discount}% menos invitando a {v.people}{" "}
-                        persona{v.people > 1 ? "s" : ""}
+                        {t("wanna-pay-discount", {
+                          discount: v.discount,
+                          people: v.people,
+                        })}
                       </button>
                     ))}
                   </div>

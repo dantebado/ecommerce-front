@@ -29,7 +29,7 @@ function FieldComponent(props: { field: Field }) {
           <input
             className="w-full"
             type={field.type || "text"}
-            placeholder={field.placeholder || "Ingresá aquí"}
+            placeholder={field.placeholder || "---"}
             value={field.value}
             onChange={(e) => changeHandler(e.target.value)}
             {...field.props}

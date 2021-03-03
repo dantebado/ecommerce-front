@@ -11,6 +11,7 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 import { checkUserExistence } from "../../api/api";
 import cogoToast from "cogo-toast";
 import Link from "next/link";
+import useTranslation from "next-translate/useTranslation";
 
 const Login = (props) => {
   const [emailAddress, setEmailAddress] = useState("");
@@ -18,6 +19,7 @@ const Login = (props) => {
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation("common");
 
   const startLogin = () => {
     checkUserExistence(emailAddress)
@@ -33,9 +35,7 @@ const Login = (props) => {
           .catch();
       })
       .catch((err) => {
-        cogoToast.error(
-          "No existe un usuario con ese correo electrónico. Intentá registrarte."
-        );
+        cogoToast.error(t("user-non-existent"));
       });
   };
 
@@ -54,25 +54,22 @@ const Login = (props) => {
         <div className="md:w-1/2 mx-auto">
           {loggedUser.magicToken ? (
             <Fragment>
-              <p className="text-center mb-3">Cerrar Sesión</p>
+              <p className="text-center mb-3">{t("signout-title")}</p>
               <button className="px-4 py-2 w-full" onClick={signOut}>
-                Salir
+                {t("signout-button")}
               </button>
             </Fragment>
           ) : (
             <Fragment>
               <p className="text-center text-4xl font-bold mb-3">
-                Iniciar Sesión
+                {t("signin-title")}
               </p>
-              <p className="my-3">
-                Ingresá ahora. Enviaremos un link a tu correo electrónico que te
-                dará acceso a la app.
-              </p>
+              <p className="my-3">{t("signin-instructions")}</p>
 
               <input
                 type="email"
                 required={true}
-                placeholder="Correo Electrónico"
+                placeholder={t("form-placeholder-email")}
                 className="w-full mb-3 px-4 py-2"
                 value={emailAddress}
                 onChange={(e) => setEmailAddress(e.target.value)}
@@ -82,11 +79,11 @@ const Login = (props) => {
                 className="px-4 py-2 w-full uppercase"
                 onClick={startLogin}
               >
-                Iniciar Sesión
+                {t("signin-title")}
               </button>
               <Link href="/signup">
                 <a className="block text-center uppercase text-sm mt-3">
-                  Registrarme ahora
+                  {t("signup-now")}
                 </a>
               </Link>
             </Fragment>

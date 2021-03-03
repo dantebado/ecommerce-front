@@ -7,8 +7,8 @@ import { StateTypes } from "../../redux/Store";
 
 export default function DefaultHeader() {
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
-  const { t, lang } = useTranslation("common");
   const dispatch = useDispatch();
+  const { t } = useTranslation("common");
 
   const logoutHandler = () => {
     dispatch(actionSignoutMagicLink());
@@ -29,11 +29,11 @@ export default function DefaultHeader() {
       <div className="w-1/3 text-white">
         {loggedUser.magicToken ? (
           <button className="px-2 py-1" onClick={logoutHandler}>
-            Cerrar Sesión
+            {t("signout-title")}
           </button>
         ) : (
           <Link href="/login">
-            <a className="block">Iniciar Sesión</a>
+            <a className="block">{t("signin-title")}</a>
           </Link>
         )}
       </div>

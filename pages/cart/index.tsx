@@ -5,17 +5,19 @@ import CartViewer from "../../components/cart/CartViewer";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
 import { StateTypes } from "../../redux/Store";
 import cogoToast from "cogo-toast";
+import useTranslation from "next-translate/useTranslation";
 
 export default function index() {
   const activeCart = useSelector((state: StateTypes) => state.activeCart);
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   if (!activeCart) {
     router.push("/");
   }
 
   const checkoutTriggerHandler = () => {
-    cogoToast.info("Dirigiéndote a Checkout");
+    cogoToast.info(t("redirecting-to-checkout"));
     router.push("/checkout");
   };
 
@@ -23,22 +25,18 @@ export default function index() {
     <DefaultLayout>
       {activeCart ? (
         <div className="container mx-auto py-6 text-center px-2">
-          <p className="font-bold text-4xl">Carrito</p>
-          <p className="mt-3">
-            Aquí verás tu carrito. Para proceder con tu compra, hacé click en Ir
-            a Checkout.
-          </p>
+          <p className="font-bold text-4xl">{t("cart-title")}</p>
           <div className="my-6">
             <CartViewer cart={activeCart} />
           </div>
           {activeCart.products.length > 0 ? (
             <div className="text-center">
               <button className="px-5 py-3" onClick={checkoutTriggerHandler}>
-                Ir a Checkout
+                {t("go-to-checkout")}
               </button>
             </div>
           ) : (
-            <p>Tu Carrito está vacío</p>
+            <p>{t("empty-cart")}</p>
           )}
         </div>
       ) : (

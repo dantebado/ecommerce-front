@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
 import { Address } from "../../interface/misc.model";
 
@@ -6,6 +7,7 @@ export default function AddressForm(props: {
   onChange: (v: any) => any;
 }) {
   const [address, setAddress] = useState({ ...props.value });
+  const { t } = useTranslation("");
 
   const inputHandler = (field: string, value: any) => {
     setAddress({
@@ -25,7 +27,7 @@ export default function AddressForm(props: {
       <div className="mb-3">
         <input
           type="text"
-          placeholder="Dirección"
+          placeholder={t("form-placeholder-address")}
           className="w-full"
           value={address.address_line}
           onChange={(e) => inputHandler("address_line", e.target.value)}
@@ -35,7 +37,7 @@ export default function AddressForm(props: {
         <div className="w-1/2 md:w-3/4 pr-3">
           <input
             type="text"
-            placeholder="Piso / Dpto."
+            placeholder={t("form-placeholder-floor-apt")}
             className="w-full"
             value={address.floor_apt}
             onChange={(e) => inputHandler("floor_apt", e.target.value)}
@@ -44,7 +46,7 @@ export default function AddressForm(props: {
         <div className="w-1/2 md:w-1/4">
           <input
             type="text"
-            placeholder="Código Postal"
+            placeholder={t("form-placeholder-zip")}
             className="w-full"
             value={address.postal_code}
             onChange={(e) => inputHandler("postal_code", e.target.value)}
@@ -55,7 +57,7 @@ export default function AddressForm(props: {
         <div className="w-1/2 pr-3">
           <input
             type="text"
-            placeholder="Ciudad"
+            placeholder={t("form-placeholder-city")}
             className="w-full"
             value={address.city}
             onChange={(e) => inputHandler("city", e.target.value)}
@@ -64,7 +66,7 @@ export default function AddressForm(props: {
         <div className="w-1/2">
           <input
             type="text"
-            placeholder="Estado / Provincia"
+            placeholder={t("form-placeholder-state")}
             className="w-full"
             value={address.state}
             onChange={(e) => inputHandler("state", e.target.value)}

@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { Payment } from "../../interface/misc.model";
@@ -10,6 +11,7 @@ export default function MercadoPagoWrapper(props: {
 }) {
   const mpPublicKey = process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY;
   const [processing, setProcessing] = useState(false);
+  const { t } = useTranslation();
 
   const [cardDetails, setCardDetails] = useState({
     number: "",
@@ -123,10 +125,10 @@ export default function MercadoPagoWrapper(props: {
         <script src="/mp.js"></script>
       </Head>
       <form id="paymentForm" className={style.MPForm}>
-        <p className="text-lg">Detalles del comprador</p>
+        <p className="text-lg">{t("buyer-details-title")}</p>
         <div>
           <div>
-            <label htmlFor="email">E-mail</label>
+            <label htmlFor="email">{t("form-label-email")}</label>
             <input
               id="email"
               name="email"
@@ -138,7 +140,7 @@ export default function MercadoPagoWrapper(props: {
           </div>
           <div className="md:flex flex-row items-center justify-between">
             <div className="w-1/2 pr-3">
-              <label htmlFor="docType">Tipo de documento</label>
+              <label htmlFor="docType">{t("form-label-id-type")}</label>
               <select
                 id="docType"
                 name="docType"
@@ -147,11 +149,11 @@ export default function MercadoPagoWrapper(props: {
                 value={payerDetails.idType}
                 onChange={(e) => inputPayerHandler("idType", e.target.value)}
               >
-                <option value={""}>Tipo de Documento</option>
+                <option value={""}>{t("form-label-id-type")}</option>
               </select>
             </div>
             <div className="w-1/2 pl-3">
-              <label htmlFor="docNumber">Número de documento</label>
+              <label htmlFor="docNumber">{t("form-label-id-number")}</label>
               <input
                 id="docNumber"
                 name="docNumber"
@@ -164,11 +166,11 @@ export default function MercadoPagoWrapper(props: {
             </div>
           </div>
         </div>
-        <p className="text-lg">Detalles de la tarjeta</p>
+        <p className="text-lg">{t("card-details-title")}</p>
         <div>
           <div className="flex flex-row items-center justify-between">
             <div className="w-3/4">
-              <label htmlFor="cardNumber">Número de la tarjeta</label>
+              <label htmlFor="cardNumber">{t("form-label-card-number")}</label>
               <input
                 type="text"
                 id="cardNumber"
@@ -180,7 +182,7 @@ export default function MercadoPagoWrapper(props: {
               />
             </div>
             <div className="w-1/4 pl-6">
-              <label htmlFor="securityCode">CVC</label>
+              <label htmlFor="securityCode">{t("form-label-card-cvc")}</label>
               <input
                 id="securityCode"
                 data-checkout="securityCode"
@@ -194,7 +196,9 @@ export default function MercadoPagoWrapper(props: {
             </div>
           </div>
           <div>
-            <label htmlFor="cardholderName">Titular de la tarjeta</label>
+            <label htmlFor="cardholderName">
+              {t("form-label-cardholder-name")}
+            </label>
             <input
               id="cardholderName"
               data-checkout="cardholderName"
@@ -207,7 +211,7 @@ export default function MercadoPagoWrapper(props: {
             />
           </div>
           <div>
-            <label htmlFor="">Fecha de vencimiento</label>
+            <label htmlFor="">{t("form-label-expiring-date")}</label>
             <div className="flex flex-row items-center justify-between">
               <input
                 type="text"
@@ -240,7 +244,7 @@ export default function MercadoPagoWrapper(props: {
           </div>
           <div className="flex flex-row items-center justify-between">
             <div id="issuerInput" className="w-1/2 pr-3">
-              <label htmlFor="issuer">Banco emisor</label>
+              <label htmlFor="issuer">{t("form-label-issuer")}</label>
               <select
                 id="issuer"
                 name="issuer"
@@ -251,7 +255,9 @@ export default function MercadoPagoWrapper(props: {
               ></select>
             </div>
             <div className="w-1/2 pl-3">
-              <label htmlFor="installments">Cuotas</label>
+              <label htmlFor="installments">
+                {t("form-label-installments")}
+              </label>
               <select
                 id="installments"
                 name="installments"
@@ -278,7 +284,7 @@ export default function MercadoPagoWrapper(props: {
               disabled={!(validCard() && validPayer()) || processing}
               onClick={onFormSubmit}
             >
-              Pagar Ahora{" "}
+              {t("pay-now-badge")}{" "}
               <CurrencyDisplay amount={props.payment.amount_to_pay} />
             </button>
           </div>
