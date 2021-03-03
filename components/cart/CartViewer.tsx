@@ -73,7 +73,7 @@ export default function CartViewer(props: { cart: Cart }) {
         </thead>
         <tbody>
           {cart.products.map((v, i, a) => (
-            <tr key={i}>
+            <tr key={`${v.product}-${i}`}>
               <td>{findProductInCache(v.product).display_name}</td>
               <td>
                 <CurrencyDisplay

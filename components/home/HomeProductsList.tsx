@@ -35,7 +35,7 @@ export default function HomeProductsList() {
         <p>{t("loading-title")}</p>
       ) : (
         products.results.map((v, i, a) => (
-          <div key={i} className="w-1/2 md:w-1/4">
+          <div key={v.id} className="w-1/2 md:w-1/4">
             <ProductGridComponent product={v} />
           </div>
         ))

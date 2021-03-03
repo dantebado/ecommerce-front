@@ -64,7 +64,7 @@ export default function index(props) {
                 {t("form-placeholder-category-selection")}
               </option>
               {categories.map((v, i, a) => (
-                <option key={i} value={v.id}>
+                <option key={v.id} value={v.id}>
                   {v.description}
                 </option>
               ))}
