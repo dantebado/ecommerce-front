@@ -50,7 +50,7 @@ const Login = (props) => {
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto text-center py-36">
+      <div className="container mx-auto text-center px-4 py-36">
         <div className="md:w-1/2 mx-auto">
           {loggedUser.magicToken ? (
             <Fragment>

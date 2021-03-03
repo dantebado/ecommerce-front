@@ -55,7 +55,7 @@ export default function ProductViewer(props: { product: Product }) {
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto py-6 text-center">
+      <div className="container mx-auto px-4 py-6 text-center">
         <div className="md:flex flex-row items-start justify-between">
           <div className="md:w-2/3">
             <p className="mb-3 text-3xl font-bold uppercase">

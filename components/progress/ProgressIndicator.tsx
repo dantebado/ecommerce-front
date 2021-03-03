@@ -12,7 +12,7 @@ export default function ProgressIndicator() {
         <div
           className={`fixed top-0 botton-0 left-0 right-0 w-screen h-screen flex flex-row items-center justify-center ${styles.ProgressWrapper}`}
         >
-          <div className={`container text-center`}>
+          <div className={`container mx-auto text-center`}>
             <img src="/assets/logo.png" />
             <p>{progress.message}</p>
           </div>
