@@ -59,6 +59,8 @@
   "purchase-title": "Compra {{purchaseId}}",
   "fetching-purchase-error": "Error obteniendo tu compra",
   "collaborative-name-title": "Compra Colaborativa",
+  "go-to-purchase": "Ir a la Compra",
+  "go-to-shipment": "Ir al Envío",
 
   "boolean-yn-true": "Sí",
   "boolean-yn-false": "No",
@@ -144,6 +146,8 @@
 
   "account-button": "Mi Cuenta",
   "profile-fetching-error": "Error al obtener tu perfil",
+  "history-fetching-error": "Error al obtener tus compras",
+  "history-title": "Historial de Compras",
   "save-account-button": "Guardar Cambios",
   "save-account-success": "Cambios guardados con éxito",
   "save-account-failed": "Error al guardar los cambios",

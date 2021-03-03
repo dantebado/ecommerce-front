@@ -24,7 +24,7 @@ const Signup = (props) => {
     email: "",
     first_name: "",
     last_name: "",
-    avatar_url: avatars[Math.floor(2 * Math.random())],
+    avatar_url: avatars[Math.floor(avatars.length * Math.random())],
   });
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
   const m = new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY);

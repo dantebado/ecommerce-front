@@ -175,7 +175,7 @@ export function retrieveUserDetails(email: string, token: string) {
 }
 
 export function retrieveUserHistory(email: string, token: string) {
-  return axios.get(API_ROOT + `/users/profile/${email}/purchases/history`, {
+  return axios.get(API_ROOT + `/purchases/${email}/history`, {
     headers: {
       Authorization: token,
     },

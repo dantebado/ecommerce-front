@@ -3,9 +3,14 @@ import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { retrieveUserDetails, updateUserDetails } from "../../api/api";
+import {
+  retrieveUserDetails,
+  retrieveUserHistory,
+  updateUserDetails,
+} from "../../api/api";
 import ImageUploader from "../../components/forms/ImageUploader";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
+import PurchaseHistoryRow from "../../components/purchases/PurchaseHistoryRow";
 import { actionSignoutMagicLink } from "../../redux/reducers/LoggedUser";
 import { StateTypes } from "../../redux/Store";
 
@@ -21,6 +26,7 @@ export default function index() {
     email: "",
     avatar_url: "",
   });
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
     retrieveUserDetails(loggedUser.email, loggedUser.magicToken)
@@ -29,6 +35,12 @@ export default function index() {
         setAvatarUrl(response.data.avatar_url);
       })
       .catch((err) => cogoToast.error(t("profile-fetching-error")));
+
+    retrieveUserHistory(loggedUser.email, loggedUser.magicToken)
+      .then((response) => {
+        setHistory(response.data);
+      })
+      .catch((err) => cogoToast.error(t("history-fetching-error")));
   }, []);
 
   const inputHandler = (field, value) => {
@@ -59,7 +71,7 @@ export default function index() {
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto p-4">
+      <div className="mx-auto p-4" style={{ maxWidth: "560px" }}>
         <div className="mb-6">
           <img
             className="w-1/2 mx-auto rounded-full border-4"
@@ -104,6 +116,11 @@ export default function index() {
         <button className="block w-full" onClick={logoutHandler}>
           {t("signout-title")}
         </button>
+
+        <p className="my-3 font-bold text-lg">{t("history-title")}</p>
+        {history.map((v) => (
+          <PurchaseHistoryRow key={v.id} elem={v} />
+        ))}
       </div>
     </DefaultLayout>
   );

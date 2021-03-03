@@ -10,7 +10,7 @@ export default function ImageUploader(props: {
 }) {
   const { t } = useTranslation("common");
   const onDrop = useCallback((acceptedFiles) => {
-    cogoToast.info("upload-processing");
+    cogoToast.info(t("upload-processing"));
     readFile(acceptedFiles[0]).then((content) => {
       axios
         .post("https://wc-commons.herokuapp.com/files/imgur", {
