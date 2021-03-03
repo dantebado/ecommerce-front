@@ -15,9 +15,8 @@ import { StateTypes } from "../../redux/Store";
 
 const Signup = (props) => {
   const avatars = [
-    "https://i.imgur.com/yZjSdKP.png",
-    "https://i.imgur.com/P7hAHw6.png",
-    "https://i.imgur.com/P7hAHw6.png",
+    "https://i.imgur.com/0QnCYdD.png",
+    "https://i.imgur.com/eqv9do9.png",
   ];
 
   const [payload, setPayload] = useState({
