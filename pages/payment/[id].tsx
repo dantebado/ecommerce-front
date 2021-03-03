@@ -32,7 +32,7 @@ export default function PaymentView(props: { payment: Payment }) {
   let iPurchase: IndividualPurchase = individualPurchase;
   let shipmentAddressString = iPurchase
     ? addressToReadableString(individualPurchase.shipment.shipment_address)
-    : t("loading");
+    : t("loading-title");
 
   useEffect(() => {
     retrieveIndividualPurchase(payment.individual_purchase_id)
@@ -44,7 +44,7 @@ export default function PaymentView(props: { payment: Payment }) {
           setIndividualPurchase(individualPurchase.data);
         }
       })
-      .catch((err) => cogoToast.error(t("error-fetching-purchase")));
+      .catch((err) => cogoToast.error(t("fetching-purchase-error")));
   }, []);
 
   const paymentProcessingCallback = (result: boolean) => {};
@@ -78,7 +78,7 @@ export default function PaymentView(props: { payment: Payment }) {
               {t("free-shipment-to")} {shipmentAddressString}
             </p>
 
-            <p className="mt-3 font-bold text-lg">{t("apply-coupon-text")}</p>
+            <p className="mt-3 font-bold text-lg">{t("apply-coupon-title")}</p>
             <div className="my-3">
               <input
                 type="text"
@@ -94,18 +94,20 @@ export default function PaymentView(props: { payment: Payment }) {
 
             <div className="text-center">
               <p className="my-4 uppercase text-2xl font-bold">
-                {t("pay-now-badge")}
+                {t("pay-now-title")}
               </p>
 
-              <p className="my-3 font-bold text-lg">{t("products-badge")}</p>
+              <p className="my-3 font-bold text-lg">{t("products-title")}</p>
               <p>
                 <CurrencyDisplay amount={iPurchase.purchase.cart_price} />
               </p>
 
-              <p className="my-3 font-bold text-lg">{t("shipment-badge")}</p>
+              <p className="my-3 font-bold text-lg">{t("shipment-title")}</p>
               <p>$ 0.00</p>
 
-              <p className="my-3 font-bold text-lg">{t("collab-savings")}</p>
+              <p className="my-3 font-bold text-lg">
+                {t("collab-savings-title")}
+              </p>
               <p>
                 -{" "}
                 <CurrencyDisplay amount={iPurchase.purchase.discount_amount} />
@@ -128,7 +130,7 @@ export default function PaymentView(props: { payment: Payment }) {
               )}
 
               <p className="my-3 pt-3 border-t uppercase font-bold text-lg">
-                {t("total-badge")}
+                {t("total-badge-title")}
               </p>
               <p>
                 <CurrencyDisplay amount={payment.amount_to_pay} />
@@ -138,7 +140,7 @@ export default function PaymentView(props: { payment: Payment }) {
                 className="block px-4 py-3 uppercase mx-auto my-6"
                 onClick={(e) => setIsPaying(true)}
               >
-                {t("pay-now-badge")}
+                {t("pay-now-title")}
               </button>
 
               {isPaying ? (

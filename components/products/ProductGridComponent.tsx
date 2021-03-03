@@ -20,7 +20,9 @@ export default function ProductGridComponent(props: { product: Product }) {
         </p>
 
         <Link href={`/product/${product.id}`}>
-          <button className="w-full py-1 font-sm">{t("view-details")}</button>
+          <button className="w-full py-1 font-sm">
+            {t("view-product-details-button")}
+          </button>
         </Link>
       </div>
     </div>

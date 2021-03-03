@@ -16,7 +16,7 @@ export default function ShipmentView(props: { shipment: Shipment }) {
     <DefaultLayout>
       <div className="container text-center px-4 py-8">
         <p className="mb-6">
-          {t("shipment-title", { shipmentId: shipment.id })}
+          {t("shipment-to-title", { shipmentId: shipment.id })}
         </p>
 
         <p className="my-3">
@@ -24,7 +24,7 @@ export default function ShipmentView(props: { shipment: Shipment }) {
           <b>{t("shipment-status-shipment.status")}</b>
         </p>
         <p className="my-3">
-          {t("shipment-address")}: {shipmentAddressString}
+          {t("shipment-address-title")}: {shipmentAddressString}
         </p>
 
         <p className="mt-6">IP#{shipment.individual_purchase}</p>

@@ -21,8 +21,18 @@ export interface Wrapper<T> {
   data: T;
 }
 
-export function queryProducts(page: number): Promise<Wrapper<Page<Product>>> {
-  return axios.get(API_ROOT + `/products/?page=${page}`);
+export function queryProducts(
+  page: number,
+  category: string | number,
+  query: string | number,
+  tag: string
+): Promise<Wrapper<Page<Product>>> {
+  return axios.get(
+    API_ROOT +
+      `/products/?page=${page}${category ? "&category=" + category : ""}${
+        tag ? "&tag=" + tag : ""
+      }${query ? "&search=" + query : ""}`
+  );
 }
 
 export function retrieveProduct(
@@ -49,7 +59,7 @@ export function retrieveProductReviews(
 
 export function createProductReview(
   productId: number | string,
-  payload: ProductReview
+  payload: ProductReview | any
 ): Promise<Wrapper<ProductReview>> {
   return axios.post(API_ROOT + `/products/${productId}/new_review/`, payload);
 }
@@ -158,6 +168,14 @@ export function signupUser(payload, token) {
 
 export function retrieveUserDetails(email: string, token: string) {
   return axios.get(API_ROOT + `/users/profile/${email}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+}
+
+export function retrieveUserHistory(email: string, token: string) {
+  return axios.get(API_ROOT + `/users/profile/${email}/purchases/history`, {
     headers: {
       Authorization: token,
     },

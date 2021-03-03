@@ -74,7 +74,7 @@ export default function index() {
       .then((purchase) => {
         createIndividualPurchase(purchase.data);
       })
-      .catch((err) => cogoToast.error(t("error-creating-individual")));
+      .catch((err) => cogoToast.error(t("creating-individual-failed")));
   };
 
   const createIndividualPurchase = (purchase: Purchase) => {
@@ -89,7 +89,7 @@ export default function index() {
             router.push("/payment/" + individual.data.payment.id);
           });
       })
-      .catch((err) => cogoToast.error(t("error-creating-individual")));
+      .catch((err) => cogoToast.error(t("creating-individual-failed")));
   };
 
   const geocodeHandler = () => {
@@ -113,7 +113,7 @@ export default function index() {
           </div>
 
           <div style={styles}>
-            <p className="font-bold text-lg mb-3">{t("your-data")}</p>
+            <p className="font-bold text-lg mb-3">{t("your-data-title")}</p>
             <div>
               <input
                 type="email"
@@ -134,7 +134,7 @@ export default function index() {
 
             {shipmentAddress.geocoding ? (
               <div>
-                <p>{t("found-address")}</p>
+                <p>{t("found-address-message")}</p>
 
                 <div className="my-3" style={{ height: "20rem" }}>
                   <CoordinatesMap
@@ -149,7 +149,7 @@ export default function index() {
                     disabled={!shipmentAddress.address_line}
                     onClick={(e) => setAddressConfirmed(true)}
                   >
-                    {t("my-address-is-correct")}
+                    {t("validate-address-is-correct")}
                   </button>
                 </div>
               </div>
@@ -159,7 +159,7 @@ export default function index() {
                 disabled={!email}
                 onClick={geocodeHandler}
               >
-                {t("validate-address")}
+                {t("validate-address-title")}
               </button>
             )}
 

@@ -15,6 +15,7 @@ import { actionSetActiveCart } from "../../redux/reducers/ActiveCart";
 import { StateTypes } from "../../redux/Store";
 import cogoToast from "cogo-toast";
 import useTranslation from "next-translate/useTranslation";
+import ReviewForm from "../../components/products/ReviewForm";
 
 export default function ProductViewer(props: { product: Product }) {
   const [product] = useState(props.product);
@@ -51,6 +52,10 @@ export default function ProductViewer(props: { product: Product }) {
         router.push("/cart");
       })
       .catch((err) => cogoToast.error(t("item-added-error")));
+  };
+
+  const addReview = (review) => {
+    setReviews([review, ...reviews]);
   };
 
   return (
@@ -100,7 +105,7 @@ export default function ProductViewer(props: { product: Product }) {
                   disabled={count == 0 || !activeCart}
                   onClick={submitHandler}
                 >
-                  {count === 0 ? t("select-quantity") : t("add-to-cart")}
+                  {count === 0 ? t("select-quantity-title") : t("add-to-cart")}
                 </button>
                 <CartRetriever></CartRetriever>
               </div>
@@ -115,6 +120,7 @@ export default function ProductViewer(props: { product: Product }) {
                 <p>{v.commentary}</p>
               </div>
             ))}
+            <ReviewForm product={product} callback={addReview} />
           </div>
         </div>
       </div>

@@ -103,7 +103,7 @@ const Signup = (props) => {
               <div className="mb-4">
                 <ImageUploader
                   text={t("upload-avatar-message")}
-                  callback={(e) => setPayload("avatar_url", e)}
+                  callback={(e) => inputHandler("avatar_url", e)}
                 />
               </div>
 
@@ -148,7 +148,7 @@ const Signup = (props) => {
               </button>
               <Link href="/login">
                 <a className="block text-center uppercase text-sm mt-3">
-                  {t("already-have-account")}
+                  {t("already-have-account-title")}
                 </a>
               </Link>
             </Fragment>

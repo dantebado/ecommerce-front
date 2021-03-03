@@ -16,7 +16,7 @@ export default function CartRetriever() {
       .then((cart) => {
         dispatch(actionSetActiveCart(cart.data));
       })
-      .catch((err) => cogoToast.error(t("error retrieving-cart")));
+      .catch((err) => cogoToast.error(t("retrieving-cart-error")));
   }
 
   return <Fragment></Fragment>;

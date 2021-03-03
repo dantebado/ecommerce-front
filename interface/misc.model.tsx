@@ -156,3 +156,10 @@ export interface User {
   id: number | string;
   email: string;
 }
+
+export interface PurchaseHistory {
+  id: string;
+  shipment_status: ShipmentStatus;
+  creation_date: Date;
+  payment_amount: number;
+}

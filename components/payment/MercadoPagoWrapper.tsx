@@ -138,7 +138,7 @@ export default function MercadoPagoWrapper(props: {
               onChange={(e) => inputPayerHandler("email", e.target.value)}
             />
           </div>
-          <div className="md:flex flex-row items-center justify-between">
+          <div className="flex flex-row items-center justify-between">
             <div className="w-1/2 pr-3">
               <label htmlFor="docType">{t("form-label-id-type")}</label>
               <select
@@ -284,7 +284,7 @@ export default function MercadoPagoWrapper(props: {
               disabled={!(validCard() && validPayer()) || processing}
               onClick={onFormSubmit}
             >
-              {t("pay-now-badge")}{" "}
+              {t("pay-now-title")}{" "}
               <CurrencyDisplay amount={props.payment.amount_to_pay} />
             </button>
           </div>

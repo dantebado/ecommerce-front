@@ -22,7 +22,7 @@ export default function CartViewer(props: { cart: Cart }) {
             [response.data.id]: response.data,
           });
         })
-        .catch((err) => cogoToast.error(t("error-fetching-purchase")));
+        .catch((err) => cogoToast.error(t("fetching-purchase-error")));
     });
   }, []);
 

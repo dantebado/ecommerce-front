@@ -15,7 +15,7 @@ export default function HomeProductsList() {
 
   const fetchProducts = () => {
     setLoading(true);
-    queryProducts(pageNumber)
+    queryProducts(pageNumber, "", "", "")
       .then((page) => {
         setProducts(page.data);
       })
@@ -32,7 +32,7 @@ export default function HomeProductsList() {
   return (
     <div className="flex flex-row items-center flex-wrap justify-around p-2">
       {loading ? (
-        <p>{t("loading")}</p>
+        <p>{t("loading-title")}</p>
       ) : (
         products.results.map((v, i, a) => (
           <div key={i} className="w-1/2 md:w-1/4">

@@ -28,14 +28,14 @@ export default function PaymentView(props: { purchase: Purchase }) {
         </p>
 
         <p className="my-2">
-          {t("collaborative-name")}:{" "}
+          {t("collaborative-name-title")}:{" "}
           {t(`boolean-yn-${purchase.clients_target > 1}`)}
         </p>
         <p className="my-2">
-          {t("neccesary-buyers")}: {purchase.clients_target}
+          {t("necessary-buyers")}: {purchase.clients_target}
         </p>
         <p className="my-2">
-          {t("curreny-buyers")}: {purchase.current_confirmed_clients}
+          {t("current-buyers")}: {purchase.current_confirmed_clients}
         </p>
         <p className="my-2">
           {t("remaining-buyers")}: {purchase.clients_left}

@@ -32,11 +32,11 @@ export default function index() {
           {activeCart.products.length > 0 ? (
             <div className="text-center">
               <button className="px-5 py-3" onClick={checkoutTriggerHandler}>
-                {t("go-to-checkout")}
+                {t("go-to-checkout-button")}
               </button>
             </div>
           ) : (
-            <p>{t("empty-cart")}</p>
+            <p>{t("empty-cart-disclamer")}</p>
           )}
         </div>
       ) : (
