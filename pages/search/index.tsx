@@ -3,9 +3,14 @@ import { useAnimation } from "framer-motion";
 import { GetServerSideProps } from "next";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { queryProducts, retrieveCategories } from "../../api/api";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
 import ProductGridComponent from "../../components/products/ProductGridComponent";
+import {
+  actionSetProgress,
+  actionsHideProgress,
+} from "../../redux/reducers/Progress";
 
 export default function index(props) {
   const [category, setCategory] = useState(props.query.category || "");
@@ -18,6 +23,7 @@ export default function index(props) {
   });
   const [categories, setCategories] = useState([]);
   const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
   const { t } = useTranslation("common");
 
   useEffect(() => {
@@ -35,12 +41,15 @@ export default function index(props) {
 
   const refreshData = (e) => {
     if (e) e.preventDefault();
+
+    dispatch(actionSetProgress(""));
     queryProducts(page, category, query, "")
       .then((response) => {
         const data: any = response.data;
         setMatches(data);
       })
-      .catch((err) => cogoToast.error(t("fetching-products-error")));
+      .catch((err) => cogoToast.error(t("fetching-products-error")))
+      .finally(() => dispatch(actionsHideProgress()));
   };
 
   return (

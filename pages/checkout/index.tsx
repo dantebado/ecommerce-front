@@ -17,6 +17,10 @@ import { actionSetActiveCart } from "../../redux/reducers/ActiveCart";
 import { StateTypes } from "../../redux/Store";
 import cogoToast from "cogo-toast";
 import useTranslation from "next-translate/useTranslation";
+import {
+  actionSetProgress,
+  actionsHideProgress,
+} from "../../redux/reducers/Progress";
 
 export default function index() {
   const styles = {
@@ -70,11 +74,15 @@ export default function index() {
 
   const createPurchaseHandler = (people: number) => {
     let finalPeople = people + 1;
+    dispatch(actionSetProgress(""));
     createPurchase(activeCart.id, shipmentAddress, finalPeople)
       .then((purchase) => {
         createIndividualPurchase(purchase.data);
       })
-      .catch((err) => cogoToast.error(t("creating-individual-failed")));
+      .catch((err) => {
+        cogoToast.error(t("creating-individual-failed"));
+        dispatch(actionsHideProgress());
+      });
   };
 
   const createIndividualPurchase = (purchase: Purchase) => {
@@ -86,10 +94,14 @@ export default function index() {
           })
           .finally(() => {
             cogoToast.success(t("redirecting-to-payment"));
+            dispatch(actionsHideProgress());
             router.push("/payment/" + individual.data.payment.id);
           });
       })
-      .catch((err) => cogoToast.error(t("creating-individual-failed")));
+      .catch((err) => {
+        cogoToast.error(t("creating-individual-failed"));
+        dispatch(actionsHideProgress());
+      });
   };
 
   const geocodeHandler = () => {

@@ -18,6 +18,11 @@ import {
 } from "../../interface/misc.model";
 import cogoToast from "cogo-toast";
 import useTranslation from "next-translate/useTranslation";
+import { useDispatch } from "react-redux";
+import {
+  actionSetProgress,
+  actionsHideProgress,
+} from "../../redux/reducers/Progress";
 
 export default function PaymentView(props: { payment: Payment }) {
   const [payment, setPayment] = useState(props.payment);
@@ -27,6 +32,7 @@ export default function PaymentView(props: { payment: Payment }) {
   const [individualPurchase, setIndividualPurchase] = useState(null);
   const [couponCode, setCouponCode] = useState("");
   const [isPaying, setIsPaying] = useState(false);
+  const dispatch = useDispatch();
   const { t } = useTranslation("common");
 
   let iPurchase: IndividualPurchase = individualPurchase;
@@ -51,6 +57,8 @@ export default function PaymentView(props: { payment: Payment }) {
 
   const applyCouponHandler = (e) => {
     e.preventDefault();
+
+    dispatch(actionSetProgress(""));
     applyCouponToPayment(payment.id, couponCode)
       .then((response) => {
         cogoToast.success(t("coupon-success"));
@@ -58,9 +66,13 @@ export default function PaymentView(props: { payment: Payment }) {
           .then((response) => {
             setPayment(response.data);
           })
-          .catch(console.error);
+          .catch(console.error)
+          .finally(() => dispatch(actionsHideProgress()));
       })
-      .catch((err) => cogoToast.error(t("coupon-error")));
+      .catch((err) => {
+        cogoToast.error(t("coupon-error"));
+        dispatch(actionsHideProgress());
+      });
   };
 
   return (

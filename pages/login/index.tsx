@@ -12,6 +12,10 @@ import { checkUserExistence } from "../../api/api";
 import cogoToast from "cogo-toast";
 import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
+import {
+  actionSetProgress,
+  actionsHideProgress,
+} from "../../redux/reducers/Progress";
 
 const Login = (props) => {
   const [emailAddress, setEmailAddress] = useState("");
@@ -22,6 +26,7 @@ const Login = (props) => {
   const { t } = useTranslation("common");
 
   const startLogin = () => {
+    dispatch(actionSetProgress(""));
     checkUserExistence(emailAddress)
       .then((response) => {
         m.auth
@@ -30,22 +35,26 @@ const Login = (props) => {
           })
           .then((token) => {
             dispatch(actionLoginMagicLink(token, emailAddress));
+            dispatch(actionsHideProgress());
             router.push("/");
           })
-          .catch();
+          .catch((err) => dispatch(actionsHideProgress()));
       })
       .catch((err) => {
+        dispatch(actionsHideProgress());
         cogoToast.error(t("user-non-existent"));
       });
   };
 
   const signOut = () => {
+    dispatch(actionSetProgress(""));
     m.user
       .logout()
       .then((value) => {
         dispatch(actionSignoutMagicLink());
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => dispatch(actionsHideProgress()));
   };
 
   return (

@@ -16,6 +16,10 @@ import { StateTypes } from "../../redux/Store";
 import cogoToast from "cogo-toast";
 import useTranslation from "next-translate/useTranslation";
 import ReviewForm from "../../components/products/ReviewForm";
+import {
+  actionSetProgress,
+  actionsHideProgress,
+} from "../../redux/reducers/Progress";
 
 export default function ProductViewer(props: { product: Product }) {
   const [product] = useState(props.product);
@@ -45,13 +49,16 @@ export default function ProductViewer(props: { product: Product }) {
       productId: product.id,
       count: count,
     };
+
+    dispatch(actionSetProgress(""));
     addProductToCart(activeCart.id, [payload])
       .then((cart) => {
         dispatch(actionSetActiveCart(cart.data));
         cogoToast.success(t("item-added-success"));
         router.push("/cart");
       })
-      .catch((err) => cogoToast.error(t("item-added-error")));
+      .catch((err) => cogoToast.error(t("item-added-error")))
+      .finally(() => dispatch(actionsHideProgress()));
   };
 
   const addReview = (review) => {

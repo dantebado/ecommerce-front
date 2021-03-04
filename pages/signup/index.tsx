@@ -11,6 +11,10 @@ import {
   actionLoginMagicLink,
   actionSignoutMagicLink,
 } from "../../redux/reducers/LoggedUser";
+import {
+  actionSetProgress,
+  actionsHideProgress,
+} from "../../redux/reducers/Progress";
 import { StateTypes } from "../../redux/Store";
 
 const Signup = (props) => {
@@ -27,14 +31,16 @@ const Signup = (props) => {
   });
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
   const m = new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY);
-  const { t, lang } = useTranslation("common");
+  const { t } = useTranslation("common");
 
   const dispatch = useDispatch();
 
   const startSignup = () => {
+    dispatch(actionSetProgress(""));
     checkUserExistence(payload.email)
       .then((response) => {
         cogoToast.error(t("user-already-exists"));
+        dispatch(actionsHideProgress());
       })
       .catch((err) => {
         m.auth
@@ -49,17 +55,20 @@ const Signup = (props) => {
               })
               .catch((err) => cogoToast.error(t("signup-error")));
           })
-          .catch(console.error);
+          .catch(console.error)
+          .finally(() => dispatch(actionsHideProgress()));
       });
   };
 
   const signOut = () => {
+    dispatch(actionSetProgress(""));
     m.user
       .logout()
       .then((value) => {
         dispatch(actionSignoutMagicLink());
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => dispatch(actionsHideProgress()));
   };
 
   const inputHandler = (field, value) => {
