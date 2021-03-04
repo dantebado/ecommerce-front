@@ -8,6 +8,9 @@ export default function CurrencyDisplay(props: { amount: number }) {
   const [convertedAmount, setConvertedAmount] = useState(props.amount);
 
   useEffect(() => {
+    if (currency.code == "ARS") {
+      setConvertedAmount(props.amount);
+    }
     axios
       .get(
         `https://api.mercadopago.com/currency_conversions/search?from=ARS&to=${currency.code}`
@@ -18,5 +21,5 @@ export default function CurrencyDisplay(props: { amount: number }) {
       .catch((err) => {});
   }, [currency]);
 
-  return <span>{`${currency.code} ${convertedAmount.toFixed(2)}`}</span>;
+  return <span>{`${currency.code} ${props.amount.toFixed(2)}`}</span>;
 }
