@@ -21,7 +21,7 @@ export default function RecommendationsBar() {
   }, []);
 
   return (
-    <div className="border-t">
+    <div className={`border-t ${recommendations.length == 0 ? "hidden" : ""}`}>
       <p className="font-bold text-3xl my-4">{t("for-you-title")}</p>
       <div className="flex flex-row md:space-x-3 space-y-3 md:space-y-0">
         {recommendations.map((v) => (

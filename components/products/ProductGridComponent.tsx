@@ -11,7 +11,7 @@ export default function ProductGridComponent(props: {
   const { t } = useTranslation("common");
 
   return (
-    <div className="m-2 text-center">
+    <div className="text-center p-2">
       <div className="shadow-lg p-3 border-radius-sm">
         <img className="border-radius-sm" src={product.featured_photo_url} />
 

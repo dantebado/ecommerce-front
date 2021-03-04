@@ -155,5 +155,6 @@
   "fetching-categories-error": "Error al consultar las categorías",
   "fetching-products-error": "Error al consultar los productos",
 
-  "for-you-title": "Para ti"
+  "for-you-title": "Para ti",
+  "explore-title": "Explorar"
 }

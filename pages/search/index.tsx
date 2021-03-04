@@ -79,7 +79,7 @@ export default function index(props) {
             </div>
           </form>
         </div>
-        <div className="md:flex flex-row items-center md:space-x-3">
+        <div className="md:flex flex-row flex-wrap">
           {matches.results.map((v, i, a) => (
             <div key={`${i}-${v.id}`} className="md:w-1/3">
               <ProductGridComponent product={v} />
