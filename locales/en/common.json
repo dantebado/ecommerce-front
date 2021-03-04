@@ -1,3 +1,160 @@
 {
-  "i-test" : "This is a test"
+  "signout-title": "Sign out",
+  "signout-button": "Sign out",
+
+  "user-already-exists": "There's already a registered user with this email address",
+  "user-non-existent": "There's no user with this email address. Try signing up.",
+  "already-have-account-title": "I already have an account",
+
+  "signup-title": "Create a new account",
+  "signup-button": "Sign up",
+  "signup-success": "Successfully registered",
+  "signup-error": "Registration error",
+  "signup-now": "Sign up now",
+
+  "signin-title": "Sign in",
+  "signin-instructions": "Sign in now. We will send you a link to your email that will give you access to the app.",
+
+  "form-placeholder-firstname": "Names",
+  "form-placeholder-lastname": "Surnames",
+  "form-placeholder-email": "Email",
+  "form-placeholder-address": "Address",
+  "form-placeholder-floor-apt": "Floor / Department",
+  "form-placeholder-zip": "Postal Code",
+  "form-placeholder-city": "City",
+  "form-placeholder-state": "State",
+  "form-placeholder-coupon": "Your Discount Coupon",
+  "form-placeholder-search": "Search",
+  "form-placeholder-category-selection": "Select a Category",
+  "form-placeholder-name": "Your Name",
+  "form-placeholder-review-commentary": "Your Comment",
+  "form-placeholder-review-stars": "Your Review",
+
+  "form-label-email": "Email",
+  "form-label-id-type": "ID Type",
+  "form-label-id-number": "ID Number",
+  "form-label-card-number": "Card number",
+  "form-label-card-cvc": "CVC",
+  "form-label-cardholder-name": "Cardholder's Name",
+  "form-label-expiring-date": "Expiration Date",
+  "form-label-issuer": "Issuing Bank",
+  "form-label-installments": "Installments",
+
+  "apply-coupon-title": "Do you have a discount coupon?",
+  "apply-coupon-button": "Apply",
+
+  "shipment-to-title": "Shipment {{shipmentId}}",
+  "shipment-title": "Shipment",
+  "shipment-data-title": "Shipping Details",
+  "free-shipment-to": "Free Shipping To",
+  "shipment-status-badge": "Shipping Status",
+  "shipment-status-awaiting-payment": "Awaiting Payment",
+  "shipment-status-awaiting-purchase-completition": "Awaiting Purchase Completition",
+  "shipment-status-aborted": "Aborted",
+  "shipment-status-pending": "Shipping Pending",
+  "shipment-status-dispatched": "Dispatched",
+  "shipment-status-delivered": "Delivered",
+  "shipment-address-title": "Shipping Address",
+
+  "purchase-title": "Purchase {{purchaseId}}",
+  "fetching-purchase-error": "Error obtaining your purchase",
+  "collaborative-name-title": "Group Purchase",
+  "go-to-purchase": "Go to Purchase",
+  "go-to-shipment": "Go to Shipment",
+
+  "boolean-yn-true": "Yes",
+  "boolean-yn-false": "No",
+
+  "necessary-buyers": "Required Buyers",
+  "current-buyers": "Current Buyers",
+  "remaining-buyers": "Remaining Buyers",
+  "confirmed-buyers": "Confirmed Buyers",
+  "collab-savings-title": "Group Purchase Savings",
+  "total-badge-title": "Total",
+  "go-to-purchase-status": "Go to Purchase Status",
+
+  "purchase-status-badge": "Purchase Status",
+  "purchase-status-awaiting-peers": "Awaiting Peers",
+  "purchase-status-pending-initial-payment": "Awaiting Initial Payment",
+  "purchase-status-completed": "Completed",
+  "purchase-status-cancelled": "Cancelled",
+  "purchase-status-expired": "Expired",
+
+  "item-added-success": "Item added to your Cart",
+  "item-added-error": "There was an error adding your item to the Cart",
+
+  "select-quantity-title": "Select Quantity",
+
+  "add-to-cart": "Add to Cart",
+
+  "products-title": "Products",
+  "comments-title": "Comments",
+  "create-review-success": "Your comment was sent successfully",
+  "create-review-failure": "There was an error creating your comment",
+  "send-review-button": "Send",
+  "send-review-title": "Send Comment",
+
+  "loading-title": "Loading",
+
+  "pay-title": "Pay",
+  "payment-not-pending": "Your Payment is not pending",
+  "pay-now-title": "Pay Now",
+  "payment-result-title": "Payment Result",
+  "payment-in-current-status": "Payment Result",
+  "redirecting-to-payment": "Redirecting to Payment",
+  "buyer-details-title": "Buyer Details",
+  "card-details-title": "Card Details",
+
+  "payment-status-pending": "Pending",
+  "payment-status-failed": "Failed",
+  "payment-status-reserved": "Reserved",
+  "payment-status-captured": "Captured",
+
+  "creating-individual-failed": "Error Creating Purchase",
+
+  "checkout-title": "Checkout",
+  "your-data-title": "Your Data",
+  "redirecting-to-checkout": "Redirecting to Checkout",
+  "found-address-message": "This is the address we found",
+  "validate-address-title": "Validate Address",
+  "validate-address-is-correct": "My Address is Right",
+  "purchase-type-question": "What kind of purchase would you like?",
+  "wanna-pay-amount": "I want to pay",
+  "wanna-pay-discount": "I want to pay {{discount}}% less by inviting {{people}} people",
+  "cart-title": "Cart",
+  "go-to-checkout-button": "Go to Checkout",
+  "empty-cart-disclamer": "Your Cart is empty",
+  "view-product-details-button": "Read more",
+
+  "item-removed-success": "Item successfully removed",
+  "item-removed-error": "Error removing item from Cart",
+
+  "product-table-head": "Product",
+  "product-table-unitary": "Unitary Price",
+  "product-table-quantity": "Quantity",
+  "product-table-total": "Total Price",
+  "product-table-remove": "Remove",
+
+  "retrieving-cart-error": "Error retrieving Cart",
+  "coupon-savings": "Coupon Savings",
+  "coupon-error": "Error applying coupon",
+  "coupon-success": "Coupon applied successfully",
+
+  "upload-error": "Error uploading your image",
+  "upload-processing": "Uploading Image",
+  "upload-avatar-message": "Upload a profile picture",
+
+  "account-button": "My account",
+  "profile-fetching-error": "Error fetching profile",
+  "history-fetching-error": "Error fetching purchase history",
+  "history-title": "Purchase History",
+  "save-account-button": "Save Changes",
+  "save-account-success": "Changes Saved Successfully",
+  "save-account-failed": "Error Saving Changes",
+
+  "fetching-categories-error": "Error fetching categories",
+  "fetching-products-error": "Error fetching products",
+
+  "for-you-title": "For you",
+  "explore-title": "Explore"
 }
