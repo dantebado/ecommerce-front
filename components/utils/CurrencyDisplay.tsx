@@ -21,5 +21,5 @@ export default function CurrencyDisplay(props: { amount: number }) {
       .catch((err) => {});
   }, [currency]);
 
-  return <span>{`${currency.code} ${props.amount.toFixed(2)}`}</span>;
+  return <span>{`${currency.code} ${convertedAmount.toFixed(2)}`}</span>;
 }
