@@ -5,12 +5,12 @@ import CurrencySelector from "../utils/CurrencySelector";
 export default function DefaultFooter() {
   return (
     <footer className="border-t py-4 text-center text-white bg-black">
-      <div className="mb-3 flex flex-wrap space-x-3 justify-center">
+      <div className="mb-3 flex flex-wrap space-x-8 justify-center">
         <Link href="/">
           <svg
             className="cursor-pointer"
-            width="24"
-            height="24"
+            width="36"
+            height="36"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -44,8 +44,8 @@ export default function DefaultFooter() {
         <Link href="https://www.instagram.com/walen.ga">
           <svg
             className="cursor-pointer"
-            width="24"
-            height="24"
+            width="36"
+            height="36"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
