@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react";
+import CurrencySelector from "../utils/CurrencySelector";
 
 export default function DefaultFooter() {
   return (
-    <footer className="border-top py-4 text-center">
-      FOOTER
+    <footer className="border-t py-4 text-center text-white bg-black">
+      <CurrencySelector />
     </footer>
-  )
+  );
 }

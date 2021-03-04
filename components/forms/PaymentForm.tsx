@@ -1,26 +1,35 @@
-import React, { useState } from 'react'
-import { processPayment } from '../../api/api'
-import { Payment } from '../../interface/misc.model'
+import React, { useState } from "react";
+import { processPayment } from "../../api/api";
+import { Payment } from "../../interface/misc.model";
+import MercadoPagoWrapper from "../payment/MercadoPagoWrapper";
+import cogoToast from "cogo-toast";
+import { useRouter } from "next/router";
 
-export default function PaymentForm(props: {payment: Payment, callback: (payment: Payment) => any}) {
-  const [payment] = useState(props.payment)
+export default function PaymentForm(props: {
+  payment: Payment;
+  purchaseId: string | number;
+  callback: (result: boolean) => any;
+}) {
+  const [payment] = useState(props.payment);
+  const router = useRouter();
 
-  const processPaymentHandler = () => {
-    processPayment(payment.id, null)
-      .then(proccesedPayment => {
-        props.callback(proccesedPayment)
+  const processPaymentHandler = (payload) => {
+    processPayment(payment.id, payload)
+      .then((proccesedPayment) => {
+        props.callback(true);
+        cogoToast.success("Tu pago fue procesado con éxito");
+        router.push("/purchase/" + props.purchaseId);
       })
-      .catch(console.error)
-  }
+      .catch((err) => {
+        props.callback(false);
+        cogoToast.error("Error al procesar tu pago");
+        router.push("/");
+      });
+  };
 
   return (
-    <div className="mx-auto sm:w-3/4 p-4 border-radius-lg shadow-2">
-      <h5>Procesando Pago ${payment.id}</h5>
-
-      <button className="px-5 py-4 mt-3"
-        onClick={processPaymentHandler} >
-        Simular Pago JEJE
-      </button>
+    <div className="mx-auto md:w-3/4 p-4 border-radius-lg shadow-md">
+      <MercadoPagoWrapper payment={payment} callback={processPaymentHandler} />
     </div>
-  )
+  );
 }

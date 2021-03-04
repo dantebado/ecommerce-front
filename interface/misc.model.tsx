@@ -1,116 +1,165 @@
 export interface Address {
-  country: string
-  address: string
-  state: string
-  city: string
-  postalCode?: string
-  commentary?: string
+  country: string;
+  address_line: string;
+  floor_apt: string;
+  state: string;
+  city: string;
+  postal_code?: string;
+  commentary?: string;
+
+  geocoding?: AddressGeoCodingResult;
+}
+
+export interface AddressGeoCodingResponse {
+  data: AddressGeoCodingResult[];
+}
+
+export interface AddressGeoCodingResult {
+  latitude: number;
+  longitude: number;
+  label: string;
+  name: string;
+  type: string;
+  number: string;
+  street: string;
+  postal_code: string;
+  confidence: number;
+  region: string;
+  region_code: string;
+  administrative_area: string;
+  neighbourhood: string;
+  country: string;
+  country_code: string;
+  map_url: string;
+  geocoding_result_type: string;
 }
 
 export function addressToReadableString(address: Address) {
-  return `${address.address}, CP ${address.postalCode}, ${address.city}, ${address.state}, ${address.country}`
+  return `${address.address_line}, ${address.floor_apt || "---"}, CP ${
+    address.postal_code || "---"
+  }, ${address.city || "---"}, ${address.state || "---"}, ${
+    address.country || "---"
+  }`;
 }
 
 export interface Client {
-  id: string | number
-  email: string
+  id: string | number;
+  email: string;
 }
 
 export interface ProductCategory {
-  id: string | number
-  name: string
+  id: string | number;
+  description: string;
 }
 
 export interface Product {
-  id: string | number
-  displayName: string
-  description: string
-  featuredPhotoURL: string
-  photosURL: string[]
-  unitaryPrice: number // supuesto, todo esta en la misma moneda, no es un negocio internacional
-  measureUnit: string // unidad / kg / atado / planta
-  tags: string[]
-  category: ProductCategory
-  currentStock: number
-  firstReview?: ProductReview
+  id: string | number;
+  display_name: string;
+  description: string;
+  featured_photo_url: string;
+  photos_url: { photo: string }[];
+  unitary_price: number; // supuesto, todo esta en la misma moneda, no es un negocio internacional
+  measure_unit: string; // unidad / kg / atado / planta
+  tags: string[];
+  category: ProductCategory;
+  current_stock: number;
+  last_review?: ProductReview;
 }
 
 export interface ProductReview {
-  id: string | number
-  authorName: string
-  commentary: string
-  rating: number // 1 - 5
-  date: Date | string
+  id: string | number;
+  author_name: string;
+  commentary: string;
+  rating: number; // 1 - 5
+  date: Date | string;
 }
 
 export interface ProductInCart {
-  id: string | number
-  product: Product
-  count: number
+  product: number | string;
+  count: number;
 }
 
 export interface Cart {
-  id: string | number
-  creationDate: Date | string
-  lastUpdateDate: Date | string
-  products: ProductInCart[]
-  productsPrice: number
-  locked: boolean
+  id: string | number;
+  created_at: Date | string;
+  //lastUpdateDate: Date | string
+  products: ProductInCart[];
+  total: number;
+  is_locked: boolean;
 }
 
-export type PurchaseStatus = "awaiting-peers" | "pending-initial-payment" | "completed" | "cancelled" | "expired"
+export type PurchaseStatus =
+  | "awaiting-peers"
+  | "pending-initial-payment"
+  | "completed"
+  | "cancelled"
+  | "expired";
 
 export interface Purchase {
-  id: string | number
-  creationDate: Date | string
-  expirationDate: Date | string
-  status: PurchaseStatus
-  clientsTarget: number
-  currentConfirmedClients: number // los que YA pagaron
-  clientsLeft: number
-  clientsTargetReached: boolean
-  shipmentAreaCenter: Address
-  shipmentAreaRadius: number // harcodearlo en el back al crear [kms]
-  cart: Cart
-  cartPrice: number
-  discountAmount: number
-  amountToPay: number
-  shareCode: string
+  id: string | number;
+  creation_date: Date | string;
+  expiration_date: Date | string;
+  status: PurchaseStatus;
+  clients_target: number;
+  current_confirmed_clients: number; // los que YA pagaron
+  clients_left: number;
+  clients_target_reached: boolean;
+  shipment_area_center: Address;
+  shipment_area_radius: number; // harcodearlo en el back al crear [kms]
+  cart: Cart; // enviar todo el cart, no el ID
+  cart_price: number;
+  discount_amount: number; // > 0
+  amount: number; // cartPrice - discountAmount
 }
 
 export interface IndividualPurchase {
-  id: string | number
-  client: Client
-  purchase: Purchase
-  shipment: Shipment
-  payment: Payment
+  id: string | number;
+  client: Client; // enviar el objeto
+  purchase: Purchase; // enviar el objeto
+  shipment: Shipment; // enviar el objeto
+  payment: Payment; // enviar el objeto
+  coupon: string;
 }
 
-export type PaymentStatus = "pending" | "failed" | "reserved" | "captured"
+export type PaymentStatus = "pending" | "failed" | "reserved" | "captured";
 
 export interface Payment {
-  id: string | number
-  individualPurchaseId: string | number
-  status: PaymentStatus
+  id: string | number;
+  individual_purchase_id: string | number;
+  status: PaymentStatus;
+  amount_to_pay: number;
 }
 
-export type ShipmentStatus = "awaiting-payment" | "awaiting-purchase-completition" | "aborted" | "pending" | "dispatched" | "delivered"
+export type ShipmentStatus =
+  | "awaiting-payment"
+  | "awaiting-purchase-completition"
+  | "aborted"
+  | "pending"
+  | "dispatched"
+  | "delivered";
 
 export interface Shipment {
-  id: string | number
-  status: ShipmentStatus
-  shipmentAddress: Address
-  individualPurchaseId: string | number
+  id: string | number;
+  status: ShipmentStatus;
+  shipment_address: Address;
+  individual_purchase: string | number;
 }
 
 export interface Page<T> {
-  count: number
-  next?: string
-  previous?: string
-  results: T[]
+  count: number;
+  next?: string;
+  previous?: string;
+  results: T[];
 }
 
 export interface User {
-  id: number | string
-  email: string
+  id: number | string;
+  email: string;
+}
+
+export interface PurchaseHistory {
+  id: string;
+  shipment_status: ShipmentStatus;
+  creation_date: Date;
+  payment_amount: number;
 }

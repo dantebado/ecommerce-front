@@ -1,49 +1,78 @@
-import React, { useEffect, useState } from 'react'
-import { Address } from '../../interface/misc.model'
+import useTranslation from "next-translate/useTranslation";
+import React, { useEffect, useState } from "react";
+import { Address } from "../../interface/misc.model";
 
-export default function AddressForm(props: {value: Address, onChange: ((v: any) => any)}) {
-  const [address, setAddress] = useState({...props.value})
+export default function AddressForm(props: {
+  value: Address;
+  onChange: (v: any) => any;
+}) {
+  const [address, setAddress] = useState({ ...props.value });
+  const { t } = useTranslation("common");
 
-  const inputHandler = (field: string, value: string) => {
+  const inputHandler = (field: string, value: any) => {
     setAddress({
       ...address,
-      [field]: value
-    })
-  }
+      [field]: value,
+    });
+  };
 
   useEffect(() => {
     if (props.onChange) {
-      props.onChange(address)
+      props.onChange(address);
     }
-  }, [address])
+  }, [address]);
 
   return (
     <div>
-
-        <div className="flex flex-row items-center sm:w-3/4 sm:mx-auto">
-          <div className="w-3/4 p-2">
-            <input type="text" placeholder="Dirección" className="px-2 py-2 w-full"
-                value={address.address}
-                onChange={(e) => inputHandler('address', e.target.value)} />
-          </div>
-          <div className="w-1/4 py-2">
-            <input type="text" placeholder="Código Postal" className="px-2 py-2 w-full"
-                value={address.postalCode}
-                onChange={(e) => inputHandler('postalCode', e.target.value)} />
-          </div>
+      <div className="mb-3">
+        <input
+          type="text"
+          placeholder={t("form-placeholder-address")}
+          className="w-full"
+          value={address.address_line}
+          onChange={(e) => inputHandler("address_line", e.target.value)}
+        />
+      </div>
+      <div className="flex flex-row items-center mb-3">
+        <div className="w-1/2 md:w-3/4 pr-3">
+          <input
+            type="text"
+            placeholder={t("form-placeholder-floor-apt")}
+            className="w-full"
+            value={address.floor_apt}
+            onChange={(e) => inputHandler("floor_apt", e.target.value)}
+          />
         </div>
-        <div className="flex flex-row items-center sm:w-3/4 sm:mx-auto pb-2">
-          <div className="w-1/2 px-2">
-            <input type="text" placeholder="Ciudad" className="w-full px-2 py-2"
-              value={address.city}
-              onChange={(e) => inputHandler('city', e.target.value)} />
-          </div>
-          <div className="w-1/2">
-            <input type="text" placeholder="Estado / Provincia" className="w-full px-2 py-2"
-              value={address.state}
-              onChange={(e) => inputHandler('state', e.target.value)} />
-          </div>
+        <div className="w-1/2 md:w-1/4">
+          <input
+            type="text"
+            placeholder={t("form-placeholder-zip")}
+            className="w-full"
+            value={address.postal_code}
+            onChange={(e) => inputHandler("postal_code", e.target.value)}
+          />
         </div>
+      </div>
+      <div className="flex flex-row items-center">
+        <div className="w-1/2 pr-3">
+          <input
+            type="text"
+            placeholder={t("form-placeholder-city")}
+            className="w-full"
+            value={address.city}
+            onChange={(e) => inputHandler("city", e.target.value)}
+          />
+        </div>
+        <div className="w-1/2">
+          <input
+            type="text"
+            placeholder={t("form-placeholder-state")}
+            className="w-full"
+            value={address.state}
+            onChange={(e) => inputHandler("state", e.target.value)}
+          />
+        </div>
+      </div>
     </div>
-  )
+  );
 }

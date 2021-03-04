@@ -1,25 +1,36 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { actionSignoutMagicLink } from '../../redux/reducers/LoggedUser'
-import { StateTypes } from '../../redux/Store'
-import Link from 'next/link'
+import useTranslation from "next-translate/useTranslation";
+import Link from "next/link";
+import React from "react";
+import { useSelector } from "react-redux";
+import { StateTypes } from "../../redux/Store";
 
 export default function DefaultHeader() {
-  const loggedUser = useSelector((state: StateTypes) => state.loggedUser)
-  const dispatch = useDispatch()
-
-  const logoutHandler = () => {
-    dispatch(actionSignoutMagicLink())
-  }
+  const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
+  const { t } = useTranslation("common");
 
   return (
-    <header className="border-bottom py-3 text-center">
-      <Link href="/">
-        <a><h2 className="mb-3">HEADER</h2></a>
-      </Link>
-      {
-        loggedUser.magicToken ? <button className="px-4 py-2" onClick={logoutHandler}>Cerrar Sesión</button> : <Link href="/login"><a className="display-block">Iniciar Sesión</a></Link>
-      }
+    <header
+      className={`py-3 text-center flex flex-row items-center bg-comm-l justify-between text-white`}
+    >
+      <div className="w-1/3"></div>
+      <div className="w-1/3">
+        <Link href="/">
+          <a className="mx-auto">
+            <img className="w-1/2 md:w-1/4 mx-auto" src="/assets/logo.png" />
+          </a>
+        </Link>
+      </div>
+      <div className="w-1/3 text-white">
+        {loggedUser.magicToken ? (
+          <Link href="/account">
+            <button className="px-2 py-1">{t("account-button")}</button>
+          </Link>
+        ) : (
+          <Link href="/login">
+            <a className="block">{t("signin-title")}</a>
+          </Link>
+        )}
+      </div>
     </header>
-  )
+  );
 }

@@ -1,117 +1,195 @@
-import { GetServerSideProps } from 'next'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { processPayment, retrieveIndividualPurchase, retrievePayment, retrievePurchase } from '../../api/api'
-import CartViewer from '../../components/cart/CartViewer'
-import PaymentForm from '../../components/forms/PaymentForm'
-import DefaultLayout from '../../components/layouts/DefaultLayout'
-import { addressToReadableString, IndividualPurchase, Payment } from '../../interface/misc.model'
+import { GetServerSideProps } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { Fragment, useEffect, useState } from "react";
+import {
+  applyCouponToPayment,
+  retrieveIndividualPurchase,
+  retrievePayment,
+} from "../../api/api";
+import CartViewer from "../../components/cart/CartViewer";
+import PaymentForm from "../../components/forms/PaymentForm";
+import DefaultLayout from "../../components/layouts/DefaultLayout";
+import CurrencyDisplay from "../../components/utils/CurrencyDisplay";
+import {
+  addressToReadableString,
+  IndividualPurchase,
+  Payment,
+} from "../../interface/misc.model";
+import cogoToast from "cogo-toast";
+import useTranslation from "next-translate/useTranslation";
 
-export default function PaymentView(props: {payment: Payment}) {
-  const payment = props.payment
-  
-  const router = useRouter()
-  const [processedPayment, setProcessedPayment] = useState(null)
-  const [individualPurchase, setIndividualPurchase] = useState(null)
-  const [isPaying, setIsPaying] = useState(false)
+export default function PaymentView(props: { payment: Payment }) {
+  const [payment, setPayment] = useState(props.payment);
 
-  let iPurchase: IndividualPurchase = individualPurchase
-  let shipmentAddressString = iPurchase ? addressToReadableString(individualPurchase.shipment.shipmentAddress) : 'Cargando'
+  const router = useRouter();
+  const [processedPayment] = useState(null);
+  const [individualPurchase, setIndividualPurchase] = useState(null);
+  const [couponCode, setCouponCode] = useState("");
+  const [isPaying, setIsPaying] = useState(false);
+  const { t } = useTranslation("common");
+
+  let iPurchase: IndividualPurchase = individualPurchase;
+  let shipmentAddressString = iPurchase
+    ? addressToReadableString(individualPurchase.shipment.shipment_address)
+    : t("loading-title");
 
   useEffect(() => {
-    retrieveIndividualPurchase(payment.individualPurchaseId)
-      .then(individualPurchase => {
-        if (individualPurchase.payment.status !== 'pending') {
-          console.error("payment is not pending")
-          router.push("/")
+    retrieveIndividualPurchase(payment.individual_purchase_id)
+      .then((individualPurchase) => {
+        if (individualPurchase.data.payment.status !== "pending") {
+          cogoToast.error(t("payment-not-pending"));
+          router.push("/");
         } else {
-          setIndividualPurchase(individualPurchase)
+          setIndividualPurchase(individualPurchase.data);
         }
       })
-      .catch(console.error)
-  }, [])
+      .catch((err) => cogoToast.error(t("fetching-purchase-error")));
+  }, []);
 
-  const paymentProcessingCallback = (payment: Payment) => {
-    setProcessedPayment(payment)
-  }
+  const paymentProcessingCallback = (result: boolean) => {};
+
+  const applyCouponHandler = (e) => {
+    e.preventDefault();
+    applyCouponToPayment(payment.id, couponCode)
+      .then((response) => {
+        cogoToast.success(t("coupon-success"));
+        retrievePayment(payment.id)
+          .then((response) => {
+            setPayment(response.data);
+          })
+          .catch(console.error);
+      })
+      .catch((err) => cogoToast.error(t("coupon-error")));
+  };
 
   return (
     <DefaultLayout>
-      <div className="container text-center">
-        <h1 className="my-5">Pagar</h1>
-        {
-          individualPurchase && !processedPayment ? (
-            <div className="text-left my-3">
-              <h3>Compra #{iPurchase.id}-#{iPurchase.purchase.id}</h3>
-              <div className="mt-3">
-                <CartViewer cart={iPurchase.purchase.cart} />
-              </div>
-
-              <h3 className="my-3">Datos de Envío</h3>
-              <p>Envío a {shipmentAddressString}</p>
-
-              <h3 className="my-3">Compra Individual {iPurchase.id} / General {iPurchase.purchase.id}</h3>
-              
-              <div className="text-center">
-                <h1 className="my-4">Pagar Ahora</h1>
-
-                <h5 className="my-3">Productos</h5>
-                <h4>$ {iPurchase.purchase.cartPrice}</h4>
-                
-                <h5 className="my-3">Envío</h5>
-                <h4>$ 0.00</h4>
-
-                <h5 className="my-3">Ahorro por Colaborativa</h5>
-                <h4>- $ {iPurchase.purchase.discountAmount}</h4>
-
-                <h5 className="my-3 pt-3 border-top sm:w-1/2 sm:mx-auto">TOTAL</h5>
-                <h4>$ {iPurchase.purchase.amountToPay}</h4>
-
-                <button
-                  className="display-block px-4 py-3 text-uppercase mx-auto my-6"
-                  onClick={(e) => setIsPaying(true)} >
-                  Pagar Ahora
-                </button>
-
-                {
-                  isPaying ? (
-                    <PaymentForm callback={paymentProcessingCallback} payment={iPurchase.payment} />
-                  ) : ( <span></span> )
-                }
-
-              </div>
+      <div className="container mx-auto text-center px-2">
+        <p className="my-5 text-4xl font-bold">{t("pay-title")}</p>
+        {individualPurchase && !processedPayment ? (
+          <div className="text-left my-3">
+            <div className="my-3">
+              <CartViewer cart={iPurchase.purchase.cart} />
             </div>
-          ) : (<span></span>)
-        }
-        {
-          processedPayment ? (
+
+            <p className="my-3 font-bold text-lg">{t("shipment-data-title")}</p>
+            <p>
+              {t("free-shipment-to")} {shipmentAddressString}
+            </p>
+
+            <p className="mt-3 font-bold text-lg">{t("apply-coupon-title")}</p>
+            <div className="my-3">
+              <input
+                type="text"
+                value={couponCode}
+                placeholder={t("form-placeholder-coupon")}
+                onChange={(e) => setCouponCode(e.target.value)}
+              />
+            </div>
+
+            <button onClick={applyCouponHandler}>
+              {t("apply-coupon-button")}
+            </button>
+
+            <div className="text-center">
+              <p className="my-4 uppercase text-2xl font-bold">
+                {t("pay-now-title")}
+              </p>
+
+              <p className="my-3 font-bold text-lg">{t("products-title")}</p>
+              <p>
+                <CurrencyDisplay amount={iPurchase.purchase.cart_price} />
+              </p>
+
+              <p className="my-3 font-bold text-lg">{t("shipment-title")}</p>
+              <p>$ 0.00</p>
+
+              <p className="my-3 font-bold text-lg">
+                {t("collab-savings-title")}
+              </p>
+              <p>
+                -{" "}
+                <CurrencyDisplay amount={iPurchase.purchase.discount_amount} />
+              </p>
+
+              {payment.amount_to_pay != iPurchase.purchase.amount ? (
+                <Fragment>
+                  <p className="my-3 font-bold text-lg">
+                    {t("coupon-savings")}
+                  </p>
+                  <p>
+                    -{" "}
+                    <CurrencyDisplay
+                      amount={iPurchase.purchase.amount - payment.amount_to_pay}
+                    />
+                  </p>
+                </Fragment>
+              ) : (
+                <span></span>
+              )}
+
+              <p className="my-3 pt-3 border-t uppercase font-bold text-lg">
+                {t("total-badge-title")}
+              </p>
+              <p>
+                <CurrencyDisplay amount={payment.amount_to_pay} />
+              </p>
+
+              <button
+                className="block px-4 py-3 uppercase mx-auto my-6"
+                onClick={(e) => setIsPaying(true)}
+              >
+                {t("pay-now-title")}
+              </button>
+
+              {isPaying ? (
+                <PaymentForm
+                  callback={paymentProcessingCallback}
+                  payment={payment}
+                  purchaseId={iPurchase.purchase.id}
+                />
+              ) : (
+                <span></span>
+              )}
+            </div>
+          </div>
+        ) : (
+          <span></span>
+        )}
+        {processedPayment ? (
+          <Fragment>
+            <p className="mb-3">{t("payment-result-title")}</p>
+
+            <p>
+              {t("payment-in-current-status")}{" "}
+              <b>{t("payment-status-" + processedPayment.status)}</b>
+            </p>
             <div>
-              <h3 className="mb-3">Resultado del Pago</h3>
-
-              <p>Pago resultado en <b>{processedPayment.status}</b></p>
-              <div>
-                <Link href={`/purchase/${iPurchase.purchase.id}`}>
-                  <button className="mt-3 px-3 py-2">Ir a Estado de Compra</button>
-                </Link>
-              </div>
+              <Link href={`/purchase/${iPurchase.purchase.id}`}>
+                <button className="mt-3 px-3 py-2">
+                  {t("go-to-purchase-status")}
+                </button>
+              </Link>
             </div>
-          ) : (<span></span>)
-        }
+          </Fragment>
+        ) : (
+          <span></span>
+        )}
 
-        <h6 className="my-6">Ref#{payment.id}</h6>
+        <p className="my-6">Ref#{payment.id}</p>
       </div>
     </DefaultLayout>
-  )
+  );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({query}) => {
-  const paymentId: any = query.id
-  const payment = await retrievePayment(paymentId)
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const paymentId: any = query.id;
+  const payment = await retrievePayment(paymentId);
 
   return {
     props: {
-      payment: payment
-    }
-  }
-}
+      payment: payment.data,
+    },
+  };
+};

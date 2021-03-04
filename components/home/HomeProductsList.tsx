@@ -1,42 +1,45 @@
-import React, { useEffect, useState } from 'react'
-import { queryProducts } from '../../api/api'
-import ProductGridComponent from '../products/ProductGridComponent'
+import React, { useEffect, useState } from "react";
+import { queryProducts } from "../../api/api";
+import ProductGridComponent from "../products/ProductGridComponent";
+import cogoToast from "cogo-toast";
+import useTranslation from "next-translate/useTranslation";
 
 export default function HomeProductsList() {
   const [products, setProducts] = useState({
     count: -1,
-    results: []
-  })
-  const [loading, setLoading] = useState(true)
-  const [pageNumber, setPageNumber] = useState(0)
+    results: [],
+  });
+  const [loading, setLoading] = useState(true);
+  const [pageNumber] = useState(1);
+  const { t } = useTranslation("common");
 
   const fetchProducts = () => {
-    setLoading(true)
-    queryProducts(pageNumber)
-    .then(page => {
-      setProducts(page)
-    })
-    .catch(console.error)
-    .finally(() => { setLoading(false) })
-  }
+    setLoading(true);
+    queryProducts(pageNumber, "", "", "")
+      .then((page) => {
+        setProducts(page.data);
+      })
+      .catch((err) => cogoToast.error("Error obteniendo lista de productos"))
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
-    fetchProducts()
-  }, [])
+    fetchProducts();
+  }, []);
 
   return (
-    <div>
-      {
-        loading ? (
-          <p>Cargando</p>
-        ) : (
-          products.results.map((v, i, a) => (
-            <div key={i} className="display-inline-block m-3">
-              <ProductGridComponent product={v} />
-            </div>
-          ))
-        )
-      }
+    <div className="flex flex-row items-center flex-wrap justify-around p-2">
+      {loading ? (
+        <p>{t("loading-title")}</p>
+      ) : (
+        products.results.map((v, i, a) => (
+          <div key={v.id} className="w-1/2 md:w-1/4">
+            <ProductGridComponent product={v} />
+          </div>
+        ))
+      )}
     </div>
-  )
+  );
 }
