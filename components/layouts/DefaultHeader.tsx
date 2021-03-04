@@ -12,7 +12,11 @@ export default function DefaultHeader() {
     <header
       className={`py-3 text-center flex flex-row items-center bg-comm-l justify-between text-white`}
     >
-      <div className="w-1/3"></div>
+      <div className="w-1/3">
+        <Link href="/cart">
+          <a className="block">{t("cart-title")}</a>
+        </Link>
+      </div>
       <div className="w-1/3">
         <Link href="/">
           <a className="mx-auto">
