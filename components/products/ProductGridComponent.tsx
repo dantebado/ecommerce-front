@@ -10,10 +10,18 @@ export default function ProductGridComponent(props: {
   const [product] = useState(props.product);
   const { t } = useTranslation("common");
 
+  const photoStyles = {
+    backgroundImage: `url("${product.featured_photo_url}")`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    width: "100%",
+    height: "12rem",
+  };
+
   return (
     <div className="text-center p-2">
       <div className="shadow-lg p-3 border-radius-sm">
-        <img className="border-radius-sm" src={product.featured_photo_url} />
+        <div style={photoStyles}></div>
 
         <p className="text-left my-3">{product.display_name}</p>
         <p className="text-left my-3 text-md font-bold">
