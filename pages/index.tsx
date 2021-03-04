@@ -11,10 +11,10 @@ export default function Home(props) {
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto">
-        <FeaturedProductCarrousel />
+      <FeaturedProductCarrousel />
+      <div className="container px-2 mx-auto">
         <Link href="/search">
-          <button className="w-full block py-6 uppercase mt-3 font-bold text-3xl">
+          <button className="w-full block py-6 uppercase mt-3 font-bold text-3xl rounded-lg">
             {t("explore-title")}
           </button>
         </Link>

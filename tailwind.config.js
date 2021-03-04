@@ -4,13 +4,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "comm-l": "#ecf0f1",
+        "comm-l": "#bbe5f0",
         "comm-m": "#3498db",
       },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      borderRadius: ["hover", "focus"],
+    },
   },
   plugins: [],
 };

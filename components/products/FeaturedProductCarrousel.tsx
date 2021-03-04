@@ -3,8 +3,13 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export default function FeaturedProductCarrousel() {
+  const styles = {
+    overflow: "hidden",
+    maxHeight: "32rem",
+  };
+
   return (
-    <div>
+    <div style={styles}>
       <Carousel
         showThumbs={false}
         showStatus={false}

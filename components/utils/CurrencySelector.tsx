@@ -6,7 +6,16 @@ import { StateTypes } from "../../redux/Store";
 
 export default function CurrencySelector() {
   const currency = useSelector((state: StateTypes) => state.currency);
-  const [currencies, setCurrencies] = useState([]);
+  const [currencies, setCurrencies] = useState([
+    {
+      id: "ARS",
+      description: "Pesos Argentinos",
+    },
+    {
+      id: "USD",
+      description: "United States Dollar",
+    },
+  ]);
   const dispatch = useDispatch();
 
   useEffect(() => {

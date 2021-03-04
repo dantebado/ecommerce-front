@@ -50,6 +50,11 @@ button {
     @apply bg-gray-200;
     @apply cursor-not-allowed;
   }
+  &:hover {
+    @apply bg-comm-m;
+    @apply border-comm-l;
+    @apply text-white;
+  }
 }
 
 input,

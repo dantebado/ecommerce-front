@@ -17,11 +17,13 @@ export default function CategoriesShowcase() {
   }, []);
 
   return (
-    <div className="container mx-auto py-3 flex flex-wrap md:space-x-3 space-y-3">
+    <div className="container mx-auto py-3 flex flex-wrap">
       {categories.map((v, i, a) => (
         <Link key={v.id} href={`/search?category=${v.id}`}>
-          <div className="w-full md:w-1/3 px-4 py-6 hover:bg-green-300 cursor-pointer transition-all text-center shadow-lg">
-            <p className="font-bold uppercase">{v.description}</p>
+          <div className="p-2 w-1/2 md:w-1/3 cursor-pointer">
+            <div className="px-4 py-6 hover:bg-green-300 transition-all text-center shadow-lg hover:rounded-lg">
+              <p className="font-bold uppercase">{v.description}</p>
+            </div>
           </div>
         </Link>
       ))}

@@ -13,7 +13,9 @@ export default function ProgressIndicator() {
           className={`fixed top-0 botton-0 left-0 right-0 w-screen h-screen flex flex-row items-center justify-center ${styles.ProgressWrapper}`}
         >
           <div className={`container mx-auto text-center`}>
-            <img src="/assets/logo.png" />
+            <div>
+              <img className="mx-auto" src="/assets/spinner.png" />
+            </div>
             <p>{progress.message}</p>
           </div>
         </div>

@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     <Provider store={store}>
       <PersistGate loading={<div>loading</div>} persistor={persistor}>
         <Head>
-          <title>ECommerce</title>
+          <title>WalenGa</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link
             rel="shortcut icon"

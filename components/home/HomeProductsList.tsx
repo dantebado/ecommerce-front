@@ -30,7 +30,7 @@ export default function HomeProductsList() {
   }, []);
 
   return (
-    <div className="flex flex-row items-center flex-wrap justify-around p-2">
+    <div className="flex flex-row items-center flex-wrap justify-around">
       {loading ? (
         <p>{t("loading-title")}</p>
       ) : (

@@ -20,8 +20,8 @@ export default function ProductGridComponent(props: {
 
   return (
     <div className="text-center p-2">
-      <div className="shadow-lg p-3 border-radius-md">
-        <div style={photoStyles}></div>
+      <div className="shadow-lg p-3 rounded-lg">
+        <div style={photoStyles} className="border-b"></div>
 
         <p className="text-left my-3">{product.display_name}</p>
         <p className="text-left my-3 text-md font-bold">
@@ -30,7 +30,7 @@ export default function ProductGridComponent(props: {
         </p>
 
         <Link href={`/product/${product.id}`}>
-          <button className="w-full py-1 font-sm">
+          <button className="w-full py-1 font-sm rounded-md">
             {t("view-product-details-button")}
           </button>
         </Link>

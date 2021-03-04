@@ -13,6 +13,10 @@ import ImageUploader from "../../components/forms/ImageUploader";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
 import PurchaseHistoryRow from "../../components/purchases/PurchaseHistoryRow";
 import { actionSignoutMagicLink } from "../../redux/reducers/LoggedUser";
+import {
+  actionSetProgress,
+  actionsHideProgress,
+} from "../../redux/reducers/Progress";
 import { StateTypes } from "../../redux/Store";
 
 export default function index() {
@@ -60,6 +64,7 @@ export default function index() {
 
   const updateProfileHandler = (e) => {
     e.preventDefault();
+    dispatch(actionSetProgress(""));
     updateUserDetails(user.email, loggedUser.magicToken, {
       ...user,
       avatar_url: avatarUrl,
@@ -69,7 +74,8 @@ export default function index() {
       })
       .catch((err) => {
         cogoToast.error(t("save-account-failed"));
-      });
+      })
+      .finally(() => dispatch(actionsHideProgress()));
   };
 
   return (
