@@ -1,4 +1,5 @@
 import cogoToast from "cogo-toast";
+import { Magic } from "magic-sdk";
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -20,6 +21,7 @@ export default function index() {
   const dispatch = useDispatch();
   const router = useRouter();
   const [avatarUrl, setAvatarUrl] = useState("");
+  const m = new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY);
   const [user, setUser] = useState({
     first_name: "",
     last_name: "",
@@ -51,6 +53,7 @@ export default function index() {
   };
 
   const logoutHandler = () => {
+    m.user.logout();
     dispatch(actionSignoutMagicLink());
     router.push("/");
   };
