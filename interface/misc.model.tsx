@@ -142,7 +142,7 @@ export interface Shipment {
   id: string | number;
   status: ShipmentStatus;
   shipment_address: Address;
-  individual_purchase: string | number;
+  individual_purchase_id: string | number;
 }
 
 export interface Page<T> {

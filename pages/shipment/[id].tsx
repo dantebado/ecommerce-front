@@ -14,20 +14,20 @@ export default function ShipmentView(props: { shipment: Shipment }) {
 
   return (
     <DefaultLayout>
-      <div className="container text-center px-4 py-8">
+      <div className="container mx-auto text-center px-4 py-8">
         <p className="mb-6">
           {t("shipment-to-title", { shipmentId: shipment.id })}
         </p>
 
         <p className="my-3">
           {t("shipment-status-badge")}{" "}
-          <b>{t("shipment-status-shipment.status")}</b>
+          <b>{t("shipment-status-" + shipment.status)}</b>
         </p>
         <p className="my-3">
           {t("shipment-address-title")}: {shipmentAddressString}
         </p>
 
-        <p className="mt-6">IP#{shipment.individual_purchase}</p>
+        <p className="mt-6">IP#{shipment.individual_purchase_id}</p>
       </div>
     </DefaultLayout>
   );
