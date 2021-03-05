@@ -4,6 +4,7 @@ import { retrieveShipment } from "../../api/api";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
 import { addressToReadableString, Shipment } from "../../interface/misc.model";
 import useTranslation from "next-translate/useTranslation";
+import Head from "next/head";
 
 export default function ShipmentView(props: { shipment: Shipment }) {
   const shipment = props.shipment;
@@ -14,6 +15,10 @@ export default function ShipmentView(props: { shipment: Shipment }) {
 
   return (
     <DefaultLayout>
+      <Head>
+        <title>{t("shipment-title")} - WalenGa</title>
+        <meta name="description" content={t("meta-description-shipment")} />
+      </Head>
       <div className="container mx-auto text-center px-4 py-8 dark:text-white">
         <p className="mb-6">
           {t("shipment-to-title", { shipmentId: shipment.id })}

@@ -92,6 +92,7 @@ export default function JoinPurchaseComponent(props: { purchase: Purchase }) {
             <div className="mb-3">
               <input
                 type="email"
+                autoComplete="false"
                 placeholder="Correo electrónico"
                 className="px-2 py-2 w-full"
                 value={email}

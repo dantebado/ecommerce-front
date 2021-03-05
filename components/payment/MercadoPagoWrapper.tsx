@@ -133,7 +133,7 @@ export default function MercadoPagoWrapper(props: {
               id="email"
               name="email"
               disabled={processing}
-              type="text"
+              type="email"
               value={payerDetails.email}
               onChange={(e) => inputPayerHandler("email", e.target.value)}
             />
@@ -172,7 +172,7 @@ export default function MercadoPagoWrapper(props: {
             <div className="w-3/4">
               <label htmlFor="cardNumber">{t("form-label-card-number")}</label>
               <input
-                type="text"
+                type="number"
                 id="cardNumber"
                 disabled={processing}
                 autoComplete="false"
@@ -188,7 +188,7 @@ export default function MercadoPagoWrapper(props: {
                 data-checkout="securityCode"
                 disabled={processing}
                 autoComplete="false"
-                type="text"
+                type="number"
                 maxLength={4}
                 value={cardDetails.cvc}
                 onChange={(e) => inputCardHandler("cvc", e.target.value)}

@@ -2,6 +2,7 @@ import cogoToast from "cogo-toast";
 import { useAnimation } from "framer-motion";
 import { GetServerSideProps } from "next";
 import useTranslation from "next-translate/useTranslation";
+import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { queryProducts, retrieveCategories } from "../../api/api";
@@ -54,12 +55,17 @@ export default function index(props) {
 
   return (
     <DefaultLayout>
+      <Head>
+        <title>{t("search-title")} - WalenGa</title>
+        <meta name="description" content={t("meta-description-search")} />
+      </Head>
       <div className="container mx-auto p-2">
         <div className="pb-3 border-b">
           <form action="" onSubmit={refreshData}>
             <input
               className="w-full"
               type="text"
+              autoComplete="false"
               value={query}
               placeholder={t("form-placeholder-search")}
               onChange={(e) => setQuery(e.target.value)}
@@ -67,6 +73,7 @@ export default function index(props) {
             <select
               className="w-full my-3"
               value={category}
+              autoComplete="false"
               onChange={(e) => setCategory(e.target.value)}
             >
               <option value="">

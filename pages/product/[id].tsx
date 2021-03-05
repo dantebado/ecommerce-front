@@ -1,6 +1,7 @@
 import cogoToast from "cogo-toast";
 import { GetServerSideProps } from "next";
 import useTranslation from "next-translate/useTranslation";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,7 +52,7 @@ export default function ProductViewer(props: { product: Product }) {
     };
 
     dispatch(actionSetProgress(""));
-    addProductToCart(activeCart.id, [payload])
+    addProductToCart(activeCart?.id, [payload])
       .then((cart) => {
         dispatch(actionSetActiveCart(cart.data));
         cogoToast.success(t("item-added-success"));
@@ -67,6 +68,12 @@ export default function ProductViewer(props: { product: Product }) {
 
   return (
     <DefaultLayout>
+      <Head>
+        <title>{product.display_name} - WalenGa</title>
+        <meta name="description" content={product.description} />
+        <meta property="og:image" content={product.featured_photo_url} />
+        <meta name="twitter:card" content="summary_large_image"></meta>
+      </Head>
       <div className="container mx-auto px-4 py-6 text-center dark:text-white">
         <div className="md:flex flex-row items-start justify-between">
           <div className="md:w-2/3">
@@ -96,6 +103,7 @@ export default function ProductViewer(props: { product: Product }) {
                 <select
                   className="w-full py-2 px-2 dark:text-black"
                   value={count}
+                  autoComplete="false"
                   onChange={(e) => setCount(parseInt(e.target.value))}
                 >
                   {countOptions.map((v, i, a) => (
@@ -109,7 +117,7 @@ export default function ProductViewer(props: { product: Product }) {
               <div className="md:w-1/2 px-4 mt-4 md:mt-0">
                 <button
                   className="px-6 py-3 w-full"
-                  disabled={count == 0 || !activeCart}
+                  disabled={count == 0 || !activeCart?.id}
                   onClick={submitHandler}
                 >
                   {count === 0 ? t("select-quantity-title") : t("add-to-cart")}

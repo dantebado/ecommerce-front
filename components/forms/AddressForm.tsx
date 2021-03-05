@@ -27,6 +27,7 @@ export default function AddressForm(props: {
       <div className="mb-3">
         <input
           type="text"
+          autoComplete="false"
           placeholder={t("form-placeholder-address")}
           className="w-full"
           value={address.address_line}
@@ -37,6 +38,7 @@ export default function AddressForm(props: {
         <div className="w-1/2 md:w-3/4 pr-3">
           <input
             type="text"
+            autoComplete="false"
             placeholder={t("form-placeholder-floor-apt")}
             className="w-full"
             value={address.floor_apt}
@@ -46,6 +48,7 @@ export default function AddressForm(props: {
         <div className="w-1/2 md:w-1/4">
           <input
             type="text"
+            autoComplete="false"
             placeholder={t("form-placeholder-zip")}
             className="w-full"
             value={address.postal_code}
@@ -57,6 +60,7 @@ export default function AddressForm(props: {
         <div className="w-1/2 pr-3">
           <input
             type="text"
+            autoComplete="false"
             placeholder={t("form-placeholder-city")}
             className="w-full"
             value={address.city}
@@ -66,6 +70,7 @@ export default function AddressForm(props: {
         <div className="w-1/2">
           <input
             type="text"
+            autoComplete="false"
             placeholder={t("form-placeholder-state")}
             className="w-full"
             value={address.state}

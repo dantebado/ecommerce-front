@@ -21,6 +21,7 @@ import {
   actionSetProgress,
   actionsHideProgress,
 } from "../../redux/reducers/Progress";
+import Head from "next/head";
 
 export default function index() {
   const styles = {
@@ -52,10 +53,6 @@ export default function index() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
-
-  if (!activeCart) {
-    return <div></div>;
-  }
 
   const promotionOptions = [
     {
@@ -115,9 +112,17 @@ export default function index() {
       .catch((err) => {});
   };
 
+  if (!activeCart?.id) {
+    return <div></div>;
+  }
+
   return (
     <DefaultLayout>
-      {activeCart ? (
+      <Head>
+        <title>{t("checkout-title")} - WalenGa</title>
+        <meta name="description" content={t("meta-description-checkout")} />
+      </Head>
+      {activeCart?.id ? (
         <div className="container mx-auto py-6 text-center px-2 dark:text-white">
           <p className="font-bold text-4xl">{t("checkout-title")}</p>
           <div className="my-6">
@@ -129,6 +134,7 @@ export default function index() {
             <div>
               <input
                 type="email"
+                autoComplete="false"
                 placeholder={t("form-placeholder-email")}
                 className="w-full"
                 value={email}

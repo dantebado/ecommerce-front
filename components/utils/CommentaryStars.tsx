@@ -33,6 +33,7 @@ export default function CommentaryStars(props: { count: number }) {
       ))}
       {arre.map((v, i) => (
         <svg
+          key={`${i}-f`}
           version="1.1"
           x="0px"
           y="0px"

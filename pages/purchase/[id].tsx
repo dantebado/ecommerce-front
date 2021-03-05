@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import useTranslation from "next-translate/useTranslation";
+import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import { retrievePurchase } from "../../api/api";
@@ -22,6 +23,12 @@ export default function PaymentView(props: { purchase: Purchase }) {
 
   return (
     <DefaultLayout>
+      <Head>
+        <title>
+          {t("purchase-title", { purchaseId: purchase.id })} - WalenGa
+        </title>
+        <meta name="description" content={t("meta-description-purchase")} />
+      </Head>
       <div className="container mx-auto text-center py-8 px-2 dark:text-white">
         <p className="mb-6 font-bold text-2xl">
           {t("purchase-title", { purchaseId: purchase.id })}

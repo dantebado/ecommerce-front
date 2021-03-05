@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import useTranslation from "next-translate/useTranslation";
+import Head from "next/head";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { retrieveIndividualPurchase, retrievePurchase } from "../../api/api";
@@ -14,6 +15,10 @@ export default function individual(props: { individual: IndividualPurchase }) {
 
   return (
     <DefaultLayout>
+      <Head>
+        <title>WalenGa</title>
+        <meta name="description" content={t("meta-description-purchase")} />
+      </Head>
       <div className="container mx-auto flex flex-row space-x-4 justify-center py-16">
         <Link href={`/purchase/${purchase.id}`}>
           <button>{t("go-to-purchase")}</button>

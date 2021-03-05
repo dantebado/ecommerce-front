@@ -23,6 +23,7 @@ import {
   actionSetProgress,
   actionsHideProgress,
 } from "../../redux/reducers/Progress";
+import Head from "next/head";
 
 export default function PaymentView(props: { payment: Payment }) {
   const [payment, setPayment] = useState(props.payment);
@@ -77,6 +78,10 @@ export default function PaymentView(props: { payment: Payment }) {
 
   return (
     <DefaultLayout>
+      <Head>
+        <title>{t("pay-title")} - WalenGa</title>
+        <meta name="description" content={t("meta-description-search")} />
+      </Head>
       <div className="container mx-auto text-center px-2 dark:text-white">
         <p className="py-5 text-4xl font-bold">{t("pay-title")}</p>
         {individualPurchase && !processedPayment ? (
@@ -94,6 +99,7 @@ export default function PaymentView(props: { payment: Payment }) {
             <div className="my-3">
               <input
                 type="text"
+                autoComplete="false"
                 value={couponCode}
                 placeholder={t("form-placeholder-coupon")}
                 onChange={(e) => setCouponCode(e.target.value)}

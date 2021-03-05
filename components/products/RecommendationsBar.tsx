@@ -10,15 +10,17 @@ export default function RecommendationsBar() {
   const [recommendations, setRecommendations] = useState([]);
   const { t } = useTranslation("common");
 
-  if (!loggedUser.email) return <div></div>;
-
   useEffect(() => {
+    if (!loggedUser.email) return;
+
     retrieveUserRecommendations(loggedUser.email, loggedUser.magicToken)
       .then((response) => {
         setRecommendations(response.data);
       })
       .catch((err) => {});
-  }, []);
+  }, [loggedUser]);
+
+  if (!loggedUser.email) return <div></div>;
 
   return (
     <div
@@ -28,8 +30,8 @@ export default function RecommendationsBar() {
     >
       <p className="font-bold text-3xl my-4">{t("for-you-title")}</p>
       <div className="flex flex-row md:space-x-3 space-y-3 md:space-y-0">
-        {recommendations.map((v) => (
-          <div key={v.id} className="w-full md:w-1/4">
+        {recommendations.map((v, i) => (
+          <div key={i} className="w-full md:w-1/4">
             <ProductGridComponent product={v} />
           </div>
         ))}

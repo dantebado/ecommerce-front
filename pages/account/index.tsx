@@ -1,6 +1,7 @@
 import cogoToast from "cogo-toast";
 import { Magic } from "magic-sdk";
 import useTranslation from "next-translate/useTranslation";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +26,7 @@ export default function index() {
   const dispatch = useDispatch();
   const router = useRouter();
   const [avatarUrl, setAvatarUrl] = useState("");
-  const m = new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY);
+  const [m, setM] = useState(null);
   const [user, setUser] = useState({
     first_name: "",
     last_name: "",
@@ -34,11 +35,12 @@ export default function index() {
   });
   const [history, setHistory] = useState([]);
 
-  if (!loggedUser) {
-    return <div></div>;
-  }
+  useEffect(() => {
+    setM(new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY));
+  }, []);
 
   useEffect(() => {
+    if (!loggedUser.email) return;
     retrieveUserDetails(loggedUser.email, loggedUser.magicToken)
       .then((response) => {
         setUser(response.data);
@@ -51,7 +53,7 @@ export default function index() {
         setHistory(response.data);
       })
       .catch((err) => cogoToast.error(t("history-fetching-error")));
-  }, []);
+  }, [loggedUser]);
 
   const inputHandler = (field, value) => {
     setUser({
@@ -82,8 +84,16 @@ export default function index() {
       .finally(() => dispatch(actionsHideProgress()));
   };
 
+  if (!loggedUser.email) {
+    return <div></div>;
+  }
+
   return (
     <DefaultLayout>
+      <Head>
+        <title>{t("account-button")} - WalenGa</title>
+        <meta name="description" content={t("meta-description-account")} />
+      </Head>
       <div
         className="mx-auto p-4 dark:text-white"
         style={{ maxWidth: "560px" }}
@@ -106,6 +116,7 @@ export default function index() {
           <div className="w-1/2">
             <input
               type="text"
+              autoComplete="false"
               required={true}
               className="w-full px-4 py-2"
               placeholder={t("form-placeholder-firstname")}
@@ -116,6 +127,7 @@ export default function index() {
           <div className="w-1/2">
             <input
               type="text"
+              autoComplete="false"
               required={true}
               className="w-full  px-4 py-2"
               placeholder={t("form-placeholder-lastname")}

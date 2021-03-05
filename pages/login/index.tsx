@@ -16,14 +16,20 @@ import {
   actionSetProgress,
   actionsHideProgress,
 } from "../../redux/reducers/Progress";
+import { useEffect } from "react";
+import Head from "next/head";
 
 const Login = (props) => {
   const [emailAddress, setEmailAddress] = useState("");
-  const m = new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY);
+  const [m, setM] = useState(null);
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
+
+  useEffect(() => {
+    setM(new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY));
+  }, []);
 
   const startLogin = () => {
     dispatch(actionSetProgress(""));
@@ -59,6 +65,10 @@ const Login = (props) => {
 
   return (
     <DefaultLayout>
+      <Head>
+        <title>{t("signin-title")} - WalenGa</title>
+        <meta name="description" content={t("meta-description-search")} />
+      </Head>
       <div className="container mx-auto text-center px-4 py-36 dark:text-white">
         <div className="md:w-1/2 mx-auto">
           {loggedUser.magicToken ? (
@@ -77,6 +87,7 @@ const Login = (props) => {
 
               <input
                 type="email"
+                autoComplete="false"
                 required={true}
                 placeholder={t("form-placeholder-email")}
                 className="w-full mb-3 px-4 py-2"

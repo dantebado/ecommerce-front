@@ -6,6 +6,7 @@ import DefaultLayout from "../../components/layouts/DefaultLayout";
 import { StateTypes } from "../../redux/Store";
 import cogoToast from "cogo-toast";
 import useTranslation from "next-translate/useTranslation";
+import Head from "next/head";
 
 export default function index() {
   const activeCart = useSelector((state: StateTypes) => state.activeCart);
@@ -19,7 +20,11 @@ export default function index() {
 
   return (
     <DefaultLayout>
-      {activeCart ? (
+      <Head>
+        <title>{t("cart-title")} - WalenGa</title>
+        <meta name="description" content={t("meta-description-cart")} />
+      </Head>
+      {activeCart?.id ? (
         <div className="container mx-auto py-6 text-center px-2 dark:text-white">
           <p className="font-bold text-4xl">{t("cart-title")}</p>
           <div className="my-6">

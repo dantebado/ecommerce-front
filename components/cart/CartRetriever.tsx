@@ -11,7 +11,7 @@ export default function CartRetriever() {
   const activeCart = useSelector((state: StateTypes) => state.activeCart);
   const { t } = useTranslation("common");
 
-  if (!activeCart) {
+  if (!activeCart?.id) {
     createCart()
       .then((cart) => {
         dispatch(actionSetActiveCart(cart.data));

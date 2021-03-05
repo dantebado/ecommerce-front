@@ -6,9 +6,13 @@ import { StateTypes } from "../../redux/Store";
 
 export default function RefreshToken() {
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
-  const m = new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY);
+  const [m, setM] = useState(null);
   const [intervalId, setIntervalId] = useState(null);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setM(new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY));
+  }, []);
 
   useEffect(() => {
     if (intervalId) {

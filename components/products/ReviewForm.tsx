@@ -50,6 +50,7 @@ export default function ReviewForm(props: {
         <input
           className="w-1/2"
           type="text"
+          autoComplete="false"
           placeholder={t("form-placeholder-name")}
           value={payload.author_name}
           onChange={(e) => inputHandler("author_name", e.target.value)}
@@ -57,6 +58,7 @@ export default function ReviewForm(props: {
         <select
           className="w-1/2"
           value={payload.rating}
+          autoComplete="false"
           onChange={(e) => inputHandler("rating", e.target.value)}
         >
           <option value="">{t("form-placeholder-review-stars")}</option>
@@ -69,6 +71,7 @@ export default function ReviewForm(props: {
       </div>
       <textarea
         className="w-full mb-1 mt-2"
+        autoComplete="false"
         placeholder={t("form-placeholder-review-commentary")}
         value={payload.commentary}
         onChange={(e) => inputHandler("commentary", e.target.value)}

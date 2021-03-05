@@ -25,35 +25,31 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={<div>loading</div>} persistor={persistor}>
-        <Head>
-          <title>WalenGa</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link
-            rel="shortcut icon"
-            href="/assets/favicon.png"
-            type="image/png"
-          />
-        </Head>
-        <motion.div
-          key={router.route}
-          initial="pageInitial"
-          animate="pageAnimate"
-          variants={{
-            pageInitial: {
-              opacity: 0,
-            },
-            pageAnimate: {
-              opacity: 1,
-            },
-          }}
-        >
-          <Component {...pageProps} />
-          <ProgressIndicator />
-          <RefreshToken />
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="/assets/favicon.png" type="image/png" />
+        <meta charSet="utf-8" />
+      </Head>
+      <motion.div
+        key={router.route}
+        initial="pageInitial"
+        animate="pageAnimate"
+        variants={{
+          pageInitial: {
+            opacity: 0,
+          },
+          pageAnimate: {
+            opacity: 1,
+          },
+        }}
+      >
+        <Component {...pageProps} />
+        <ProgressIndicator />
+        <RefreshToken />
+        <PersistGate persistor={persistor}>
           <CartRetriever />
-        </motion.div>
-      </PersistGate>
+        </PersistGate>
+      </motion.div>
     </Provider>
   );
 }

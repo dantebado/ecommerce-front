@@ -1,8 +1,10 @@
 import cogoToast from "cogo-toast";
+import { m } from "framer-motion";
 import { Magic } from "magic-sdk";
 import useTranslation from "next-translate/useTranslation";
+import Head from "next/head";
 import Link from "next/link";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserExistence, signupUser } from "../../api/api";
 import ImageUploader from "../../components/forms/ImageUploader";
@@ -30,10 +32,14 @@ const Signup = (props) => {
     avatar_url: avatars[Math.floor(avatars.length * Math.random())],
   });
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
-  const m = new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY);
+  const [m, setM] = useState(null);
   const { t } = useTranslation("common");
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setM(new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY));
+  }, []);
 
   const startSignup = () => {
     dispatch(actionSetProgress(""));
@@ -86,6 +92,10 @@ const Signup = (props) => {
 
   return (
     <DefaultLayout>
+      <Head>
+        <title>{t("signup-title")} - WalenGa</title>
+        <meta name="description" content={t("meta-description-signup")} />
+      </Head>
       <div className="container mx-auto text-center px-4 py-12 dark:text-white">
         <div className="md:w-1/2 mx-auto">
           {loggedUser.magicToken ? (
@@ -120,6 +130,7 @@ const Signup = (props) => {
                   <input
                     type="text"
                     required={true}
+                    autoComplete="false"
                     className="w-full px-4 py-2"
                     placeholder={t("form-placeholder-firstname")}
                     value={payload.first_name}
@@ -130,6 +141,7 @@ const Signup = (props) => {
                   <input
                     type="text"
                     required={true}
+                    autoComplete="false"
                     className="w-full  px-4 py-2"
                     placeholder={t("form-placeholder-lastname")}
                     value={payload.last_name}
@@ -141,6 +153,7 @@ const Signup = (props) => {
               <input
                 type="email"
                 required={true}
+                autoComplete="false"
                 className="w-full mb-3 px-4 py-2"
                 placeholder={t("form-placeholder-email")}
                 value={payload.email}

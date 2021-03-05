@@ -156,5 +156,16 @@
   "fetching-products-error": "Error fetching products",
 
   "for-you-title": "For you",
-  "explore-title": "Explore"
+  "explore-title": "Explore",
+
+  "search-title": "Search",
+
+  "meta-description-home": "Fresh product at Walenga",
+  "meta-description-signup": "Signup in Walenga",
+  "meta-description-shipment": "Follor your Walenga shipment",
+  "meta-description-search": "Product search en Walenga",
+  "meta-description-purchase": "Purchase in Walenga",
+  "meta-description-checkout": "Continue with your Walenga purchase",
+  "meta-description-cart": "Your Walenga Cart",
+  "meta-description-account": "Your Walenga Account"
 }

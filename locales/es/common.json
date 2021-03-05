@@ -156,5 +156,16 @@
   "fetching-products-error": "Error al consultar los productos",
 
   "for-you-title": "Para ti",
-  "explore-title": "Explorar"
+  "explore-title": "Explorar",
+
+  "search-title": "Búsqueda",
+
+  "meta-description-home": "Compras frescas en Walenga",
+  "meta-description-signup": "Registrate en Walenga",
+  "meta-description-shipment": "Seguimiento de envío en Walenga",
+  "meta-description-search": "Búsqueda de productos en Walenga",
+  "meta-description-purchase": "Compra de Walenga",
+  "meta-description-checkout": "Finalizá tu compra en Walenga",
+  "meta-description-cart": "Tu Carrito en Walenga",
+  "meta-description-account": "Tu Cuenta en Walenga"
 }
