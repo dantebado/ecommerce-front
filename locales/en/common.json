@@ -167,5 +167,19 @@
   "meta-description-purchase": "Purchase in Walenga",
   "meta-description-checkout": "Continue with your Walenga purchase",
   "meta-description-cart": "Your Walenga Cart",
-  "meta-description-account": "Your Walenga Account"
+  "meta-description-account": "Your Walenga Account",
+
+  "share-link-text": "Share this link with your friends so they can join the purchase.",
+  "share-link-click-to-copy": "(click to copy to clipboard)",
+  "copy-success": "Link copied to clipboard",
+  "copy-failed": "Failed to copy to clipboard",
+
+  "you-are-in-valid-address": "You are in the shipment area!",
+  "you-are-in-invalid-address": "You are outside this purchase shipment zone",
+  "address-not-found": "Error finding your address",
+  "join-collab-and-save": "Join this collaborative purchase and save",
+  "enter-shipment-address": "Enter the shipment address",
+  "purchase-and-save": "Finish your purchase and save",
+  "payment-success": "Payment successfully processed",
+  "payment-failure": "Error processing payment"
 }

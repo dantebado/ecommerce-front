@@ -19,7 +19,7 @@ export default function HomeProductsList() {
       .then((page) => {
         setProducts(page.data);
       })
-      .catch((err) => cogoToast.error("Error obteniendo lista de productos"))
+      .catch((err) => cogoToast.error(t("fetching-products-error")))
       .finally(() => {
         setLoading(false);
       });

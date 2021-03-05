@@ -167,5 +167,19 @@
   "meta-description-purchase": "Compra de Walenga",
   "meta-description-checkout": "Finalizá tu compra en Walenga",
   "meta-description-cart": "Tu Carrito en Walenga",
-  "meta-description-account": "Tu Cuenta en Walenga"
+  "meta-description-account": "Tu Cuenta en Walenga",
+
+  "share-link-text": "Compartí este link con tus amigos para que se unan a la compra.",
+  "share-link-click-to-copy": "(click para copiar)",
+  "copy-success": "Enlace copiado con éxito",
+  "copy-failed": "Operación fallida",
+
+  "you-are-in-valid-address": "¡Estás dentro de la zona de entrega!",
+  "you-are-in-invalid-address": "Estás fuera del área de cobertura de esta compra",
+  "address-not-found": "Error encontrando tu dirección",
+  "join-collab-and-save": "Unite a la compra colaborativa y ahorrá",
+  "enter-shipment-address": "Ingresá la dirección de envío",
+  "purchase-and-save": "Finalizá la compra y ahorrá",
+  "payment-success": "Tu pago fue procesado con éxito",
+  "payment-failure": "Error al procesar tu pago"
 }

@@ -26,7 +26,7 @@ export default function RefreshToken() {
             .then((token) => {
               dispatch(actionLoginMagicLink(token, loggedUser.email));
             })
-            .catch(console.error);
+            .catch((err) => {});
         }, 1000 * 60 * 5)
       );
     }

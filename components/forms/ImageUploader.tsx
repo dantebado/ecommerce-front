@@ -37,11 +37,9 @@ export default function ImageUploader(props: {
         return resolve((e.target as FileReader).result as string);
       };
       reader.onerror = (e) => {
-        console.error(`FileReader failed on file ${file.name}.`);
         return reject(null);
       };
       if (!file) {
-        console.error("No file to read.");
         return reject(null);
       }
       reader.readAsDataURL(file);

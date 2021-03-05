@@ -67,7 +67,7 @@ export default function PaymentView(props: { payment: Payment }) {
           .then((response) => {
             setPayment(response.data);
           })
-          .catch(console.error)
+          .catch((err) => {})
           .finally(() => dispatch(actionsHideProgress()));
       })
       .catch((err) => {

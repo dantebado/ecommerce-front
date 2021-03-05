@@ -13,8 +13,6 @@ export default function CommentaryStars(props: { count: number }) {
     arre.push("a");
   }
 
-  console.log(arrf.length, arre.length);
-
   return (
     <div className="block mb-1">
       {arrf.map((v, i) => (

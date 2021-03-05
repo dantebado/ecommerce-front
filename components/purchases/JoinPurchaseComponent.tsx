@@ -1,5 +1,6 @@
 import axios from "axios";
 import cogoToast from "cogo-toast";
+import useTranslation from "next-translate/useTranslation";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -40,13 +41,17 @@ export default function JoinPurchaseComponent(props: { purchase: Purchase }) {
   });
 
   const [email, setEmail] = useState("");
-
   const [validatedShipmentArea, setValidatedShipmentArea] = useState(false);
+  const { t } = useTranslation("common");
 
   const validateAddressHandler = () => {
     setValidatedShipmentArea(false);
     geocodeAddress(shipmentAddress)
       .then((geo) => {
+        if (!geo) {
+          throw new Error("error fetching geocoding data");
+        }
+
         axios
           .post(`/api/shipment-check`, {
             originAddress: purchase.shipment_area_center.geocoding,
@@ -55,19 +60,17 @@ export default function JoinPurchaseComponent(props: { purchase: Purchase }) {
           })
           .then((v) => {
             setValidatedShipmentArea(true);
-            cogoToast.success(
-              "Estás dentro del área de cobertura de esta compra"
-            );
+            cogoToast.success(t("you-are-in-valid-address"));
           })
           .catch((err) => {
-            cogoToast.error("Estás fuera del área de cobertura de esta compra");
+            cogoToast.error(t("you-are-in-invalid-address"));
           });
         setShipmentAddress({
           ...shipmentAddress,
           geocoding: geo,
         });
       })
-      .catch((err) => cogoToast.error("Error encontrando tu dirección"));
+      .catch((err) => cogoToast.error(t("address-not-found")));
   };
 
   const createIndividualPurchaseHandler = () => {
@@ -76,7 +79,7 @@ export default function JoinPurchaseComponent(props: { purchase: Purchase }) {
         cogoToast.success("Dirigiéndote a tu pago");
         router.push("/payment/" + individual.data.payment.id);
       })
-      .catch((err) => cogoToast.error("Error al crear tu compra"));
+      .catch((err) => cogoToast.error(t("redirecting-to-payment")));
   };
 
   return (
@@ -85,7 +88,7 @@ export default function JoinPurchaseComponent(props: { purchase: Purchase }) {
         <div>
           <div style={styles}>
             <p className="mt-6 font-bold text-2xl uppercase">
-              Unite a la Compra Colaborativa y ahorrá
+              {t("join-collab-and-save")}
             </p>
 
             <p className="my-3 text-lg font-bold">Tus Datos</p>
@@ -93,7 +96,7 @@ export default function JoinPurchaseComponent(props: { purchase: Purchase }) {
               <input
                 type="email"
                 autoComplete="false"
-                placeholder="Correo electrónico"
+                placeholder={t("form-placeholder-email")}
                 className="px-2 py-2 w-full"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -101,7 +104,7 @@ export default function JoinPurchaseComponent(props: { purchase: Purchase }) {
             </div>
 
             <p className="my-3 text-lg font-bold">
-              Ingresá tu dirección de envío
+              {t("enter-shipment-address")}
             </p>
             <AddressForm
               value={shipmentAddress}
@@ -110,7 +113,9 @@ export default function JoinPurchaseComponent(props: { purchase: Purchase }) {
 
             {validatedShipmentArea && shipmentAddress.geocoding ? (
               <div className="mt-3">
-                <p className="font-bold my-6">¡Estás en el área de entrega!</p>
+                <p className="font-bold my-6">
+                  {t("you-are-in-valid-address")}
+                </p>
 
                 <div className="my-3" style={{ height: "20rem" }}>
                   <CoordinatesMap
@@ -120,7 +125,7 @@ export default function JoinPurchaseComponent(props: { purchase: Purchase }) {
                 </div>
 
                 <p className="mt-3">
-                  Finalizá tu compra y ahorrá{" "}
+                  {t("purchase-and-save")}{" "}
                   <CurrencyDisplay amount={purchase.discount_amount} />
                 </p>
 
@@ -128,18 +133,19 @@ export default function JoinPurchaseComponent(props: { purchase: Purchase }) {
                   className="px-4 py-2 mt-3 uppercase"
                   onClick={createIndividualPurchaseHandler}
                 >
-                  Pagar Ahora <CurrencyDisplay amount={purchase.amount} />
+                  {t("pay-now-title")}{" "}
+                  <CurrencyDisplay amount={purchase.amount} />
                 </button>
               </div>
             ) : (
               <div className="mt-3">
-                <p>La dirección ingresada no está en el área de entrega.</p>
+                <p>{t("you-are-in-invalid-address")}</p>
 
                 <button
                   className="px-4 py-2 mt-3 w-full"
                   onClick={validateAddressHandler}
                 >
-                  Validar Dirección
+                  {t("validate-address-title")}
                 </button>
               </div>
             )}

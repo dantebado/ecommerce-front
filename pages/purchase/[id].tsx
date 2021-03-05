@@ -8,6 +8,8 @@ import CartViewer from "../../components/cart/CartViewer";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
 import JoinPurchaseComponent from "../../components/purchases/JoinPurchaseComponent";
 import { Purchase } from "../../interface/misc.model";
+import copy from "copy-to-clipboard";
+import cogoToast from "cogo-toast";
 
 export default function PaymentView(props: { purchase: Purchase }) {
   const [purchase, setPurchase] = useState(props.purchase);
@@ -19,6 +21,14 @@ export default function PaymentView(props: { purchase: Purchase }) {
       ...purchase,
       status: "expired",
     });
+  };
+
+  const copyShareLink = () => {
+    if (copy(`${process.env.NEXT_PUBLIC_ROOT_URL}/purchases/${purchase.id}`)) {
+      cogoToast.success(t("copy-success"));
+    } else {
+      cogoToast.error(t("copy-failed"));
+    }
   };
 
   return (
@@ -71,6 +81,17 @@ export default function PaymentView(props: { purchase: Purchase }) {
                   onComplete={expirationCallback}
                 />
               </div>
+
+              <p className="text-2xl font-bold mt-3 text-center">
+                {t("share-link-text")}
+              </p>
+
+              <p className="mt-3 cursor-pointer" onClick={copyShareLink}>
+                {process.env.NEXT_PUBLIC_ROOT_URL}/purchases/{purchase.id}
+                <br />
+                <small>{t("share-link-click-to-copy")}</small>
+              </p>
+
               <JoinPurchaseComponent purchase={purchase} />
             </div>
           ) : (

@@ -61,7 +61,7 @@ const Signup = (props) => {
               })
               .catch((err) => cogoToast.error(t("signup-error")));
           })
-          .catch(console.error)
+          .catch((err) => {})
           .finally(() => dispatch(actionsHideProgress()));
       });
   };

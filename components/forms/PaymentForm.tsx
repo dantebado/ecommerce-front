@@ -4,6 +4,7 @@ import { Payment } from "../../interface/misc.model";
 import MercadoPagoWrapper from "../payment/MercadoPagoWrapper";
 import cogoToast from "cogo-toast";
 import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
 
 export default function PaymentForm(props: {
   payment: Payment;
@@ -12,17 +13,18 @@ export default function PaymentForm(props: {
 }) {
   const [payment] = useState(props.payment);
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   const processPaymentHandler = (payload) => {
     processPayment(payment.id, payload)
       .then((proccesedPayment) => {
         props.callback(true);
-        cogoToast.success("Tu pago fue procesado con éxito");
+        cogoToast.success(t("payment-success"));
         router.push("/purchase/" + props.purchaseId);
       })
       .catch((err) => {
         props.callback(false);
-        cogoToast.error("Error al procesar tu pago");
+        cogoToast.error(t("payment-failure"));
         router.push("/");
       });
   };

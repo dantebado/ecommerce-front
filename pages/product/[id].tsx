@@ -41,7 +41,7 @@ export default function ProductViewer(props: { product: Product }) {
       .then((response) => {
         setReviews(response.data.results);
       })
-      .catch(console.error);
+      .catch((err) => {});
   }, []);
 
   const submitHandler = (e) => {

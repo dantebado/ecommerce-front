@@ -90,8 +90,6 @@ export default function MercadoPagoWrapper(props: {
           payment_vendor: "mercadopago",
         });
       }
-    } else {
-      console.log("Verify filled data!\n" + JSON.stringify(response, null, 4));
     }
     setProcessing(false);
   };
