@@ -8,6 +8,9 @@ module.exports = {
         "comm-m": "#3498db",
       },
     },
+    fontFamily: {
+      sans: ["Poppins"],
+    },
   },
   variants: {
     extend: {
