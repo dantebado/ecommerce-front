@@ -7,7 +7,7 @@ import CurrencyDisplay from "../utils/CurrencyDisplay";
 
 export default function CartViewerRow(props: {
   item: ProductInCart;
-  removeCallback: any;
+  removeCallback?: any;
 }) {
   const { t } = useTranslation("common");
 
@@ -38,14 +38,16 @@ export default function CartViewerRow(props: {
       <td>
         <CurrencyDisplay amount={product.unitary_price * props.item.count} />
       </td>
-      <td>
-        <button
-          className="w-full py-2"
-          onClick={() => props.removeCallback(props.item.product)}
-        >
-          {t("product-table-remove")}
-        </button>
-      </td>
+      {props.removeCallback && (
+        <td>
+          <button
+            className="w-full py-2"
+            onClick={() => props.removeCallback(props.item.product)}
+          >
+            {t("product-table-remove")}
+          </button>
+        </td>
+      )}
     </tr>
   );
 }

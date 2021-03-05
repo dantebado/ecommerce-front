@@ -32,13 +32,16 @@ export default function CartViewer(props: { cart: Cart }) {
             <th>{t("product-table-unitary")}</th>
             <th>{t("product-table-quantity")}</th>
             <th>{t("product-table-total")}</th>
-            <th>{t("product-table-remove")}</th>
+            {!cart.is_locked && <th>{t("product-table-remove")}</th>}
           </tr>
         </thead>
         <tbody>
           {cart.products.map((v, i, a) => (
             <Fragment key={v.product}>
-              <CartViewerRow item={v} removeCallback={removeFromCart} />
+              <CartViewerRow
+                item={v}
+                removeCallback={cart.is_locked ? null : removeFromCart}
+              />
             </Fragment>
           ))}
         </tbody>
