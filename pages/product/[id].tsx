@@ -20,6 +20,7 @@ import {
   actionSetProgress,
   actionsHideProgress,
 } from "../../redux/reducers/Progress";
+import CommentaryStars from "../../components/utils/CommentaryStars";
 
 export default function ProductViewer(props: { product: Product }) {
   const [product] = useState(props.product);
@@ -114,7 +115,6 @@ export default function ProductViewer(props: { product: Product }) {
                 >
                   {count === 0 ? t("select-quantity-title") : t("add-to-cart")}
                 </button>
-                <CartRetriever></CartRetriever>
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function ProductViewer(props: { product: Product }) {
             <p className="uppercase text-2xl">{t("comments-title")}</p>
             {reviews.map((v, i, a) => (
               <div className="my-3 border-b pb-3">
-                <p className="text-sm">{v.rating} / 5</p>
+                <CommentaryStars count={v.rating} />
                 <p className="text-lg font-bold">{v.author_name} dijo:</p>
                 <p>{v.commentary}</p>
               </div>

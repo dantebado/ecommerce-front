@@ -11,6 +11,7 @@ import { useStore } from "../redux/Store";
 import "../styles/globals.scss";
 import { motion } from "framer-motion";
 import RefreshToken from "../components/utils/RefreshToken";
+import CartRetriever from "../components/cart/CartRetriever";
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   if (TimeAgo.getDefaultLocale() == "en") {
@@ -50,6 +51,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
           <Component {...pageProps} />
           <ProgressIndicator />
           <RefreshToken />
+          <CartRetriever />
         </motion.div>
       </PersistGate>
     </Provider>
