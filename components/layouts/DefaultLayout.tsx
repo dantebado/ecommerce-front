@@ -6,7 +6,7 @@ function DefaultLayout(props) {
   return (
     <div>
       <DefaultHeader />
-      <div>{props.children}</div>
+      <div className="dark:bg-gray-700">{props.children}</div>
       <DefaultFooter />
     </div>
   );

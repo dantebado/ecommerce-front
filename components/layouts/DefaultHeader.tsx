@@ -1,17 +1,64 @@
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { StateTypes } from "../../redux/Store";
 
 export default function DefaultHeader() {
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
-  const { t } = useTranslation("common");
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    catchDarkMode();
+  }, [darkMode]);
+
+  const toggleDarkMode = (value) => {
+    if (value === "true") {
+      setLightTheme();
+    } else {
+      setDarkTheme();
+    }
+  };
+
+  const catchDarkMode = () => {
+    if (typeof window == undefined) return;
+
+    if (!localStorage.getItem("theme")) {
+      localStorage.setItem("theme", "light");
+    }
+    const selectedTheme = localStorage.getItem("theme");
+
+    if (selectedTheme === "dark") {
+      setDarkMode(true);
+    } else {
+      setDarkMode(false);
+    }
+
+    if (
+      selectedTheme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
+  const setDarkTheme = () => {
+    setDarkMode(false);
+    localStorage.theme = "light";
+  };
+
+  const setLightTheme = () => {
+    setDarkMode(true);
+    localStorage.theme = "dark";
+  };
 
   return (
-    <header className={`py-3 bg-comm-l`}>
+    <header className={`py-3 bg-comm-l dark:bg-gray-800 text-white`}>
       <div className="container mx-auto text-center flex flex-row items-center justify-between">
-        <div className="w-1/3 pl-4">
+        <div className="w-1/3 pl-4 flex items-center">
           <Link href="/cart">
             <a>
               <svg
@@ -38,6 +85,14 @@ export default function DefaultHeader() {
               </svg>
             </a>
           </Link>
+          <select
+            className="ml-4 py-1 px-3 rounded-md border-none shadow-sm bg-white dark:bg-black text-black dark:text-white"
+            value={darkMode.toString()}
+            onChange={(e) => toggleDarkMode(e.target.value)}
+          >
+            <option value={"false"}>Light</option>
+            <option value={"true"}>Dark</option>
+          </select>
         </div>
         <div className="w-1/3">
           <Link href="/">

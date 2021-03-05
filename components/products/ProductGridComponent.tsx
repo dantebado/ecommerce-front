@@ -20,8 +20,8 @@ export default function ProductGridComponent(props: {
 
   return (
     <div className="text-center p-2">
-      <div className="shadow-lg p-3 rounded-lg">
-        <div style={photoStyles} className="border-b"></div>
+      <div className="shadow-lg p-3 rounded-lg dark:text-white border-white dark:bg-gray-800">
+        <div style={photoStyles} className="border-b dark:border-black"></div>
 
         <p className="text-left my-3">{product.display_name}</p>
         <p className="text-left my-3 text-md font-bold">

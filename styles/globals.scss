@@ -29,6 +29,7 @@ table.cart-table {
   border-collapse: collapse;
   td,
   th {
+    @apply dark:border-white;
     border: 1px solid black;
     padding: 0.5rem;
   }
@@ -65,4 +66,10 @@ textarea {
   @apply border-opacity-60;
   @apply rounded-sm;
   @apply p-2;
+}
+
+select,
+input,
+textarea {
+  @apply dark:text-black;
 }

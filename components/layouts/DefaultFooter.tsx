@@ -69,7 +69,9 @@ export default function DefaultFooter() {
           </svg>
         </Link>
       </div>
-      <CurrencySelector />
+      <div className="flex flex-row justify-center space-x-4">
+        <CurrencySelector />
+      </div>
     </footer>
   );
 }

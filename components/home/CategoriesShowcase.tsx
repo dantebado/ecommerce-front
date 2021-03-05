@@ -21,7 +21,7 @@ export default function CategoriesShowcase() {
       {categories.map((v, i, a) => (
         <Link key={v.id} href={`/search?category=${v.id}`}>
           <div className="p-2 w-1/2 md:w-1/3 cursor-pointer">
-            <div className="px-4 py-6 hover:bg-green-300 transition-all text-center shadow-lg hover:rounded-lg">
+            <div className="px-4 py-6 hover:bg-green-300 transition-all text-center shadow-lg hover:rounded-lg dark:bg-gray-200 dark:hover:bg-green-400">
               <p className="font-bold uppercase">{v.description}</p>
             </div>
           </div>

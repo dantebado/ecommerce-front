@@ -68,7 +68,7 @@ export default function ProductViewer(props: { product: Product }) {
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto px-4 py-6 text-center">
+      <div className="container mx-auto px-4 py-6 text-center dark:text-white">
         <div className="md:flex flex-row items-start justify-between">
           <div className="md:w-2/3">
             <p className="mb-3 text-3xl font-bold uppercase">
@@ -95,7 +95,7 @@ export default function ProductViewer(props: { product: Product }) {
             <div className="md:flex flex-row items-center md:w-1/2 md:mx-auto mt-6">
               <div className="md:w-1/2 px-4">
                 <select
-                  className="w-full py-2 px-2"
+                  className="w-full py-2 px-2 dark:text-black"
                   value={count}
                   onChange={(e) => setCount(parseInt(e.target.value))}
                 >

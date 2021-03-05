@@ -86,7 +86,7 @@ const Signup = (props) => {
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto text-center px-4 py-12">
+      <div className="container mx-auto text-center px-4 py-12 dark:text-white">
         <div className="md:w-1/2 mx-auto">
           {loggedUser.magicToken ? (
             <Fragment>
