@@ -34,6 +34,10 @@ export default function index() {
   });
   const [history, setHistory] = useState([]);
 
+  if (!loggedUser) {
+    return <div></div>;
+  }
+
   useEffect(() => {
     retrieveUserDetails(loggedUser.email, loggedUser.magicToken)
       .then((response) => {
@@ -80,7 +84,10 @@ export default function index() {
 
   return (
     <DefaultLayout>
-      <div className="mx-auto p-4" style={{ maxWidth: "560px" }}>
+      <div
+        className="mx-auto p-4 dark:text-white"
+        style={{ maxWidth: "560px" }}
+      >
         <div className="mb-6">
           <img
             className="w-1/2 mx-auto rounded-full border-4"

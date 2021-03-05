@@ -77,8 +77,8 @@ export default function PaymentView(props: { payment: Payment }) {
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto text-center px-2">
-        <p className="my-5 text-4xl font-bold">{t("pay-title")}</p>
+      <div className="container mx-auto text-center px-2 dark:text-white">
+        <p className="py-5 text-4xl font-bold">{t("pay-title")}</p>
         {individualPurchase && !processedPayment ? (
           <div className="text-left my-3">
             <div className="my-3">
@@ -189,7 +189,7 @@ export default function PaymentView(props: { payment: Payment }) {
           <span></span>
         )}
 
-        <p className="my-6">Ref#{payment.id}</p>
+        <p className="py-6">Ref#{payment.id}</p>
       </div>
     </DefaultLayout>
   );

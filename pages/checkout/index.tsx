@@ -54,7 +54,7 @@ export default function index() {
   const { t } = useTranslation("common");
 
   if (!activeCart) {
-    router.push("/");
+    return <div></div>;
   }
 
   const promotionOptions = [
@@ -118,7 +118,7 @@ export default function index() {
   return (
     <DefaultLayout>
       {activeCart ? (
-        <div className="container mx-auto py-6 text-center px-2">
+        <div className="container mx-auto py-6 text-center px-2 dark:text-white">
           <p className="font-bold text-4xl">{t("checkout-title")}</p>
           <div className="my-6">
             <CartViewer cart={activeCart} />

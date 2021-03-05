@@ -12,10 +12,6 @@ export default function index() {
   const router = useRouter();
   const { t } = useTranslation("common");
 
-  if (!activeCart) {
-    router.push("/");
-  }
-
   const checkoutTriggerHandler = () => {
     cogoToast.info(t("redirecting-to-checkout"));
     router.push("/checkout");

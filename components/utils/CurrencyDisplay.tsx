@@ -19,7 +19,7 @@ export default function CurrencyDisplay(props: { amount: number }) {
         setConvertedAmount(props.amount * response.data.ratio);
       })
       .catch((err) => {});
-  }, [currency]);
+  }, [currency, props.amount]);
 
   return <span>{`${currency.code} ${convertedAmount.toFixed(2)}`}</span>;
 }

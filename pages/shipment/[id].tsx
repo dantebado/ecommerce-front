@@ -14,7 +14,7 @@ export default function ShipmentView(props: { shipment: Shipment }) {
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto text-center px-4 py-8">
+      <div className="container mx-auto text-center px-4 py-8 dark:text-white">
         <p className="mb-6">
           {t("shipment-to-title", { shipmentId: shipment.id })}
         </p>

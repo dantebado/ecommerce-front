@@ -27,6 +27,8 @@ img {
 
 table.cart-table {
   border-collapse: collapse;
+  @apply dark:text-white;
+
   td,
   th {
     @apply dark:border-white;

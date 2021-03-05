@@ -1,4 +1,6 @@
+import cogoToast from "cogo-toast";
 import { GetServerSideProps } from "next";
+import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,20 +9,17 @@ import {
   retrieveProduct,
   retrieveProductReviews,
 } from "../../api/api";
-import CartRetriever from "../../components/cart/CartRetriever";
 import DefaultLayout from "../../components/layouts/DefaultLayout";
+import ReviewForm from "../../components/products/ReviewForm";
+import CommentaryStars from "../../components/utils/CommentaryStars";
 import CurrencyDisplay from "../../components/utils/CurrencyDisplay";
 import { Product } from "../../interface/misc.model";
 import { actionSetActiveCart } from "../../redux/reducers/ActiveCart";
-import { StateTypes } from "../../redux/Store";
-import cogoToast from "cogo-toast";
-import useTranslation from "next-translate/useTranslation";
-import ReviewForm from "../../components/products/ReviewForm";
 import {
   actionSetProgress,
   actionsHideProgress,
 } from "../../redux/reducers/Progress";
-import CommentaryStars from "../../components/utils/CommentaryStars";
+import { StateTypes } from "../../redux/Store";
 
 export default function ProductViewer(props: { product: Product }) {
   const [product] = useState(props.product);

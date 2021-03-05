@@ -22,7 +22,7 @@ export default function PaymentView(props: { purchase: Purchase }) {
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto text-center py-8 px-2">
+      <div className="container mx-auto text-center py-8 px-2 dark:text-white">
         <p className="mb-6 font-bold text-2xl">
           {t("purchase-title", { purchaseId: purchase.id })}
         </p>
