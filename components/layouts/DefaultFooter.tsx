@@ -1,8 +1,11 @@
+import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import React from "react";
 import CurrencySelector from "../utils/CurrencySelector";
 
 export default function DefaultFooter() {
+  const { t } = useTranslation("common");
+
   return (
     <footer className="border-t py-4 text-center text-white bg-black">
       <div className="mb-3 flex flex-wrap space-x-8 justify-center">
@@ -72,6 +75,28 @@ export default function DefaultFooter() {
             </svg>
           </a>
         </Link>
+        <Link href="https://www.twitter.com/walen.ga">
+          <a className="text-white" target="_blank">
+            <svg
+              className="cursor-pointer"
+              width="36"
+              height="36"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M8 3C9.10457 3 10 3.89543 10 5V8H16C17.1046 8 18 8.89543 18 10C18 11.1046 17.1046 12 16 12H10V14C10 15.6569 11.3431 17 13 17H16C17.1046 17 18 17.8954 18 19C18 20.1046 17.1046 21 16 21H13C9.13401 21 6 17.866 6 14V5C6 3.89543 6.89543 3 8 3Z"
+                fill="currentColor"
+              />
+            </svg>
+          </a>
+        </Link>
+      </div>
+      <div className="mb-3 container mx-auto px-4">
+        <p>{t("footer-line")}</p>
       </div>
       <div className="flex flex-row justify-center space-x-4">
         <CurrencySelector />

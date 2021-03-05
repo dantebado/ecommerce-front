@@ -181,5 +181,7 @@
   "enter-shipment-address": "Enter the shipment address",
   "purchase-and-save": "Finish your purchase and save",
   "payment-success": "Payment successfully processed",
-  "payment-failure": "Error processing payment"
+  "payment-failure": "Error processing payment",
+
+  "footer-line": "A new way to buy. Whenever you want, whoever you want with."
 }

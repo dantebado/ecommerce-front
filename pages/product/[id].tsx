@@ -129,7 +129,7 @@ export default function ProductViewer(props: { product: Product }) {
           <div className="md:w-1/3 text-left mt-6 md:mt-0 px-3">
             <p className="uppercase text-2xl">{t("comments-title")}</p>
             {reviews.map((v, i, a) => (
-              <div className="my-3 border-b pb-3">
+              <div key={i} className="my-3 border-b pb-3">
                 <CommentaryStars count={v.rating} />
                 <p className="text-lg font-bold">{v.author_name} dijo:</p>
                 <p>{v.commentary}</p>

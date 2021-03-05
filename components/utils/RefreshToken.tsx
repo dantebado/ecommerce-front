@@ -1,7 +1,10 @@
 import { Magic } from "magic-sdk";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actionLoginMagicLink } from "../../redux/reducers/LoggedUser";
+import {
+  actionLoginMagicLink,
+  actionSignoutMagicLink,
+} from "../../redux/reducers/LoggedUser";
 import { StateTypes } from "../../redux/Store";
 
 export default function RefreshToken() {
@@ -18,6 +21,11 @@ export default function RefreshToken() {
     if (intervalId) {
       clearInterval(intervalId);
     }
+
+    if (!m) {
+      setM(new Magic(process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY));
+    }
+
     if (loggedUser.magicToken) {
       setIntervalId(
         setInterval(() => {
@@ -26,11 +34,27 @@ export default function RefreshToken() {
             .then((token) => {
               dispatch(actionLoginMagicLink(token, loggedUser.email));
             })
-            .catch((err) => {});
-        }, 1000 * 60 * 5)
+            .catch((err) => signOutHandler());
+        }, 1000 * 60 * 10)
       );
     }
   }, [loggedUser]);
 
+  const signOutHandler = () => {
+    m.user
+      .logout()
+      .then((value) => {
+        dispatch(actionSignoutMagicLink());
+      })
+      .catch((err) => {});
+  };
+
   return <div></div>;
+}
+function actionSetProgress(arg0: string): any {
+  throw new Error("Function not implemented.");
+}
+
+function actionsHideProgress(): any {
+  throw new Error("Function not implemented.");
 }

@@ -19,7 +19,7 @@ export default function CommentaryStars(props: { count: number }) {
         <svg
           key={`${i}-f`}
           version="1.1"
-          className="inline mr-1"
+          className="inline mr-1 fill-current"
           width="16"
           height="16"
           viewBox="0 0 19.481 19.481"
@@ -35,7 +35,7 @@ export default function CommentaryStars(props: { count: number }) {
           version="1.1"
           x="0px"
           y="0px"
-          className="inline mr-1"
+          className="inline mr-1 fill-current"
           width="16"
           height="16"
           viewBox="0 0 487.222 487.222"

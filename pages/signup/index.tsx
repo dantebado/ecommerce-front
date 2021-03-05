@@ -4,6 +4,7 @@ import { Magic } from "magic-sdk";
 import useTranslation from "next-translate/useTranslation";
 import Head from "next/head";
 import Link from "next/link";
+import { Router, useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserExistence, signupUser } from "../../api/api";
@@ -33,6 +34,7 @@ const Signup = (props) => {
   });
   const loggedUser = useSelector((state: StateTypes) => state.loggedUser);
   const [m, setM] = useState(null);
+  const router = useRouter();
   const { t } = useTranslation("common");
 
   const dispatch = useDispatch();
@@ -58,6 +60,7 @@ const Signup = (props) => {
               .then((response) => {
                 cogoToast.success(t("signup-success"));
                 dispatch(actionLoginMagicLink(token, payload.email));
+                router.push("/");
               })
               .catch((err) => cogoToast.error(t("signup-error")));
           })
@@ -66,7 +69,7 @@ const Signup = (props) => {
       });
   };
 
-  const signOut = () => {
+  const signOutHandler = () => {
     dispatch(actionSetProgress(""));
     m.user
       .logout()
@@ -74,7 +77,10 @@ const Signup = (props) => {
         dispatch(actionSignoutMagicLink());
       })
       .catch((err) => {})
-      .finally(() => dispatch(actionsHideProgress()));
+      .finally(() => {
+        dispatch(actionsHideProgress());
+        router.push("/");
+      });
   };
 
   const inputHandler = (field, value) => {
@@ -102,7 +108,7 @@ const Signup = (props) => {
           {loggedUser.magicToken ? (
             <Fragment>
               <p className="text-center mb-3">{t("signout-title")}</p>
-              <button className="px-4 py-2 w-full" onClick={signOut}>
+              <button className="px-4 py-2 w-full" onClick={signOutHandler}>
                 {t("signout-button")}
               </button>
             </Fragment>

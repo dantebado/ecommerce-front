@@ -181,5 +181,7 @@
   "enter-shipment-address": "Ingresá la dirección de envío",
   "purchase-and-save": "Finalizá la compra y ahorrá",
   "payment-success": "Tu pago fue procesado con éxito",
-  "payment-failure": "Error al procesar tu pago"
+  "payment-failure": "Error al procesar tu pago",
+
+  "footer-line": "Somos la compañía que revolucionó la forma de hacer compras. Compra cuando quieras, acompañado con quien quieras."
 }

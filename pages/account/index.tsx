@@ -62,10 +62,18 @@ export default function index() {
     });
   };
 
-  const logoutHandler = () => {
-    m.user.logout();
-    dispatch(actionSignoutMagicLink());
-    router.push("/");
+  const signOutHandler = () => {
+    dispatch(actionSetProgress(""));
+    m.user
+      .logout()
+      .then((value) => {
+        dispatch(actionSignoutMagicLink());
+      })
+      .catch((err) => {})
+      .finally(() => {
+        dispatch(actionsHideProgress());
+        router.push("/");
+      });
   };
 
   const updateProfileHandler = (e) => {
@@ -142,7 +150,7 @@ export default function index() {
           {t("save-account-button")}
         </button>
 
-        <button className="block w-full" onClick={logoutHandler}>
+        <button className="block w-full" onClick={signOutHandler}>
           {t("signout-title")}
         </button>
 

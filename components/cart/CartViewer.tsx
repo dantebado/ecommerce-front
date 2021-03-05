@@ -13,9 +13,9 @@ export default function CartViewer(props: { cart: Cart }) {
   const cart = props.cart;
   const { t } = useTranslation("common");
 
-  const removeFromCart = (product: Product) => {
+  const removeFromCart = (productId: string | number) => {
     if (cart.is_locked) return;
-    modifyProductInCart(cart.id, product.id, 0)
+    modifyProductInCart(cart.id, productId, 0)
       .then((cart) => {
         dispatch(actionSetActiveCart(cart.data));
         cogoToast.success(t("item-removed-success"));

@@ -52,7 +52,7 @@ const Login = (props) => {
       });
   };
 
-  const signOut = () => {
+  const signOutHandler = () => {
     dispatch(actionSetProgress(""));
     m.user
       .logout()
@@ -60,7 +60,10 @@ const Login = (props) => {
         dispatch(actionSignoutMagicLink());
       })
       .catch((err) => {})
-      .finally(() => dispatch(actionsHideProgress()));
+      .finally(() => {
+        dispatch(actionsHideProgress());
+        router.push("/");
+      });
   };
 
   return (
@@ -75,7 +78,7 @@ const Login = (props) => {
           {loggedUser.magicToken ? (
             <Fragment>
               <p className="text-center mb-3">{t("signout-title")}</p>
-              <button className="px-4 py-2 w-full" onClick={signOut}>
+              <button className="px-4 py-2 w-full" onClick={signOutHandler}>
                 {t("signout-button")}
               </button>
             </Fragment>
