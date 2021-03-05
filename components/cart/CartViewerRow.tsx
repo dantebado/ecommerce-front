@@ -42,7 +42,7 @@ export default function CartViewerRow(props: {
         <td>
           <button
             className="w-full py-2"
-            onClick={() => props.removeCallback(props.item.product)}
+            onClick={(e) => props.removeCallback(product.id)}
           >
             {t("product-table-remove")}
           </button>
