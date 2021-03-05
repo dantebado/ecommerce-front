@@ -75,7 +75,7 @@ export default function DefaultFooter() {
             </svg>
           </a>
         </Link>
-        <Link href="https://www.twitter.com/walen.ga">
+        <Link href="https://www.twitter.com/walen_ga">
           <a className="text-white" target="_blank">
             <svg
               className="cursor-pointer"
