@@ -57,6 +57,7 @@ export default function index(props) {
     <DefaultLayout>
       <Head>
         <title>{t("search-title")} - WalenGa</title>
+        <meta name="og:title" content={`${t("search-title")} - WalenGa`} />
         <meta name="description" content={t("meta-description-search")} />
       </Head>
       <div className="container mx-auto p-2">

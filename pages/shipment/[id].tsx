@@ -17,6 +17,7 @@ export default function ShipmentView(props: { shipment: Shipment }) {
     <DefaultLayout>
       <Head>
         <title>{t("shipment-title")} - WalenGa</title>
+        <meta name="og:title" content={`${t("shipment-title")} - WalenGa`} />
         <meta name="description" content={t("meta-description-shipment")} />
       </Head>
       <div className="container mx-auto text-center px-4 py-8 dark:text-white">

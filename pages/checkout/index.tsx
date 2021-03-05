@@ -120,6 +120,7 @@ export default function index() {
     <DefaultLayout>
       <Head>
         <title>{t("checkout-title")} - WalenGa</title>
+        <meta name="og:title" content={`${t("checkout-title")} - WalenGa`} />
         <meta name="description" content={t("meta-description-checkout")} />
       </Head>
       {activeCart?.id ? (

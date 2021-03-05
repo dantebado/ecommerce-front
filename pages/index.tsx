@@ -15,6 +15,7 @@ export default function Home(props) {
     <DefaultLayout>
       <Head>
         <title>WalenGa</title>
+        <meta name="og:title" content="WalenGa" />
         <meta name="description" content={t("meta-description-home")} />
       </Head>
       <FeaturedProductCarrousel />

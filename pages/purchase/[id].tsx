@@ -27,6 +27,12 @@ export default function PaymentView(props: { purchase: Purchase }) {
         <title>
           {t("purchase-title", { purchaseId: purchase.id })} - WalenGa
         </title>
+        <meta
+          name="og:title"
+          content={`${t("purchase-title", {
+            purchaseId: purchase.id,
+          })} - WalenGa`}
+        />
         <meta name="description" content={t("meta-description-purchase")} />
       </Head>
       <div className="container mx-auto text-center py-8 px-2 dark:text-white">

@@ -94,6 +94,7 @@ const Signup = (props) => {
     <DefaultLayout>
       <Head>
         <title>{t("signup-title")} - WalenGa</title>
+        <meta name="og:title" content={`${t("signup-title")} - WalenGa`} />
         <meta name="description" content={t("meta-description-signup")} />
       </Head>
       <div className="container mx-auto text-center px-4 py-12 dark:text-white">

@@ -67,6 +67,7 @@ const Login = (props) => {
     <DefaultLayout>
       <Head>
         <title>{t("signin-title")} - WalenGa</title>
+        <meta name="og:title" content={`${t("signin-title")} - WalenGa`} />
         <meta name="description" content={t("meta-description-search")} />
       </Head>
       <div className="container mx-auto text-center px-4 py-36 dark:text-white">

@@ -70,6 +70,7 @@ export default function ProductViewer(props: { product: Product }) {
     <DefaultLayout>
       <Head>
         <title>{product.display_name} - WalenGa</title>
+        <meta name="og:title" content={`${product.display_name} - WalenGa`} />
         <meta name="description" content={product.description} />
         <meta property="og:image" content={product.featured_photo_url} />
         <meta name="twitter:card" content="summary_large_image"></meta>

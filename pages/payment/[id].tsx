@@ -80,6 +80,7 @@ export default function PaymentView(props: { payment: Payment }) {
     <DefaultLayout>
       <Head>
         <title>{t("pay-title")} - WalenGa</title>
+        <meta name="og:title" content={`${t("pay-title")} - WalenGa`} />
         <meta name="description" content={t("meta-description-search")} />
       </Head>
       <div className="container mx-auto text-center px-2 dark:text-white">

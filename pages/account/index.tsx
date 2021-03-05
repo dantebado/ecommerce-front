@@ -92,6 +92,7 @@ export default function index() {
     <DefaultLayout>
       <Head>
         <title>{t("account-button")} - WalenGa</title>
+        <meta name="og:title" content={`${t("account-button")} - WalenGa`} />
         <meta name="description" content={t("meta-description-account")} />
       </Head>
       <div

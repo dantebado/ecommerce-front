@@ -17,6 +17,7 @@ export default function individual(props: { individual: IndividualPurchase }) {
     <DefaultLayout>
       <Head>
         <title>WalenGa</title>
+        <meta name="og:title" content="WalenGa" />
         <meta name="description" content={t("meta-description-purchase")} />
       </Head>
       <div className="container mx-auto flex flex-row space-x-4 justify-center py-16">
